@@ -47,7 +47,7 @@ const NavBar = () => {
             <div>
                 <Navbar>
                     <Container>
-                        <Navbar.Brand href="#home">
+                        <Navbar.Brand href="/">
                             <img
                                 alt=""
                                 src="/src/assets/img/logo.svg"
