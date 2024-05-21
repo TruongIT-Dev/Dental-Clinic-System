@@ -1,4 +1,5 @@
-import { Button, Form, Input } from 'antd';
+
+import { Button, Form, Input, Radio } from 'antd';
 
 
 const onFinish = (values) => {
@@ -9,28 +10,28 @@ const onFinishFailed = (errorInfo) => {
 };
 
 
-const SignIn = () => {
+const Appoinment = () => {
 
     return (
         <>
-            <div className="sign-in" style={{ width: '100%' }}>
+            <div className="sign-in">
                 <div className="container space-1">
                     <div className="w-md-80 w-lg-50 text-center mx-md-auto mb-lg-5 mb-md-3">
                         <h2 style={{ color: '#f6921e', fontWeight: '400', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-                            Đăng Nhập
+                            đặt lịch hẹn
                         </h2>
                         <p style={{ lineHeight: '1.5', margin: 0 }}>
                             <i style={{ fontStyle: 'italic', fontSize: '0.9625rem' }}>Vui lòng để lại thông tin, nhu cầu của quý khách.</i>
                         </p>
                         <p style={{ lineHeight: '1.5' }}>
-                            <i style={{ fontStyle: 'italic', fontSize: '0.9625rem' }}>Nha Khoa Kim sẽ liên hệ đến Quý Khách trong thời gian sớm nhất</i>
+                            <i style={{ fontStyle: 'italic', fontSize: '0.9625rem' }}>Nha Khoa Sức Khỏe sẽ liên hệ đến Quý Khách trong thời gian sớm nhất</i>
                         </p>
                     </div>
 
                     {/* Form Inout */}
-                    <div className='w-lg-60 mx-auto bg-light p-3 '>
+                    <div className='w-lg-60 mx-auto bg-light p-3 ' style={{maxWidth:'300', width:'50%'}}>
                         <Form
-                            name="signin"
+                            name="basic"
                             labelCol={{
                                 span: 6,
                             }}
@@ -51,9 +52,17 @@ const SignIn = () => {
                             autoComplete="off"
                         >
                             {/* Nhập Username */}
+                            <Form.Item>
+                                <Radio.Group style={{ display: 'flex', justifyContent: 'flex-start', marginLeft:35 }}>
+                                    <Radio value="male"> Anh </Radio>
+                                    <Radio value="female"> Chị </Radio>
+                                </Radio.Group>
+                            </Form.Item>
+
+                            {/* Nhập Username */}
                             <Form.Item
                                 label="Tên đăng nhập"
-                                name="usernameSignin"
+                                name="username"
                                 rules={[
                                     {
                                         required: true,
@@ -67,7 +76,7 @@ const SignIn = () => {
                             {/* Nhập Password */}
                             <Form.Item
                                 label="Mật khẩu"
-                                name="passwordSignin"
+                                name="password"
                                 rules={[
                                     {
                                         required: true,
@@ -78,15 +87,43 @@ const SignIn = () => {
                                 <Input.Password />
                             </Form.Item>
 
-                            {/* Nút Submit */}
+                            {/* Nhập Email */}
                             <Form.Item
-                                wrapperCol={{
-                                    span: 16,
-                                }}
-                                style={{display:'flex', justifyContent:'center'}}
+                                label="Email"
+                                name="email"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Yêu cầu nhập email!',
+                                    },
+                                ]}
+                            >
+                                <Input.Password />
+                            </Form.Item>
+
+                            {/* Nhập Số Điện Thoại */}
+                            <Form.Item
+                                label="Số điện thoại"
+                                name="phone"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Yêu cầu nhập số điện thoại!',
+                                    },
+                                ]}
+                            >
+                                <Input.Password />
+                            </Form.Item>
+
+
+                            <Form.Item
+                            // wrapperCol={{
+                            //     offset: 8,
+                            //     span: 16,
+                            // }}
                             >
                                 <Button type="primary" htmlType="submit">
-                                    Đăng nhập
+                                    Đặt lịch hẹn
                                 </Button>
                             </Form.Item>
                         </Form>
@@ -98,4 +135,4 @@ const SignIn = () => {
     )
 }
 
-export default SignIn
+export default Appoinment

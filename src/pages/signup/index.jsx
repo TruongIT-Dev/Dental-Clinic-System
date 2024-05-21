@@ -14,7 +14,7 @@ const SignUp = () => {
 
     return (
         <>
-            <div className="sign-in">
+            <div className="sign-up" style={{ width: '100%' }}>
                 <div className="container space-1">
                     <div className="w-md-80 w-lg-50 text-center mx-md-auto mb-lg-5 mb-md-3">
                         <h2 style={{ color: '#f6921e', fontWeight: '400', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
@@ -28,9 +28,9 @@ const SignUp = () => {
                         </p>
                     </div>
 
-                    <div className='w-lg-60 mx-auto bg-light p-3 ' style={{width:'60%'}}>
+                    <div className='w-lg-60 mx-auto bg-light p-3 '>
                         <Form
-                            name="basic"
+                            name="signup"
                             labelCol={{
                                 span: 6,
                             }}
@@ -59,7 +59,7 @@ const SignUp = () => {
                             {/* Nhập Username */}
                             <Form.Item
                                 label="Tên đăng nhập"
-                                name="username"
+                                name="usernameSignup"
                                 rules={[
                                     {
                                         required: true,
@@ -73,7 +73,7 @@ const SignUp = () => {
                             {/* Nhập Password */}
                             <Form.Item
                                 label="Mật khẩu"
-                                name="password"
+                                name="passwordSignup"
                                 rules={[
                                     {
                                         required: true,
@@ -114,10 +114,11 @@ const SignUp = () => {
 
 
                             <Form.Item
-                            // wrapperCol={{
-                            //     offset: 8,
-                            //     span: 16,
-                            // }}
+                                wrapperCol={{
+                                    offset: 8,
+                                    span: 16,
+                                }}
+                                style={{ display: 'flex', justifyContent: 'center' }}
                             >
                                 <Button type="primary" htmlType="submit">
                                     Đăng ký

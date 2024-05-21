@@ -3,7 +3,7 @@ import NavBar from '../components/header/navbar';
 import FooterComponent from '../components/footer';
 import { Outlet } from 'react-router-dom';
 
-
+import bg from '../assets/img/background.jpg'
 
 const { Header, Content, Footer } = Layout;
 
@@ -21,7 +21,8 @@ const PageLayout = () => {
                     width: '100%',
                     display: 'flex',
                     alignItems: 'center',
-                    backgroundColor: 'white'
+                    backgroundColor: 'white',
+                    padding: '0 10rem',
                 }}
             >
 
@@ -34,7 +35,8 @@ const PageLayout = () => {
             <Content
                 style={{
                     padding: '0 48px',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    backgroundImage: `url(${bg})`,
                 }}
             >
 

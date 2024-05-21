@@ -1,0 +1,41 @@
+/* Navbar.css */
+
+/* Style adjustments for the navbar */
+.navbar {
+    padding: 1rem;
+}
+
+/* Ensure the navbar brand logo and text are aligned */
+.navbar-brand img {
+    margin-right: 0.5rem;
+}
+
+/* Adjust dropdown menu items */
+.navbar-nav .dropdown-menu {
+    /* background-color: #f8f9fa; */
+    /* Matches the light navbar background */
+}
+
+.navbar-nav .nav-link {
+    color: #000;
+    /* Ensure text color is visible */
+}
+
+/* Button styles */
+.navbar-nav .btn-outline-primary {
+    margin-right: 0.5rem;
+}
+
+.navbar-nav .btn-primary {
+    margin-left: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+
+    .navbar-nav .nav-link,
+    .navbar-nav .btn {
+        margin: 0.5rem 0;
+        /* Add margin for better spacing on small screens */
+    }
+}
