@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 // Antd
 import { Modal } from 'antd';
+import { Dropdown, Space } from 'antd';
+import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 
 // CSS
 import '../../scss/navbar.css';
@@ -23,6 +25,43 @@ const TextHeader = {
     textDecoration: 'none',
     height: 'fit-content',
 }
+
+
+// Items Dropdown Ant Design
+const items = [
+    {
+        key: '1',
+        label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+                1st menu item
+            </a>
+        ),
+    },
+    {
+        key: '2',
+        label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+                2nd menu item (disabled)
+            </a>
+        ),
+        icon: <SmileOutlined />,
+        disabled: true,
+    },
+    {
+        key: '3',
+        label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+                3rd menu item (disabled)
+            </a>
+        ),
+        disabled: true,
+    },
+    {
+        key: '4',
+        danger: true,
+        label: 'a danger item',
+    },
+];
 
 const NavBar = () => {
 
@@ -100,9 +139,9 @@ const NavBar = () => {
                         <div>
                             <Nav className="justify-content-center" activeKey="/home">
                                 <Nav.Link style={TextHeader} href="/">Trang chủ</Nav.Link>
-                                <NavDropdown style={TextHeader} title="Dịch vụ" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="#">
-                                        Action
+                                {/* <NavDropdown href='/service' style={TextHeader} title="Dịch vụ" id="basic-nav-dropdown">
+                                    <NavDropdown.Item href="/service">
+                                        Serivce
                                     </NavDropdown.Item>
                                     <NavDropdown.Item href="#">
                                         Another action
@@ -110,13 +149,27 @@ const NavBar = () => {
                                     <NavDropdown.Item href="#">
                                         Something
                                     </NavDropdown.Item>
-                                </NavDropdown>
-                                <Nav.Link href='#price' style={TextHeader} eventKey="link-2">Bảng giá</Nav.Link>
-                                <Nav.Link href='appoinment' style={TextHeader} eventKey="link-3">Đặt hẹn</Nav.Link>
+                                </NavDropdown> */}
+                                <Nav.Link href='/service' style={TextHeader} eventKey='link-2'>
+                                    <Dropdown
+                                        menu={{
+                                            items,
+                                        }}
+                                    >
+                                        {/* <a onClick={(e) => e.preventDefault()}> */}
+                                            <Space style={{color:'black'}}>
+                                                Dịch vụ
+                                                <DownOutlined />
+                                            </Space>
+                                        {/* </a> */}
+                                    </Dropdown>
+                                </Nav.Link>
+                                <Nav.Link href='#price' style={TextHeader} eventKey="link-3">Bảng giá</Nav.Link>
+                                <Nav.Link href='appoinment' style={TextHeader} eventKey="link-4">Đặt hẹn</Nav.Link>
                             </Nav>
                         </div>
 
-                        {/* Btn */}
+                        {/* Button Sign IN Sign UP */}
                         <div>
                             <Nav className="justify-content-center">
 
