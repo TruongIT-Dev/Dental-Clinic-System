@@ -14,8 +14,8 @@ const onFinishFailed = (errorInfo) => {
 
 const SignUp = () => {
 
-    const dispatch = useDispatch();
-    const [form] = Form.useForm();
+    // const dispatch = useDispatch();
+    // const [form] = Form.useForm();
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -28,8 +28,8 @@ const SignUp = () => {
         setIsLoading(false);
         
         if (res) {
+            navigate('/');
             message.success("Register successfully");
-            navigate('/dich-vu');
         } else {
             navigate('/error');
         }
@@ -91,7 +91,7 @@ const SignUp = () => {
                         </p>
                     </div>
 
-                    <div className='w-lg-60 mx-auto bg-light p-3 '>
+                    <div className='w-lg-60 mx-auto bg-light p-3'>
                         <Form
                             name="signup"
                             labelCol={{
@@ -113,13 +113,6 @@ const SignUp = () => {
                             autoComplete="off"
 
                         >
-                            {/* <Form.Item>
-                                <Radio.Group style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                                    <Radio value="male"> Anh </Radio>
-                                    <Radio value="female"> Chị </Radio>
-                                </Radio.Group>
-                            </Form.Item> */}
-
                             {/* Nhập Email */}
                             <Form.Item
                                 label="Email"

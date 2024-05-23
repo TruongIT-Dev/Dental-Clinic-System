@@ -150,7 +150,7 @@ const NavBar = () => {
                                         Something
                                     </NavDropdown.Item>
                                 </NavDropdown> */}
-                                <Nav.Link href='/dich-vu' style={TextHeader} eventKey='link-2'>
+                                <Nav.Link href='/loai-hinh-dich-vu' style={TextHeader} eventKey='link-2'>
                                     <Dropdown
                                         menu={{
                                             items,
@@ -173,10 +173,12 @@ const NavBar = () => {
                         <div>
                             <Nav className="justify-content-center">
 
+
                                 {/* Sign In */}
-                                <Button onClick={showSignInModal} type='primary' variant="outline-primary">
-                                    Sign In
-                                    <Modal
+                                <Nav.Link href='/dang-nhap' style={TextHeader}>
+                                    <Button onClick={showSignInModal} type='primary' variant="outline-primary">
+                                        Sign In
+                                        {/* <Modal
                                         open={signInOpen}
                                         onOk={handleSignInOk}
                                         onCancel={handleSignInCancel}
@@ -184,13 +186,15 @@ const NavBar = () => {
                                         footer={[]}
                                     >
                                         <SignIn />
-                                    </Modal>
-                                </Button>
+                                    </Modal> */}
+                                    </Button>
+                                </Nav.Link>
 
                                 {/* Sign Up */}
-                                <Button onClick={showSignUpModal} type='primary' variant="primary">
-                                    Sign Up
-                                    <Modal
+                                <Nav.Link href='/dang-ky' style={TextHeader}>
+                                    <Button onClick={showSignUpModal} type='primary' variant="primary">
+                                        Sign Up
+                                        {/* <Modal
                                         open={signUpOpen}
                                         onOk={handleSignUpOk}
                                         onCancel={handleSignUpCancel}
@@ -198,8 +202,9 @@ const NavBar = () => {
                                         footer={[]}
                                     >
                                         <SignUp />
-                                    </Modal>
-                                </Button>
+                                    </Modal> */}
+                                    </Button>
+                                </Nav.Link>
 
                             </Nav>
                         </div>

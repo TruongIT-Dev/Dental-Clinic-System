@@ -11,7 +11,7 @@ import dieuTriTuy from '../../assets/img/catergories/dieu-tri-tuy.png';
 import '../../scss/catergory.css';
 
 
-const Service = () => {
+const Catergory = () => {
     return (
         <>
             <div id="service-content" className='w-100 p-3'>
@@ -22,7 +22,7 @@ const Service = () => {
                             {/* Catergory 1 */}
                             <article className="col-md-4 p-2 col-sm-4 col-6">
                                 <div className="d-flex card shadow mb-1 br-0 transition-3d-hover">
-                                    <a className="transition-3d-hover text-decoration-none" title="Bọc răng sứ" href="#">
+                                    <a className="transition-3d-hover text-decoration-none" title="Bọc răng sứ" href="/dich-vu">
                                         <div className="justify-content-center d-flex">
                                             <img className="img-fluid" width='232' height='150' src={bocRangSu} />
                                         </div>
@@ -105,4 +105,4 @@ const Service = () => {
     )
 }
 
-export default Service
+export default Catergory
