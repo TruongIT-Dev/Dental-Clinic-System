@@ -1,16 +1,79 @@
+import { useState } from 'react';
+import { Button, Form, Input, Radio, message, notification } from 'antd';
 
-import { Button, Form, Input, Radio } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { doLoginAction, doLogoutAction } from '../../redux/account/accountSlice';
+import { GetSignUp } from '../../apis/api';
 
 
-const onFinish = (values) => {
-    console.log('Success:', values);
-};
 const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
 };
-
+//  hi
 
 const SignUp = () => {
+
+    const dispatch = useDispatch();
+    const [form] = Form.useForm();
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const onFinish = async (values) => {
+        const { email, full_name, password, phone_number } = values;
+        console.log('input values: ', 'email:', email, 'fullname:', full_name, 'password:', password, 'phone:', phone_number);
+        setIsLoading(true);
+        let res = await GetSignUp(email, full_name, password, phone_number);
+        console.log('res api signup', res);
+        setIsLoading(false);
+        
+        if (res) {
+            message.success("Register successfully");
+            navigate('/dich-vu');
+        } else {
+            navigate('/error');
+        }
+
+        // notification.error({
+        //     message: 'Register Error',
+        //     description: res.data && Array.isArray(message) ? res.message[0] : res.message,
+        //     duration: 5
+        // })
+
+        // if (res?.data) {
+        //     let accessToken = res.data?.accessToken;
+        //     localStorage.setItem('access_token', accessToken);
+        //     dispatch(doLoginAction({ accessToken: accessToken }));
+        //     message.success("Register successfully");
+        //     navigate("/dich-vu");
+        //     return;
+        // }
+        // notification.error({
+        //     message: 'Login Error',
+        //     description: res.data && Array.isArray(message) ? res.message[0] : res.message,
+        //     duration: 5
+        // })
+    };
+
+
+    // // Checking Data before send to server
+    // const [formData, setFormData] = useState({
+    //     fullname: '',
+    //     email: '',
+    //     password: '',
+    //     phone:''
+    // });
+
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFormData({ ...formData, [name]: value });
+    // };
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log(formData); // This will log the form data when the form is submitted
+    //     // Now you can proceed with sending formData to the server or perform any other action
+    // };
 
     return (
         <>
@@ -48,18 +111,33 @@ const SignUp = () => {
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
                             autoComplete="off"
+
                         >
-                            <Form.Item>
+                            {/* <Form.Item>
                                 <Radio.Group style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                     <Radio value="male"> Anh </Radio>
                                     <Radio value="female"> Chị </Radio>
                                 </Radio.Group>
+                            </Form.Item> */}
+
+                            {/* Nhập Email */}
+                            <Form.Item
+                                label="Email"
+                                name="email"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Yêu cầu nhập email!',
+                                    },
+                                ]}
+                            >
+                                <Input />
                             </Form.Item>
 
                             {/* Nhập Username */}
                             <Form.Item
                                 label="Tên đăng nhập"
-                                name="usernameSignup"
+                                name="full_name"
                                 rules={[
                                     {
                                         required: true,
@@ -73,7 +151,7 @@ const SignUp = () => {
                             {/* Nhập Password */}
                             <Form.Item
                                 label="Mật khẩu"
-                                name="passwordSignup"
+                                name="password"
                                 rules={[
                                     {
                                         required: true,
@@ -84,24 +162,11 @@ const SignUp = () => {
                                 <Input.Password />
                             </Form.Item>
 
-                            {/* Nhập Email */}
-                            <Form.Item
-                                label="Email"
-                                name="email"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Yêu cầu nhập email!',
-                                    },
-                                ]}
-                            >
-                                <Input.Password />
-                            </Form.Item>
 
                             {/* Nhập Số Điện Thoại */}
                             <Form.Item
                                 label="Số điện thoại"
-                                name="phone"
+                                name="phone_number"
                                 rules={[
                                     {
                                         required: true,
@@ -120,7 +185,9 @@ const SignUp = () => {
                                 }}
                                 style={{ display: 'flex', justifyContent: 'center' }}
                             >
-                                <Button type="primary" htmlType="submit">
+                                <Button
+
+                                    type="primary" htmlType="submit" loading={isLoading} >
                                     Đăng ký
                                 </Button>
                             </Form.Item>

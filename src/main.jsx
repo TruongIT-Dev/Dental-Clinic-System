@@ -10,12 +10,18 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 
 // Libs
 import { BrowserRouter } from "react-router-dom";
+import { persistor, store } from './redux/store.jsx'
+import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      {/* The rest of your app goes here */}
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>,
+      </PersistGate>
+    </Provider>,
   </React.StrictMode>,
 )

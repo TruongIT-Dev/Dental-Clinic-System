@@ -150,22 +150,22 @@ const NavBar = () => {
                                         Something
                                     </NavDropdown.Item>
                                 </NavDropdown> */}
-                                <Nav.Link href='/service' style={TextHeader} eventKey='link-2'>
+                                <Nav.Link href='/dich-vu' style={TextHeader} eventKey='link-2'>
                                     <Dropdown
                                         menu={{
                                             items,
                                         }}
                                     >
                                         {/* <a onClick={(e) => e.preventDefault()}> */}
-                                            <Space style={{color:'black'}}>
-                                                Dịch vụ
-                                                <DownOutlined />
-                                            </Space>
+                                        <Space style={{ color: 'black' }}>
+                                            Dịch vụ
+                                            <DownOutlined />
+                                        </Space>
                                         {/* </a> */}
                                     </Dropdown>
                                 </Nav.Link>
-                                <Nav.Link href='#price' style={TextHeader} eventKey="link-3">Bảng giá</Nav.Link>
-                                <Nav.Link href='appoinment' style={TextHeader} eventKey="link-4">Đặt hẹn</Nav.Link>
+                                <Nav.Link href='#gia' style={TextHeader} eventKey="link-3">Bảng giá</Nav.Link>
+                                <Nav.Link href='/dat-lich-hen' style={TextHeader} eventKey="link-4">Đặt hẹn</Nav.Link>
                             </Nav>
                         </div>
 

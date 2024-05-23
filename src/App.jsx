@@ -6,6 +6,7 @@ import Service from './pages/service'
 import { Route, Routes } from 'react-router-dom'
 import PageLayout from './pages'
 import Appoinment from './pages/appoinment'
+import Error from './pages/error'
 
 function App() {
 
@@ -13,14 +14,15 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<PageLayout />} >
-          
-          <Route index element={<Home />} />
 
-          <Route path='/service' element={<Service />} />
-          <Route path='#price' />
-          <Route path='/appoinment' element={<Appoinment />} />
-          
-          
+          <Route index path='/' element={<Home />} />
+
+          <Route path='/dich-vu' element={<Service />} />
+          <Route path='#gia' />
+          <Route path='/dat-lich-hen' element={<Appoinment />} />
+
+          <Route path='/error' element={<Error />} />
+
         </Route>
       </Routes>
     </>
