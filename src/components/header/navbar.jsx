@@ -1,15 +1,16 @@
-import { useState } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { doLogoutAction } from '../../redux/account/accountSlice';
+
 // Antd
-import { Modal } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 
 // CSS
 import '../../scss/navbar.css';
-import SignIn from '../../pages/signin';
-import SignUp from '../../pages/signup';
+import { useState } from 'react';
 
 
 const BrandHeader = {
@@ -26,8 +27,7 @@ const TextHeader = {
     height: 'fit-content',
 }
 
-
-// Items Dropdown Ant Design
+// Bảng Drop Down cho phần Dịch Vụ
 const items = [
     {
         key: '1',
@@ -63,62 +63,39 @@ const items = [
     },
 ];
 
+// Lấy thông tin người dùng từ LocalStorage
+const GetUser = () => {
+    let user = localStorage.getItem('user');
+    if (user) {
+        user = JSON.parse(user);
+    } else {
+        user = null;
+    }
+    return user;
+}
+
 const NavBar = () => {
+    // ********** USESTATE ***********
+    const [user, setUser] = useState(GetUser());
 
-    // Sign In
-    const [signInOpen, setSignInOpen] = useState(false);
-    const [confirmSignInLoading, setConfirmSignInLoading] = useState(false);
+    const account = useSelector(state => state?.account);
+    const userSelector = useSelector(state => state?.account?.user?.user);
+    const isAuthenticated = account.isAuthenticated;
+    const dispatch = useDispatch();
 
-    const showSignInModal = () => {
-        setSignInOpen(true);
-    };
+    console.log('account', account)
+    console.log('userSelector', userSelector)
 
-    const handleSignInOk = () => {
-        setConfirmSignInLoading(true);
-        setTimeout(() => {
-            setSignInOpen(false);
-            setConfirmSignInLoading(false);
-        }, 1000);
-    };
-    const handleSignInCancel = () => {
-        console.log('Clicked cancel button');
-        setConfirmSignInLoading(true);
-        setTimeout(() => {
-            setSignInOpen(false);
-            setConfirmSignInLoading(false);
-        }, 1000);
+    // Function xử lý thoát đăng nhập
+    const handleLogOut = () => {
+        console.log('Button Logout clicked')
+        localStorage.removeItem('access_token');
+        dispatch(doLogoutAction());
+        setUser(null);
+    }
 
-        // Not Running? Why?
-        // setSignInOpen(false);
-    };
-
-    // Sign Up
-    const [signUpOpen, setSignUpOpen] = useState(false);
-    const [confirmSignUpLoading, setConfirmSignUpLoading] = useState(false);
-
-    const showSignUpModal = () => {
-        setSignUpOpen(true);
-    };
-
-    const handleSignUpOk = () => {
-        // setModalText('The modal will be closed after two seconds');
-        setConfirmSignUpLoading(true);
-        setTimeout(() => {
-            setSignUpOpen(false);
-            setConfirmSignUpLoading(false);
-        }, 1000);
-    };
-    const handleSignUpCancel = () => {
-        console.log('Clicked cancel button');
-        setConfirmSignUpLoading(true);
-        setTimeout(() => {
-            setSignUpOpen(false);
-            setConfirmSignUpLoading(false);
-        }, 1000);
-    };
     return (
         <>
-
             <div style={{ width: '100%', maxWidth: '300' }}>
                 <Navbar>
                     <Container>
@@ -139,24 +116,12 @@ const NavBar = () => {
                         <div>
                             <Nav className="justify-content-center" activeKey="/home">
                                 <Nav.Link style={TextHeader} href="/">Trang chủ</Nav.Link>
-                                {/* <NavDropdown href='/service' style={TextHeader} title="Dịch vụ" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="/service">
-                                        Serivce
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="#">
-                                        Another action
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="#">
-                                        Something
-                                    </NavDropdown.Item>
-                                </NavDropdown> */}
                                 <Nav.Link href='/loai-hinh-dich-vu' style={TextHeader} eventKey='link-2'>
                                     <Dropdown
                                         menu={{
                                             items,
                                         }}
                                     >
-                                        {/* <a onClick={(e) => e.preventDefault()}> */}
                                         <Space style={{ color: 'black' }}>
                                             Dịch vụ
                                             <DownOutlined />
@@ -173,39 +138,41 @@ const NavBar = () => {
                         <div>
                             <Nav className="justify-content-center">
 
+                                {isAuthenticated === true ? (
+                                    <li>
+                                        <span>Hello, {userSelector.full_name}</span>
+                                        <Button onClick={handleLogOut} type="primary">Logout</Button>
+                                    </li>
+                                ) : (
+                                    <>
+                                        {/* {account.user.accessToken && (
+                                            <>
+                                                <Nav.Link href='/dang-nhap' style={TextHeader}>
+                                                    <Button type='primary' variant="outline-primary">
+                                                        Đăng nhập
+                                                    </Button>
+                                                </Nav.Link>
 
-                                {/* Sign In */}
-                                <Nav.Link href='/dang-nhap' style={TextHeader}>
-                                    <Button onClick={showSignInModal} type='primary' variant="outline-primary">
-                                        Sign In
-                                        {/* <Modal
-                                        open={signInOpen}
-                                        onOk={handleSignInOk}
-                                        onCancel={handleSignInCancel}
-                                        confirmLoading={confirmSignInLoading}
-                                        footer={[]}
-                                    >
-                                        <SignIn />
-                                    </Modal> */}
-                                    </Button>
-                                </Nav.Link>
+                                                <Nav.Link href='/dang-ky' style={TextHeader}>
+                                                    <Button type='primary' variant="primary">
+                                                        Đăng ký
+                                                    </Button>
+                                                </Nav.Link>
+                                            </>
+                                        )} */}
+                                        <Nav.Link href='/dang-nhap' style={TextHeader}>
+                                            <Button type='primary' variant="outline-primary">
+                                                Đăng nhập
+                                            </Button>
+                                        </Nav.Link>
 
-                                {/* Sign Up */}
-                                <Nav.Link href='/dang-ky' style={TextHeader}>
-                                    <Button onClick={showSignUpModal} type='primary' variant="primary">
-                                        Sign Up
-                                        {/* <Modal
-                                        open={signUpOpen}
-                                        onOk={handleSignUpOk}
-                                        onCancel={handleSignUpCancel}
-                                        confirmLoading={confirmSignUpLoading}
-                                        footer={[]}
-                                    >
-                                        <SignUp />
-                                    </Modal> */}
-                                    </Button>
-                                </Nav.Link>
-
+                                        <Nav.Link href='/dang-ky' style={TextHeader}>
+                                            <Button type='primary' variant="primary">
+                                                Đăng ký
+                                            </Button>
+                                        </Nav.Link>
+                                    </>
+                                )}
                             </Nav>
                         </div>
                     </Container>

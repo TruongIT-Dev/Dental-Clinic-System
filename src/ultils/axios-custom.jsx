@@ -9,29 +9,28 @@ const instance = axios.create({
     // withCredentials: true,
 });
 
+// CÁI NÀY CÓ CẦN THIẾT KO. VÌ NÓ TOÀN CHẶN API CỦA TÔI
 // instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
 
-// Add a request interceptor
+// Thêm một bộ đón chặn request
 axios.interceptors.request.use(function (config) {
-    // Do something before request is sent
+    // Làm gì đó trước khi request dược gửi đi
     return config;
 }, function (error) {
-    // Do something with request error
+    // Làm gì đó với lỗi request
     return Promise.reject(error);
 });
 
-// Add a response interceptor
+// Thêm một bộ đón chặn response
 axios.interceptors.response.use(function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    // return response && response.data ? response.data : response;
-    return response
+    // Bất kì mã trạng thái nào nằm trong tầm 2xx đều khiến hàm này được trigger
+    // Làm gì đó với dữ liệu response
+    return response;
 }, function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    // return error?.response?.data ?? Promise.reject(error);
+    // Bất kì mã trạng thái nào lọt ra ngoài tầm 2xx đều khiến hàm này được trigger\
+    // Làm gì đó với lỗi response
     return Promise.reject(error);
-})
+});
 
 
 export default instance;
