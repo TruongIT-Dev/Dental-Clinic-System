@@ -44,7 +44,7 @@ const PageLayout = () => {
                     style={{
                         padding: 24,
                         minHeight: 380,
-                        margin: '5rem 5rem',
+                        margin: '5rem 4rem',
                     }}
                 >
                     <Outlet></Outlet>

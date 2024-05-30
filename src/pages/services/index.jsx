@@ -1,4 +1,4 @@
-const Service = () => {
+const ServiceDetail = () => {
     return (
         <>
             Service nè
@@ -6,4 +6,4 @@ const Service = () => {
     )
 }
 
-export default Service
+export default ServiceDetail

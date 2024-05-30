@@ -78,8 +78,13 @@ const NavBar = () => {
     // ********** USESTATE ***********
     const [user, setUser] = useState(GetUser());
 
+    // set biến 'account' chứa all
     const account = useSelector(state => state?.account);
+
+    // set biến 'userSelector' chứa thông tin đã đăng nhập
     const userSelector = useSelector(state => state?.account?.user?.user);
+
+    // check biến 'account' đã authenticated là TRUE chưa.
     const isAuthenticated = account.isAuthenticated;
     const dispatch = useDispatch();
 
@@ -131,6 +136,8 @@ const NavBar = () => {
                                 </Nav.Link>
                                 <Nav.Link href='#gia' style={TextHeader} eventKey="link-3">Bảng giá</Nav.Link>
                                 <Nav.Link href='/dat-lich-hen' style={TextHeader} eventKey="link-4">Đặt hẹn</Nav.Link>
+                                <Nav.Link href='/lich-lam-viec' style={TextHeader} eventKey="link-5">Lịch làm việc</Nav.Link>
+                                <Nav.Link href='/lien-he' style={TextHeader} eventKey="link-6">Liên hệ</Nav.Link>
                             </Nav>
                         </div>
 
@@ -145,21 +152,6 @@ const NavBar = () => {
                                     </li>
                                 ) : (
                                     <>
-                                        {/* {account.user.accessToken && (
-                                            <>
-                                                <Nav.Link href='/dang-nhap' style={TextHeader}>
-                                                    <Button type='primary' variant="outline-primary">
-                                                        Đăng nhập
-                                                    </Button>
-                                                </Nav.Link>
-
-                                                <Nav.Link href='/dang-ky' style={TextHeader}>
-                                                    <Button type='primary' variant="primary">
-                                                        Đăng ký
-                                                    </Button>
-                                                </Nav.Link>
-                                            </>
-                                        )} */}
                                         <Nav.Link href='/dang-nhap' style={TextHeader}>
                                             <Button type='primary' variant="outline-primary">
                                                 Đăng nhập

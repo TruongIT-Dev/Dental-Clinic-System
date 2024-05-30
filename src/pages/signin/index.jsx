@@ -24,10 +24,14 @@ const SignIn = () => {
         const { email, password } = (values);
         // console.log('email: ', email, 'mật khẩu: ', password);
         try {
+            // lấy API
             let res = await GetLogin(email, password);
             console.log('Response Login: ', res);
+            // set biến token
             accessToken = res.data.access_token;
+            // lưu vào LocalStorage
             localStorage.setItem('access_token', accessToken);
+            // Goi Redux
             dispatch(doLoginAction({ user: res.data.user_info }));
 
             if (res.status === 200) {
