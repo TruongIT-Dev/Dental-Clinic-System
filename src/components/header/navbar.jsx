@@ -6,7 +6,7 @@ import { doLogoutAction } from '../../redux/account/accountSlice';
 
 // Antd
 import { Dropdown, Space } from 'antd';
-import { DownOutlined, SmileOutlined } from '@ant-design/icons';
+import { DownOutlined } from '@ant-design/icons';
 
 // CSS
 import '../../scss/navbar.css';
@@ -28,38 +28,73 @@ const TextHeader = {
 }
 
 // Bảng Drop Down cho phần Dịch Vụ
+const LinkDropDownStyle = {
+    textDecoration: 'none',
+    color: '#30374b',
+    marginBottom: '0.5rem',
+    fontSize: '16px',
+}
 const items = [
     {
         key: '1',
         label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                1st menu item
+            <a style={LinkDropDownStyle} href="#">
+              Bọc răng sứ
             </a>
         ),
     },
     {
         key: '2',
         label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                2nd menu item (disabled)
+            <a style={LinkDropDownStyle}  href="#">
+                Cấy ghép implant
             </a>
         ),
-        icon: <SmileOutlined />,
-        disabled: true,
     },
     {
         key: '3',
         label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-                3rd menu item (disabled)
+            <a style={LinkDropDownStyle}  href="#">
+                Niềng răng thẩm mỹ
             </a>
         ),
-        disabled: true,
+
     },
     {
         key: '4',
-        danger: true,
-        label: 'a danger item',
+        label: (
+            <a style={LinkDropDownStyle}  href="#">
+                Tẩy trắng răng
+            </a>
+        ),
+
+    },
+    {
+        key: '5',
+        label: (
+            <a style={LinkDropDownStyle}  href="#">
+                Nhổ răng khôn
+            </a>
+        ),
+
+    },
+    {
+        key: '6',
+        label: (
+            <a style={LinkDropDownStyle}  href="#">
+                Bệnh lý nha chu
+            </a>
+        ),
+
+    },
+    {
+        key: '7',
+        label: (
+            <a style={LinkDropDownStyle}  href="#">
+                Điều trị tủy
+            </a>
+        ),
+
     },
 ];
 
@@ -113,7 +148,7 @@ const NavBar = () => {
                                     height="50"
                                     className="d-inline-block"
                                 />{' '}
-                                Nha Khoa Sức Khỏe
+                                Nha Khoa Kim
                             </Navbar.Brand>
                         </div>
 
@@ -131,12 +166,11 @@ const NavBar = () => {
                                             Dịch vụ
                                             <DownOutlined />
                                         </Space>
-                                        {/* </a> */}
                                     </Dropdown>
                                 </Nav.Link>
-                                <Nav.Link href='#gia' style={TextHeader} eventKey="link-3">Bảng giá</Nav.Link>
-                                <Nav.Link href='/dat-lich-hen' style={TextHeader} eventKey="link-4">Đặt hẹn</Nav.Link>
-                                <Nav.Link href='/lich-lam-viec' style={TextHeader} eventKey="link-5">Lịch làm việc</Nav.Link>
+                                {/* <Nav.Link href='#gia' style={TextHeader} eventKey="link-3">Bảng giá</Nav.Link> */}
+                                <Nav.Link href='/lich-lam-viec' style={TextHeader} eventKey="link-4">Lịch làm việc</Nav.Link>
+                                <Nav.Link href='/dat-lich-hen' style={TextHeader} eventKey="link-5">Đặt hẹn</Nav.Link>
                                 <Nav.Link href='/lien-he' style={TextHeader} eventKey="link-6">Liên hệ</Nav.Link>
                             </Nav>
                         </div>

@@ -1,10 +1,10 @@
 import axios from '../ultils/axios-custom';
 
-export const GetSignUp = (full_name, email, password, phone_number) => {
+export const GetSignUp = (email, full_name, phone_number, password) => {
     return axios.post('/api/v1/users',
         {
-            full_name: full_name,
             email: email,
+            full_name: full_name,
             phone_number: phone_number,
             password: password,
         })

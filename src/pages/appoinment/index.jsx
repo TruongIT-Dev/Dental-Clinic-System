@@ -1,5 +1,5 @@
 
-import { Button, Form, Input, Radio } from 'antd';
+import { Button, Form, Input, Select, DatePicker } from 'antd';
 
 
 const onFinish = (values) => {
@@ -11,6 +11,7 @@ const onFinishFailed = (errorInfo) => {
 
 
 const Appoinment = () => {
+
 
     return (
         <>
@@ -29,7 +30,7 @@ const Appoinment = () => {
                     </div>
 
                     {/* Form Inout */}
-                    <div className='w-lg-60 mx-auto bg-light p-3 ' style={{maxWidth:'300', width:'50%'}}>
+                    <div className='w-lg-60 mx-auto bg-light p-3 ' style={{ maxWidth: '300', width: '50%' }}>
                         <Form
                             name="basic"
                             labelCol={{
@@ -39,7 +40,7 @@ const Appoinment = () => {
                                 span: 16,
                             }}
                             style={{
-                                maxWidth: 600,
+                                maxWidth: 450,
                                 marginTop: '1.5rem',
                                 width: '100%',
                                 display: 'inline-block',
@@ -51,42 +52,6 @@ const Appoinment = () => {
                             onFinishFailed={onFinishFailed}
                             autoComplete="off"
                         >
-                            {/* Nhập Username */}
-                            <Form.Item>
-                                <Radio.Group style={{ display: 'flex', justifyContent: 'flex-start', marginLeft:35 }}>
-                                    <Radio value="male"> Anh </Radio>
-                                    <Radio value="female"> Chị </Radio>
-                                </Radio.Group>
-                            </Form.Item>
-
-                            {/* Nhập Username */}
-                            <Form.Item
-                                label="Tên đăng nhập"
-                                name="username"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Yêu cầu nhập tên đăng nhập!',
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
-
-                            {/* Nhập Password */}
-                            <Form.Item
-                                label="Mật khẩu"
-                                name="password"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Yêu cầu nhập mật khẩu!',
-                                    },
-                                ]}
-                            >
-                                <Input.Password />
-                            </Form.Item>
-
                             {/* Nhập Email */}
                             <Form.Item
                                 label="Email"
@@ -98,7 +63,21 @@ const Appoinment = () => {
                                     },
                                 ]}
                             >
-                                <Input.Password />
+                                <Input />
+                            </Form.Item>
+
+                            {/* Nhập Username */}
+                            <Form.Item
+                                label="Họ và Tên"
+                                name="username"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Yêu cầu nhập tên đăng nhập!',
+                                    },
+                                ]}
+                            >
+                                <Input />
                             </Form.Item>
 
                             {/* Nhập Số Điện Thoại */}
@@ -112,19 +91,152 @@ const Appoinment = () => {
                                     },
                                 ]}
                             >
-                                <Input.Password />
+                                <Input />
+                            </Form.Item>
+
+                            {/* Chọn loại hình dịch vụ */}
+                            <Form.Item
+                                label="Loại dịch vụ"
+                                name="category"
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    showSearch
+                                    placeholder="Chọn dịch vụ"
+                                    optionFilterProp="children"
+                                    filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                    filterSort={(optionA, optionB) =>
+                                        (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                    }
+                                    options={[
+                                        {
+                                            value: '1',
+                                            label: 'Bọc răng sứ',
+                                        },
+                                        {
+                                            value: '2',
+                                            label: 'Cấy ghép implant',
+                                        },
+                                        {
+                                            value: '3',
+                                            label: 'Niềng răng thẩm mỹ',
+                                        },
+                                        {
+                                            value: '4',
+                                            label: 'Tẩy trắng răng',
+                                        },
+                                        {
+                                            value: '5',
+                                            label: 'Nhổ răng khôn',
+                                        },
+                                        {
+                                            value: '6',
+                                            label: 'Bệnh lý nha chu',
+                                        },
+                                        {
+                                            value: '7',
+                                            label: 'Điều trị tủy',
+                                        },
+                                    ]}
+                                />
+                            </Form.Item>
+
+                            {/* Chọn thời gian */}
+                            <Form.Item
+                                label="Chọn ngày"
+                                name="date"
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <DatePicker style={{ width: '100%' }} needConfirm />
+                            </Form.Item>
+
+                            {/* Chọn bác sĩ */}
+                            <Form.Item
+                                label="Chọn bác sĩ"
+                                name="doctor"
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    placeholder='chọn bác sĩ để khám'
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    options={[
+                                        {
+                                            value: 'doctorA',
+                                            label: 'doctorA',
+                                        },
+                                        {
+                                            value: 'doctorB',
+                                            label: 'doctorB',
+                                        },
+                                        {
+                                            value: 'doctorC',
+                                            label: 'doctorC',
+                                        },
+                                        {
+                                            value: 'doctorD',
+                                            label: 'doctorD',
+                                        },
+                                    ]}
+                                />
+                            </Form.Item>
+
+                            {/* Chọn thời gian */}
+                            <Form.Item
+                                label="Chọn thời gian"
+                                name="time"
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    placeholder='chọn thời gian khám'
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    options={[
+                                        {
+                                            value: '1',
+                                            label: '7h-9h15',
+                                        },
+                                        {
+                                            value: '2',
+                                            label: '9h30-11h45',
+                                        },
+                                        {
+                                            value: '3',
+                                            label: '12h30-14h45',
+                                        },
+                                        {
+                                            value: '4',
+                                            label: '15h-17h15',
+                                        },
+                                    ]}
+                                />
                             </Form.Item>
 
 
-                            <Form.Item
-                            // wrapperCol={{
-                            //     offset: 8,
-                            //     span: 16,
-                            // }}
-                            >
-                                <Button type="primary" htmlType="submit">
-                                    Đặt lịch hẹn
-                                </Button>
+                            <Form.Item>
+                                <div style={{display:'flex', justifyContent:'flex-end'}}>
+                                    <Button type="primary" htmlType="submit">
+                                        Đặt lịch hẹn
+                                    </Button>
+                                </div>
                             </Form.Item>
                         </Form>
                     </div>

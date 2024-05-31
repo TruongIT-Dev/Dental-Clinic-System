@@ -24,12 +24,12 @@ const SignUp = () => {
     };
 
     const onFinish = async (values) => {
-        const { full_name, email, password, phone_number } = values;
+        const { email, full_name, phone_number, password } = values;
         // console.log('input values: ', 'email:', email, 'fullname:', full_name, 'password:', password, 'phone:', phone_number);
 
         try {
             // Lấy API
-            let res = await GetSignUp(full_name, email, password, phone_number);
+            let res = await GetSignUp(email, full_name, phone_number, password);
             console.log('Response Sign Up:', res);
             // Nếu có dữ liệu BE trả về!
 
@@ -149,6 +149,16 @@ const SignUp = () => {
         return Promise.resolve();
     };
 
+    // Validate Nhập lại mật khẩu
+    const validateRePassword = (rule, value, callback) => {
+        const { getFieldValue } = form;
+
+        if (value && value !== getFieldValue('password')) {
+            callback('Mật khẩu không khớp!');
+        } else {
+            callback();
+        }
+    };
 
     // *********** JSX **************
     return (
@@ -205,6 +215,25 @@ const SignUp = () => {
                                         autoComplete="off"
 
                                     >
+                                        {/* Nhập Email */}
+                                        <Form.Item
+                                            label="Email"
+                                            name="email"
+                                            rules={[
+                                                {
+                                                    type: "email",
+                                                    message: "Dữ liệu nhập không chính xác"
+                                                },
+                                                {
+                                                    required: true,
+                                                    message: 'Yêu cầu nhập email!',
+                                                },
+                                            ]}
+                                            hasFeedback
+                                        >
+                                            <Input placeholder='nhập email' />
+                                        </Form.Item>
+
                                         {/* Nhập Username */}
                                         <Form.Item
                                             label="Họ và Tên"
@@ -223,23 +252,22 @@ const SignUp = () => {
                                             <Input placeholder='nhập tên đăng nhập' />
                                         </Form.Item>
 
-                                        {/* Nhập Email */}
+                                        {/* Nhập Số Điện Thoại */}
                                         <Form.Item
-                                            label="Email"
-                                            name="email"
+                                            label="Số điện thoại"
+                                            name="phone_number"
                                             rules={[
                                                 {
-                                                    type: "email",
-                                                    message: "Dữ liệu nhập không chính xác"
+                                                    required: true,
+                                                    message: 'Yêu cầu nhập số điện thoại!',
                                                 },
                                                 {
-                                                    required: true,
-                                                    message: 'Yêu cầu nhập email!',
+                                                    validator: validatePhoneNumber,
                                                 },
                                             ]}
                                             hasFeedback
                                         >
-                                            <Input placeholder='nhập email' />
+                                            <Input placeholder='nhập số điện thoại' />
                                         </Form.Item>
 
                                         {/* Nhập Password */}
@@ -260,24 +288,24 @@ const SignUp = () => {
                                             <Input.Password placeholder='nhập mật khẩu' />
                                         </Form.Item>
 
-
-                                        {/* Nhập Số Điện Thoại */}
+                                        {/* Nhập lại Password */}
                                         <Form.Item
-                                            label="Số điện thoại"
-                                            name="phone_number"
+                                            label="Nhập lại mật khẩu"
+                                            name="re-password"
                                             rules={[
                                                 {
                                                     required: true,
-                                                    message: 'Yêu cầu nhập số điện thoại!',
+                                                    message: 'Yêu cầu nhập mật khẩu!',
                                                 },
                                                 {
-                                                    validator: validatePhoneNumber,
+                                                    validator: validateRePassword,
                                                 },
                                             ]}
                                             hasFeedback
                                         >
-                                            <Input placeholder='nhập số điện thoại' />
+                                            <Input.Password placeholder='nhập mật khẩu' />
                                         </Form.Item>
+
 
                                         <Form.Item
                                             wrapperCol={{
