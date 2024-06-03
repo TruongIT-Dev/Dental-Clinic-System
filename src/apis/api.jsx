@@ -16,3 +16,8 @@ export const GetLogin = (email, password) => {
         password: password,
     })
 }
+
+// Category page
+export const DoViewCategory = () => {
+    return axios.get('/api/v1/service-categories');
+}
