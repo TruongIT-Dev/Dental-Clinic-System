@@ -10,7 +10,7 @@ const instance = axios.create({
 });
 
 // CÁI NÀY CÓ CẦN THIẾT KO. VÌ NÓ TOÀN CHẶN API CỦA TÔI
-// instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
+instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
 
 // Thêm một bộ đón chặn request
 axios.interceptors.request.use(function (config) {

@@ -39,7 +39,10 @@ const SignUp = () => {
                 navigate('/dang-nhap');
 
                 // Show a success message
-                notification.success("Đăng ký thành công")
+                notification.success({
+                    type: 'success',
+                    message: 'Đăng ký thành công',
+                })
             }
         } catch (error) {
             // Log the error for debugging

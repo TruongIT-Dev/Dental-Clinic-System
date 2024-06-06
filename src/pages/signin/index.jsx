@@ -29,16 +29,23 @@ const SignIn = () => {
             console.log('Response Login: ', res);
             // set biến token
             accessToken = res.data.access_token;
+            // console.log('token:', accessToken);
             // lưu vào LocalStorage
             localStorage.setItem('access_token', accessToken);
             // Goi Redux
-            dispatch(doLoginAction({ user: res.data.user_info }));
+            dispatch(doLoginAction({
+                // access_token: accessToken,
+                user: res.data
+            }));
 
             if (res.status === 200) {
                 // Navigate to the home page
                 navigate('/');
                 // Show a success message
-                notification.success("Đăng nhập thành công");
+                notification.success({
+                    type: 'success',
+                    message: 'Đăng nhập thành công',
+                })
             }
         } catch (error) {
             // Log the error for debugging

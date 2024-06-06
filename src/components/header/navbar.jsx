@@ -1,16 +1,14 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { doLogoutAction } from '../../redux/account/accountSlice';
 
-// Antd
-import { Dropdown, Space } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+
+// Components
+import CategoryDropdown from './CategoryDropdown';
+import UserProfileDropDown from './UserProfileDropDown';
 
 // CSS
 import '../../scss/navbar.css';
-import { useState } from 'react';
 
 
 const BrandHeader = {
@@ -25,114 +23,22 @@ const TextHeader = {
     color: 'black',
     textDecoration: 'none',
     height: 'fit-content',
-}
-
-// Bảng Drop Down cho phần Dịch Vụ
-const LinkDropDownStyle = {
-    textDecoration: 'none',
-    color: '#30374b',
-    marginBottom: '0.5rem',
-    fontSize: '16px',
-}
-const items = [
-    {
-        key: '1',
-        label: (
-            <a style={LinkDropDownStyle} href="#">
-              Bọc răng sứ
-            </a>
-        ),
-    },
-    {
-        key: '2',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Cấy ghép implant
-            </a>
-        ),
-    },
-    {
-        key: '3',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Niềng răng thẩm mỹ
-            </a>
-        ),
-
-    },
-    {
-        key: '4',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Tẩy trắng răng
-            </a>
-        ),
-
-    },
-    {
-        key: '5',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Nhổ răng khôn
-            </a>
-        ),
-
-    },
-    {
-        key: '6',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Bệnh lý nha chu
-            </a>
-        ),
-
-    },
-    {
-        key: '7',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Điều trị tủy
-            </a>
-        ),
-
-    },
-];
-
-// Lấy thông tin người dùng từ LocalStorage
-const GetUser = () => {
-    let user = localStorage.getItem('user');
-    if (user) {
-        user = JSON.parse(user);
-    } else {
-        user = null;
-    }
-    return user;
+    textTransform: 'capitalize',
 }
 
 const NavBar = () => {
     // ********** USESTATE ***********
-    const [user, setUser] = useState(GetUser());
 
     // set biến 'account' chứa all
     const account = useSelector(state => state?.account);
 
     // set biến 'userSelector' chứa thông tin đã đăng nhập
-    const userSelector = useSelector(state => state?.account?.user?.user);
-
-    // check biến 'account' đã authenticated là TRUE chưa.
+    // const userSelector = useSelector(state => state?.account?.user?.user);
+    const userSelector = useSelector(state => state?.account?.user?.user?.user_info);
+    // // check biến 'account' đã authenticated là TRUE chưa.
     const isAuthenticated = account.isAuthenticated;
-    const dispatch = useDispatch();
 
-    console.log('account', account)
-    console.log('userSelector', userSelector)
-
-    // Function xử lý thoát đăng nhập
-    const handleLogOut = () => {
-        console.log('Button Logout clicked')
-        localStorage.removeItem('access_token');
-        dispatch(doLogoutAction());
-        setUser(null);
-    }
+    // console.log('User info: ' ,userSelector);
 
     return (
         <>
@@ -148,7 +54,7 @@ const NavBar = () => {
                                     height="50"
                                     className="d-inline-block"
                                 />{' '}
-                                Nha Khoa Kim
+                                Nha Khoa Sức Khỏe
                             </Navbar.Brand>
                         </div>
 
@@ -157,16 +63,7 @@ const NavBar = () => {
                             <Nav className="justify-content-center" activeKey="/home">
                                 <Nav.Link style={TextHeader} href="/">Trang chủ</Nav.Link>
                                 <Nav.Link href='/loai-hinh-dich-vu' style={TextHeader} eventKey='link-2'>
-                                    <Dropdown
-                                        menu={{
-                                            items,
-                                        }}
-                                    >
-                                        <Space style={{ color: 'black' }}>
-                                            Dịch vụ
-                                            <DownOutlined />
-                                        </Space>
-                                    </Dropdown>
+                                    <CategoryDropdown />
                                 </Nav.Link>
                                 {/* <Nav.Link href='#gia' style={TextHeader} eventKey="link-3">Bảng giá</Nav.Link> */}
                                 <Nav.Link href='/lich-lam-viec' style={TextHeader} eventKey="link-4">Lịch làm việc</Nav.Link>
@@ -180,10 +77,7 @@ const NavBar = () => {
                             <Nav className="justify-content-center">
 
                                 {isAuthenticated === true ? (
-                                    <li>
-                                        <span>Hello, {userSelector.full_name}</span>
-                                        <Button onClick={handleLogOut} type="primary">Logout</Button>
-                                    </li>
+                                    <UserProfileDropDown user={userSelector} />
                                 ) : (
                                     <>
                                         <Nav.Link href='/dang-nhap' style={TextHeader}>

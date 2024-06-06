@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import NavBar from '../components/header/navbar';
+import NavBar from '../components/header/Navbar';
 import FooterComponent from '../components/footer';
 import { Outlet } from 'react-router-dom';
 
@@ -22,7 +22,6 @@ const PageLayout = () => {
                     display: 'flex',
                     alignItems: 'center',
                     backgroundColor: 'white',
-                    padding: '0 10rem',
                 }}
             >
 
