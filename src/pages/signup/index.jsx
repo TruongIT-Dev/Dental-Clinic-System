@@ -6,11 +6,12 @@ import { GetSignUp } from '../../apis/api';
 
 
 const FormLayout = {
-    backgroundColor: '#fff',
-    borderRadius: '4px',
-    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .14)',
-    boxSizing: 'border - box',
-    overflow: 'hidden',
+    // backgroundColor: '#fff',
+    // borderRadius: '4px',
+    // boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .14)',
+    // boxSizing: 'border - box',
+    // overflow: 'hidden',
+    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
 }
 
 
@@ -166,7 +167,7 @@ const SignUp = () => {
     // *********** JSX **************
     return (
         <>
-            <div className="sign-in" style={{ width: '100%' }}>
+            <div className="sign-in" style={{ width: '90%', margin: '4rem auto' }}>
                 <div className="container space-1">
                     <div>
                         <Row>

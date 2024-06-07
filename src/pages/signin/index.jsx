@@ -7,11 +7,12 @@ import { GetLogin } from '../../apis/api';
 import { doLoginAction } from '../../redux/account/accountSlice';
 
 const FormLayout = {
-    backgroundColor: '#fff',
-    borderRadius: '4px',
-    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .14)',
-    boxSizing: 'border - box',
-    overflow: 'hidden',
+    // backgroundColor: '#fff',
+    // borderRadius: '4px',
+    // boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .14)',
+    // boxSizing: 'border - box',
+    // overflow: 'hidden',
+    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
 }
 
 const SignIn = () => {
@@ -106,7 +107,7 @@ const SignIn = () => {
     // *********** JSX **************
     return (
         <>
-            <div className="sign-in" style={{ width: '100%' }}>
+            <div className="sign-in" style={{ width: '90%', margin:'4rem auto'}}>
                 <div className="container space-1">
                     <div>
                         <Row>
@@ -194,7 +195,7 @@ const SignIn = () => {
                                                 <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
                                                     Đăng nhập
                                                 </Button>
-                                                Or <a href="">Đăng ký!</a>
+                                                Or <a href="/dang-ky">Đăng ký!</a>
                                             </Form.Item>
                                         </div>
                                     </Form>

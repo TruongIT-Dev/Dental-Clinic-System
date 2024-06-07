@@ -1,7 +1,6 @@
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-
+import { CarryOutOutlined } from '@ant-design/icons';
 
 // Components
 import CategoryDropdown from './CategoryDropdown';
@@ -9,6 +8,8 @@ import UserProfileDropDown from './UserProfileDropDown';
 
 // CSS
 import '../../scss/navbar.css';
+import { Space, Avatar } from 'antd';
+
 
 
 const BrandHeader = {
@@ -22,8 +23,12 @@ const TextHeader = {
     fontSize: '16px',
     color: 'black',
     textDecoration: 'none',
-    height: 'fit-content',
     textTransform: 'capitalize',
+    marginRight: '12px',
+}
+
+const ButtonHeader = {
+    padding: 0,
 }
 
 const NavBar = () => {
@@ -43,17 +48,10 @@ const NavBar = () => {
     return (
         <>
             <div style={{ width: '100%', maxWidth: '300' }}>
-                <Navbar>
+                <Navbar style={{ padding: '0' }}>
                     <Container>
                         <div>
                             <Navbar.Brand style={BrandHeader} href="/">
-                                <img
-                                    alt=""
-                                    src="/src/assets/img/logo.svg"
-                                    width="50"
-                                    height="50"
-                                    className="d-inline-block"
-                                />{' '}
                                 Nha Khoa Sức Khỏe
                             </Navbar.Brand>
                         </div>
@@ -65,9 +63,8 @@ const NavBar = () => {
                                 <Nav.Link href='/loai-hinh-dich-vu' style={TextHeader} eventKey='link-2'>
                                     <CategoryDropdown />
                                 </Nav.Link>
-                                {/* <Nav.Link href='#gia' style={TextHeader} eventKey="link-3">Bảng giá</Nav.Link> */}
                                 <Nav.Link href='/lich-lam-viec' style={TextHeader} eventKey="link-4">Lịch làm việc</Nav.Link>
-                                <Nav.Link href='/dat-lich-hen' style={TextHeader} eventKey="link-5">Đặt hẹn</Nav.Link>
+                                {/* <Nav.Link href='/dat-lich-hen' style={TextHeader} eventKey="link-5">Đặt hẹn</Nav.Link> */}
                                 <Nav.Link href='/lien-he' style={TextHeader} eventKey="link-6">Liên hệ</Nav.Link>
                             </Nav>
                         </div>
@@ -77,16 +74,35 @@ const NavBar = () => {
                             <Nav className="justify-content-center">
 
                                 {isAuthenticated === true ? (
-                                    <UserProfileDropDown user={userSelector} />
+                                    // <UserProfileDropDown user={userSelector} />
+                                    <>
+                                        <Nav.Link href='/dat-lich-hen' style={ButtonHeader}>
+                                            <Button className='btn btn-danger' type='button'>
+                                                <Space style={{ color: 'white', textTransform:'capitalize', cursor: 'pointer' }}>
+                                                    <Avatar
+                                                        style={{ color: '#fff' }}
+                                                        icon={<CarryOutOutlined />}
+                                                    />
+                                                    Đặt lịch hẹn
+                                                </Space>
+                                            </Button>
+                                        </Nav.Link>
+
+                                        <Nav.Link href='#user' style={ButtonHeader}>
+                                            <Button className='btn btn-primary' type='button'>
+                                                <UserProfileDropDown user={userSelector} />
+                                            </Button>
+                                        </Nav.Link>
+                                    </>
                                 ) : (
                                     <>
-                                        <Nav.Link href='/dang-nhap' style={TextHeader}>
+                                        <Nav.Link href='/dang-nhap' style={ButtonHeader}>
                                             <Button type='primary' variant="outline-primary">
                                                 Đăng nhập
                                             </Button>
                                         </Nav.Link>
 
-                                        <Nav.Link href='/dang-ky' style={TextHeader}>
+                                        <Nav.Link href='/dang-ky' style={ButtonHeader}>
                                             <Button type='primary' variant="primary">
                                                 Đăng ký
                                             </Button>

@@ -8,7 +8,6 @@ import { DownOutlined, UserOutlined } from '@ant-design/icons';
 
 const LinkDropDownStyle = {
     textDecoration: 'none',
-    color: '#30374b',
     marginBottom: '0.5rem',
     fontSize: '16px',
 }
@@ -71,11 +70,9 @@ const UserProfileDropDown = ({ user }) => {
                     cursor: 'pointer',
                 }}
             >
-                <Space style={{ color: 'black', cursor: 'pointer' }}>
+                <Space style={{ color: 'white', cursor: 'pointer' }}>
                     <Avatar
-                        style={{
-                            backgroundColor: '#87d068',
-                        }}
+                        style={{color:'white'}}
                         icon={<UserOutlined />}
                     />
                     {user.full_name}

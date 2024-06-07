@@ -38,10 +38,10 @@ const Home = () => {
                                     <p className="lead">Nha Khoa Sức Khỏe - Hệ thống nha khoa uy tín Việt Nam với hơn 30 phòng khám trải dài khắp 6 tỉnh thành trên toàn quốc.</p>
                                     <div className="name">
                                         <p>
-                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a href="https://nhakhoakim.com/tieu-chuan-chat-luong" title="tiêu chuẩn chất lượng">Chứng nhận chất lượng ISO 9001:2015 Vương Quốc Anh.</a><br></br>
-                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a href="https://nhakhoakim.com/nha-khoa-kim-thang-hang-top-50-nha-khoa-tot-nhat-the-gioi-tren-bang-xep-hang-gcr.html" title="Đạt chứng nhận GCR Hoa Kỳ">Đạt chứng nhận GCR Hoa Kỳ.</a><br></br>
-                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a href="https://nhakhoakim.com/healthcare-ecosystem/nha-khoa-kim-cung-uc-singapore-an-do-china-duoc-bao-cao-dien-hinh-tac-dong-chau-a-2021" title="Quỹ Đầu Tư Chính Phủ Singapore">Được chính phủ Singapore đầu tư tài chính.</a><br></br>
-                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a href="https://nhakhoakim.com/nha-khoa-kim-tu-hao-la-doi-tac-toan-cau-cua-dai-hoc-harvard.html" title="Đối tác toàn cầu của Đại học Harvard">Đối tác toàn cầu của đại học Harvard.</a>
+                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="https://nhakhoakim.com/tieu-chuan-chat-luong" title="tiêu chuẩn chất lượng">Chứng nhận chất lượng ISO 9001:2015 Vương Quốc Anh.</a><br></br>
+                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="https://nhakhoakim.com/nha-khoa-kim-thang-hang-top-50-nha-khoa-tot-nhat-the-gioi-tren-bang-xep-hang-gcr.html" title="Đạt chứng nhận GCR Hoa Kỳ">Đạt chứng nhận GCR Hoa Kỳ.</a><br></br>
+                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="https://nhakhoakim.com/healthcare-ecosystem/nha-khoa-kim-cung-uc-singapore-an-do-china-duoc-bao-cao-dien-hinh-tac-dong-chau-a-2021" title="Quỹ Đầu Tư Chính Phủ Singapore">Được chính phủ Singapore đầu tư tài chính.</a><br></br>
+                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="https://nhakhoakim.com/nha-khoa-kim-tu-hao-la-doi-tac-toan-cau-cua-dai-hoc-harvard.html" title="Đối tác toàn cầu của Đại học Harvard">Đối tác toàn cầu của đại học Harvard.</a>
                                         </p>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@ const Home = () => {
                         <div className="row">
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover">
                                 <div className="card border-0"  >
-                                    <a title="Yêu cầu cho tham quan phòng tiệt trùng nha khoa trước khi quyết định điều trị" href="https://nhakhoakim.com/healthcare-ecosystem/yeu-cau-cho-tham-quan-phong-tiet-trung-truoc-khi-quyet-dinh-dieu-tri-nha-khoa">
+                                    <a className='text-decoration-none' title="Yêu cầu cho tham quan phòng tiệt trùng nha khoa trước khi quyết định điều trị" href="https://nhakhoakim.com/healthcare-ecosystem/yeu-cau-cho-tham-quan-phong-tiet-trung-truoc-khi-quyet-dinh-dieu-tri-nha-khoa">
                                         <img width="350" height="197" className="card-img img-fluid lazy-load" src={img2} />
                                         <h6 className="h6 py-2 card-text-dark">Yêu cầu cho tham quan phòng tiệt trùng nha khoa trước khi quyết định điều trị</h6>
                                     </a>
@@ -71,7 +71,7 @@ const Home = () => {
                             </article>
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-6 col-index-1">
                                 <div className="card border-0">
-                                    <a title="4 khác biệt tạo nên Nha Khoa Kim uy tín" href="https://nhakhoakim.com/healthcare-ecosystem/nha-khoa-kim-chuan-quoc-te-moi-khach-hang-la-mot-phong-dieu-tri-rieng-biet">
+                                    <a className='text-decoration-none' title="4 khác biệt tạo nên Nha Khoa Kim uy tín" href="https://nhakhoakim.com/healthcare-ecosystem/nha-khoa-kim-chuan-quoc-te-moi-khach-hang-la-mot-phong-dieu-tri-rieng-biet">
                                         <img width="350" height="197" className="card-img img-fluid lazy-load" src={img3} />
                                         <h6 className="h6 py-2 card-text-dark">4 khác biệt tạo nên Nha Khoa Sức Khỏe uy tín</h6>
                                     </a>
@@ -79,7 +79,7 @@ const Home = () => {
                             </article>
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-6 col-index-2">
                                 <div className="card border-0">
-                                    <a title="Những thành tựu Nha Khoa Kim" href="https://nhakhoakim.com/healthcare-ecosystem/nhung-thanh-tuu-nha-khoa-kim-dat-duoc">
+                                    <a className='text-decoration-none' title="Những thành tựu Nha Khoa Kim" href="https://nhakhoakim.com/healthcare-ecosystem/nhung-thanh-tuu-nha-khoa-kim-dat-duoc">
                                         <img width="350" height="197" className="card-img img-fluid lazy-load" src={img4} />
                                         <h6 className="h6 py-2 card-text-dark">Những thành tựu Nha Khoa Sức Khỏe</h6>
                                     </a>
@@ -101,7 +101,7 @@ const Home = () => {
                         <div className="row pt-3 mb-3 bg-light" >
                             <div className="col-sm-12 col-md-6 col-lg-6 p-0">
                                 <article className="col-md-12 col-sm-12 col-lg-12 transition-3d-hover col-sm-12">
-                                    <a className="" href="https://nhakhoakim.com/nha-khoa-kim-chuan-bi-khai-truong-hang-loat-phong-kham-moi.html" title="Nha Khoa Kim chuẩn bị khai trương hàng loạt phòng khám mới">
+                                    <a className='text-decoration-none' href="https://nhakhoakim.com/nha-khoa-kim-chuan-bi-khai-truong-hang-loat-phong-kham-moi.html" title="Nha Khoa Kim chuẩn bị khai trương hàng loạt phòng khám mới">
                                         <div className="col-sm-12 col-md-12 col-lg-12 p-0">
                                             <img className="card-img img-fluid lazy-load" width="2500" height="1308" src={ban1} />
                                         </div>
@@ -118,7 +118,7 @@ const Home = () => {
 
                             <div className="col-sm-12 col-md-6 col-lg-6">
                                 <article className="mb-2 transition-3d-hover col-12">
-                                    <a className="row p-0" title="Niềng răng công nghệ hiện đại với ưu đãi hấp dẫn hè này" href="https://nhakhoakim.com/nieng-rang-cong-nghe-hien-dai-voi-uu-dai-hap-dan-he-nay.html">
+                                    <a className="row p-0 text-decoration-none" title="Niềng răng công nghệ hiện đại với ưu đãi hấp dẫn hè này" href="https://nhakhoakim.com/nieng-rang-cong-nghe-hien-dai-voi-uu-dai-hap-dan-he-nay.html">
                                         <div className="col-5 col-sm-5 col-md-4 col-lg-4 p-0">
                                             <img className="card-img img-fluid lazy-load" width="555" height="312" src={ban2} />
                                         </div>
@@ -132,7 +132,7 @@ const Home = () => {
                                 </article>
 
                                 <article className="mb-2 transition-3d-hover col-12">
-                                    <a className="row p-0" title="Hành trình Răng hạnh phúc Nha Khoa Kim trở lại, tiếp tục sứ mệnh nâng cao ý thức chăm sóc răng miệng cộng đồng" href="https://nhakhoakim.com/hanh-trinh-rang-hanh-phuc-nha-khoa-kim-tro-lai.html">
+                                    <a className="row p-0 text-decoration-none" title="Hành trình Răng hạnh phúc Nha Khoa Kim trở lại, tiếp tục sứ mệnh nâng cao ý thức chăm sóc răng miệng cộng đồng" href="https://nhakhoakim.com/hanh-trinh-rang-hanh-phuc-nha-khoa-kim-tro-lai.html">
                                         <div className="col-5 col-sm-5 col-md-4 col-lg-4 p-0">
                                             <img className="card-img img-fluid lazy-load" width="555" height="312" src={ban3} />
                                         </div>
@@ -146,7 +146,7 @@ const Home = () => {
                                 </article>
 
                                 <article className="mb-2 transition-3d-hover col-12">
-                                    <a className="row p-0" title="Thông báo nghỉ Lễ 30/4 &amp; 1/5" href="https://nhakhoakim.com/thong-bao-nghi-le-30-4-1-5.html">
+                                    <a className="row p-0 text-decoration-none" title="Thông báo nghỉ Lễ 30/4 &amp; 1/5" href="https://nhakhoakim.com/thong-bao-nghi-le-30-4-1-5.html">
                                         <div className="col-5 col-sm-5 col-md-4 col-lg-4 p-0">
                                             <img className="card-img img-fluid lazy-load" width="555" height="312" src={ban4} />
                                         </div>
@@ -160,7 +160,7 @@ const Home = () => {
                                 </article>
 
                                 <article className="mb-2 transition-3d-hover col-12">
-                                    <a className="row p-0" title="Thông báo nghỉ lễ Giỗ Tổ Hùng Vương" href="https://nhakhoakim.com/thong-bao-nghi-le-gio-to-hung-vuong.html">
+                                    <a className="row p-0 text-decoration-none" title="Thông báo nghỉ lễ Giỗ Tổ Hùng Vương" href="https://nhakhoakim.com/thong-bao-nghi-le-gio-to-hung-vuong.html">
                                         <div className="col-5 col-sm-5 col-md-4 col-lg-4 p-0">
                                             <img className="card-img img-fluid lazy-load" width="555" height="312" src={ban5} />
                                         </div>
@@ -187,7 +187,7 @@ const Home = () => {
                         <div className="row" >
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-12">
                                 <div className="card border-0">
-                                    <a title="Công nghệ trồng răng Implant SAFEST nhanh tại Nha Khoa Kim" href="https://nhakhoakim.com/cong-nghe-cay-implant-safest-nhanh-tai-nha-khoa-kim.html">
+                                    <a className='text-decoration-none' title="Công nghệ trồng răng Implant SAFEST nhanh tại Nha Khoa Kim" href="https://nhakhoakim.com/cong-nghe-cay-implant-safest-nhanh-tai-nha-khoa-kim.html">
                                         <img className="card-img img-fluid lazy-load" width="350" height="197" src={tech1} />
                                         <h6 className="h6 py-1 card-text-dark"><span className="hide-mobile">Công nghệ trồng răng Implant SAFEST nhanh tại Nha Khoa Kim</span></h6>
                                     </a>
@@ -195,7 +195,7 @@ const Home = () => {
                             </article>
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-12">
                                 <div className="card border-0">
-                                    <a title="Răng sứ thẩm mỹ công nghệ Swift Perfect: Khỏe đẹp hoàn hảo - Bảo tồn răng thật" href="https://nhakhoakim.com/rang-su-tham-my-cong-nghe-swift-perfect-khoe-dep-hoan-hao-bao-ton-rang-that.html">
+                                    <a className='text-decoration-none' title="Răng sứ thẩm mỹ công nghệ Swift Perfect: Khỏe đẹp hoàn hảo - Bảo tồn răng thật" href="https://nhakhoakim.com/rang-su-tham-my-cong-nghe-swift-perfect-khoe-dep-hoan-hao-bao-ton-rang-that.html">
                                         <img className="card-img img-fluid lazy-load" width="350" height="197" src={tech2} />
                                         <h6 className="h6 py-1 card-text-dark"><span className="hide-mobile">Răng sứ thẩm mỹ công nghệ Swift Perfect: Khỏe đẹp hoàn hảo - Bảo tồn răng thật</span></h6>
                                     </a>
@@ -203,14 +203,14 @@ const Home = () => {
                             </article>
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-12">
                                 <div className="card border-0">
-                                    <a title="Niềng răng công nghệ Optimal Align: Tối ưu hiệu quả - Cười đẹp tự tin" href="https://nhakhoakim.com/nieng-rang-cong-nghe-optimal-align-toi-uu-hieu-qua-cuoi-dep-tu-tin.html">
+                                    <a className='text-decoration-none' title="Niềng răng công nghệ Optimal Align: Tối ưu hiệu quả - Cười đẹp tự tin" href="https://nhakhoakim.com/nieng-rang-cong-nghe-optimal-align-toi-uu-hieu-qua-cuoi-dep-tu-tin.html">
                                         <img className="card-img img-fluid lazy-load" width="350" height="197" src={tech3} />
                                         <h6 className="h6 py-1 card-text-dark"><span className="hide-mobile">Niềng răng công nghệ Optimal Align: Tối ưu hiệu quả - Cười đẹp tự tin</span></h6>
                                     </a>
                                 </div>
                             </article>
                         </div>
-                        <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
+                        <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary text-decoration-none btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
                     </div>
                 </div>
 
@@ -224,7 +224,7 @@ const Home = () => {
                         <div className="row">
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-6">
                                 <div className="card border-0">
-                                    <a title="Khoang miệng là gì? Cấu tạo và chức năng của khoang miệng" href="https://nhakhoakim.com/khoang-mieng-la-gi.html">
+                                    <a className='text-decoration-none' title="Khoang miệng là gì? Cấu tạo và chức năng của khoang miệng" href="https://nhakhoakim.com/khoang-mieng-la-gi.html">
                                         <img className="card-img img-fluid lazy-load" width="350" height="197" src={in1} />
                                         <h6 className="h6 py-2 card-text-dark">Khoang miệng là gì? Cấu tạo và chức năng của khoang miệng</h6>
                                     </a>
@@ -232,7 +232,7 @@ const Home = () => {
                             </article>
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-6">
                                 <div className="card border-0">
-                                    <a title="Trẻ Bị Sâu Răng Hàm Có Mọc Lại Không? Vì Sao?" href="https://nhakhoakim.com/tre-bi-sau-rang-ham-co-moc-lai-khong.html">
+                                    <a className='text-decoration-none' title="Trẻ Bị Sâu Răng Hàm Có Mọc Lại Không? Vì Sao?" href="https://nhakhoakim.com/tre-bi-sau-rang-ham-co-moc-lai-khong.html">
                                         <img className="card-img img-fluid lazy-load" width="350" height="197" src={in2} />
                                         <h6 className="h6 py-2 card-text-dark">Trẻ Bị Sâu Răng Hàm Có Mọc Lại Không? Vì Sao?</h6>
                                     </a>
@@ -240,7 +240,7 @@ const Home = () => {
                             </article>
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-6">
                                 <div className="card border-0">
-                                    <a title="Trồng răng implant all on 4 khi nào? Giá bao nhiêu?" href="https://nhakhoakim.com/trong-rang-implant-all-on-4.html">
+                                    <a className='text-decoration-none' title="Trồng răng implant all on 4 khi nào? Giá bao nhiêu?" href="https://nhakhoakim.com/trong-rang-implant-all-on-4.html">
                                         <img className="card-img img-fluid lazy-load" width="350" height="197" src={in3} />
                                         <h6 className="h6 py-2 card-text-dark">Trồng răng implant all on 4 khi nào? Giá bao nhiêu?</h6>
                                     </a>
@@ -248,7 +248,7 @@ const Home = () => {
                             </article>
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-6">
                                 <div className="card border-0">
-                                    <a title="Sâu răng là gì? Nguyên nhân, dấu hiệu và cách điều trị" href="https://nhakhoakim.com/sau-rang-la-gi.html">
+                                    <a className='text-decoration-none' title="Sâu răng là gì? Nguyên nhân, dấu hiệu và cách điều trị" href="https://nhakhoakim.com/sau-rang-la-gi.html">
                                         <img className="card-img img-fluid lazy-load" width="350" height="197" src={in4} />
                                         <h6 className="h6 py-2 card-text-dark">Sâu răng là gì? Nguyên nhân, dấu hiệu và cách điều trị</h6>
                                     </a>
@@ -256,7 +256,7 @@ const Home = () => {
                             </article>
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-6">
                                 <div className="card border-0">
-                                    <a title="Xịt chống sâu răng cho bé có tốt không? Nên dùng loại nào" href="https://nhakhoakim.com/xit-chong-sau-rang-cho-be.html">
+                                    <a className='text-decoration-none' title="Xịt chống sâu răng cho bé có tốt không? Nên dùng loại nào" href="https://nhakhoakim.com/xit-chong-sau-rang-cho-be.html">
                                         <img className="card-img img-fluid lazy-load" width="350" height="197" src={in5} />
                                         <h6 className="h6 py-2 card-text-dark">Xịt chống sâu răng cho bé có tốt không? Nên dùng loại nào</h6>
                                     </a>
@@ -264,20 +264,16 @@ const Home = () => {
                             </article>
                             <article className="col-md-4 col-sm-4 col-lg-4 transition-3d-hover col-6">
                                 <div className="card border-0">
-                                    <a title="Lưỡi nổi mụn thịt là dấu hiệu của bệnh gì? Cách điều trị" href="https://nhakhoakim.com/luoi-noi-mun-thit.html">
+                                    <a className='text-decoration-none' title="Lưỡi nổi mụn thịt là dấu hiệu của bệnh gì? Cách điều trị" href="https://nhakhoakim.com/luoi-noi-mun-thit.html">
                                         <img className="card-img img-fluid lazy-load" width="350" height="197" src={in6} />
                                         <h6 className="h6 py-2 card-text-dark">Lưỡi nổi mụn thịt là dấu hiệu của bệnh gì? Cách điều trị</h6>
                                     </a>
                                 </div>
                             </article>
                         </div>
-                        <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
+                        <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary text-decoration-none btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
                     </div>
                 </div>
-
-
-
-
             </div>
         </>
     )
