@@ -32,7 +32,7 @@ export const DoListScheduleExamination = (date, category_id) => {
 
 // Đặt Lịch Khám
 export const DoAppointment = (examination_schedule_id, patient_note, payment_id) => {
-    return axios.post('/api/v1/patients/me/appointments/examination',
+    return axios.post('/api/v1/patients/appointments/examination',
         {
             examination_schedule_id: examination_schedule_id,
             patient_note: patient_note,

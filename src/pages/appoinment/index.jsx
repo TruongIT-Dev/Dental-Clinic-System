@@ -359,11 +359,6 @@ const Appoinment = () => {
                                 <Form.Item
                                     label="Lý do đặt khám"
                                     name="patient_note"
-                                    rules={[
-                                        {
-                                            required: true,
-                                        },
-                                    ]}
                                 >
                                     <div className='d-flex flex-start' style={{ width: '100%' }}>
                                         <TextArea rows={2} />
@@ -395,7 +390,7 @@ const Appoinment = () => {
 
                                 <Form.Item>
                                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                        <SubmitButton form={form}>Đặt lịch Hẹn</SubmitButton>
+                                        <SubmitButton form={form}>Đặt Lịch Hẹn</SubmitButton>
                                     </div>
                                 </Form.Item>
                             </Form>

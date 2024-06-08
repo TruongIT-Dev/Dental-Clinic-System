@@ -6,11 +6,6 @@ import { GetSignUp } from '../../apis/api';
 
 
 const FormLayout = {
-    // backgroundColor: '#fff',
-    // borderRadius: '4px',
-    // boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .14)',
-    // boxSizing: 'border - box',
-    // overflow: 'hidden',
     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
 }
 
@@ -43,6 +38,7 @@ const SignUp = () => {
                 notification.success({
                     type: 'success',
                     message: 'Đăng ký thành công',
+                    duration: 2,
                 })
             }
         } catch (error) {
@@ -119,8 +115,8 @@ const SignUp = () => {
         if (!value) {
             return Promise.reject(new Error(''));
         }
-        if (!/[A-Z]/.test(value) || !/[0-9]/.test(value)) {
-            return Promise.reject(new Error('Yêu cầu chứa ít nhất một chữ cái viết hoa và 1 chữ số!'));
+        if (!/^[a-zA-Z]+$/.test(value)) {
+            return Promise.reject(new Error('Yêu cầu chỉ chữ thường và chữ cái in hoa!'));
         }
         return Promise.resolve();
     };
@@ -134,7 +130,7 @@ const SignUp = () => {
         const phoneRegex = /^0[1-9][0-9]{8}$/;
 
         if (!phoneRegex.test(value)) {
-            return Promise.reject(new Error('Vui lòng nhập 10 chữ số, bắt đầu bằng số 0 và chữ số tiếp theo khác 0.'));
+            return Promise.reject(new Error('Số điện thoại không hợp lệ!'));
         }
         return Promise.resolve();
     };
@@ -145,10 +141,10 @@ const SignUp = () => {
             return Promise.reject(new Error(''));
         }
 
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
         if (!passwordRegex.test(value)) {
-            return Promise.reject(new Error('Yêu cầu chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.'));
+            return Promise.reject(new Error('Yêu cầu ít nhất 8 ký tự bao gồm chữ in hoa, số và 1 ký tự đặc biệt.'));
         }
         return Promise.resolve();
     };
@@ -190,12 +186,6 @@ const SignUp = () => {
                                         <h2 style={{ color: '#f6921e', fontWeight: '400', textTransform: 'uppercase' }}>
                                             Đăng Ký
                                         </h2>
-                                        <p style={{ lineHeight: '1.5', margin: 0 }}>
-                                            <i style={{ fontStyle: 'italic', fontSize: '0.9625rem' }}>Vui lòng để lại thông tin, nhu cầu của quý khách.</i>
-                                        </p>
-                                        <p style={{ lineHeight: '1.5' }}>
-                                            <i style={{ fontStyle: 'italic', fontSize: '0.9625rem' }}>Nha Khoa Kim sẽ liên hệ đến Quý Khách trong thời gian sớm nhất</i>
-                                        </p>
                                     </div>
                                     <Form
                                         form={form}
@@ -320,7 +310,6 @@ const SignUp = () => {
                                         >
                                             <Space>
                                                 <SubmitButton form={form}>Đăng ký</SubmitButton>
-                                                <Button htmlType="reset">Reset</Button>
                                             </Space>
                                         </Form.Item>
                                     </Form>

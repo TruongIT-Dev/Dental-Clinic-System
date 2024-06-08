@@ -13,10 +13,13 @@ import { Space, Avatar } from 'antd';
 
 
 const BrandHeader = {
+    disPlay: 'flex',
+    alignItems :'center',
     fontSize: '32px',
     fontWeight: 500,
     color: '#005f9d',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    paddingBottom: '0',
 }
 
 const TextHeader = {
@@ -25,6 +28,7 @@ const TextHeader = {
     textDecoration: 'none',
     textTransform: 'capitalize',
     marginRight: '12px',
+   paddingBottom: '0',
 }
 
 const ButtonHeader = {
@@ -38,8 +42,8 @@ const NavBar = () => {
     const account = useSelector(state => state?.account);
 
     // set biến 'userSelector' chứa thông tin đã đăng nhập
-    // const userSelector = useSelector(state => state?.account?.user?.user);
     const userSelector = useSelector(state => state?.account?.user?.user?.user_info);
+
     // // check biến 'account' đã authenticated là TRUE chưa.
     const isAuthenticated = account.isAuthenticated;
 
@@ -50,7 +54,7 @@ const NavBar = () => {
             <div style={{ width: '100%', maxWidth: '300' }}>
                 <Navbar style={{ padding: '0' }}>
                     <Container>
-                        <div>
+                        <div style={{display:'flex', alignItems:'center'}}>
                             <Navbar.Brand style={BrandHeader} href="/">
                                 Nha Khoa Sức Khỏe
                             </Navbar.Brand>
@@ -64,30 +68,21 @@ const NavBar = () => {
                                     <CategoryDropdown />
                                 </Nav.Link>
                                 <Nav.Link href='/lich-lam-viec' style={TextHeader} eventKey="link-4">Lịch làm việc</Nav.Link>
-                                {/* <Nav.Link href='/dat-lich-hen' style={TextHeader} eventKey="link-5">Đặt hẹn</Nav.Link> */}
                                 <Nav.Link href='/lien-he' style={TextHeader} eventKey="link-6">Liên hệ</Nav.Link>
+                                <Nav.Link href='/dat-lich-hen' style={TextHeader} eventKey="link-5">
+                                    <Space style={{color:'red',fontWeight:'500', textTransform: 'capitalize', cursor: 'pointer' }}>
+                                        <CarryOutOutlined />
+                                        Đặt lịch hẹn
+                                    </Space>
+                                </Nav.Link>
                             </Nav>
                         </div>
 
                         {/* Button Sign IN Sign UP */}
                         <div>
                             <Nav className="justify-content-center">
-
                                 {isAuthenticated === true ? (
-                                    // <UserProfileDropDown user={userSelector} />
                                     <>
-                                        <Nav.Link href='/dat-lich-hen' style={ButtonHeader}>
-                                            <Button className='btn btn-danger' type='button'>
-                                                <Space style={{ color: 'white', textTransform:'capitalize', cursor: 'pointer' }}>
-                                                    <Avatar
-                                                        style={{ color: '#fff' }}
-                                                        icon={<CarryOutOutlined />}
-                                                    />
-                                                    Đặt lịch hẹn
-                                                </Space>
-                                            </Button>
-                                        </Nav.Link>
-
                                         <Nav.Link href='#user' style={ButtonHeader}>
                                             <Button className='btn btn-primary' type='button'>
                                                 <UserProfileDropDown user={userSelector} />
