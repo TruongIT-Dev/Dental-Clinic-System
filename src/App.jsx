@@ -14,7 +14,6 @@ import Error from './pages/error'
 import Contact from './pages/contact'
 import Schedule from './pages/schedule'
 import ServiceDetail from './pages/services'
-import DashBoard from './pages/dashboard'
 import AdminDashBoard from './pages/dashboard/admin';
 import UnAuthorizated from './pages/unauthorizated';
 
@@ -34,7 +33,6 @@ function App() {
           <Route path='/dat-lich-hen' element={<Appoinment />} />
           <Route path='/lich-lam-viec' element={<Schedule />} />
           <Route path='/lien-he' element={<Contact />} />
-          <Route path='/dashboard' element={<DashBoard />} />
 
           {/* Đăng ký && Đăng nhập */}
           <Route path='/dang-nhap' element={<SignIn />} />
