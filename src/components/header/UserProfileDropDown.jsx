@@ -4,7 +4,7 @@ import { doLogoutAction } from '../../redux/account/accountSlice';
 // Antd
 import { Dropdown, Space, Avatar } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
-
+import { useNavigate } from 'react-router-dom';
 
 const LinkDropDownStyle = {
     textDecoration: 'none',
@@ -16,12 +16,14 @@ const LinkDropDownStyle = {
 const UserProfileDropDown = ({ user }) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // Function xử lý thoát đăng nhập
     const handleLogOut = () => {
         console.log('Button Logout clicked')
         localStorage.removeItem('access_token');
         dispatch(doLogoutAction());
+        navigate('/');
     }
 
     const items = [

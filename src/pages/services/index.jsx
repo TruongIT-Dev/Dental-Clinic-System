@@ -43,12 +43,12 @@ const ServiceDetail = () => {
 
     return (
         <>
-            <div className='content'>
-                <div className='banner'>
-                    <Image
-                        src={bocRangSuBanner}
-                    />
-                </div>
+            <div className='banner'>
+                <Image
+                    src={bocRangSuBanner}
+                />
+            </div>
+            <div className='content' style={{ margin: '2rem 5rem' }}>
                 <div className='mt-4'>
                     <Row>
                         <Col span={16}>
@@ -87,7 +87,7 @@ const ServiceDetail = () => {
                         </Col>
 
                         {/* Slider - Aside */}
-                        <Col span={8} style={{ display: 'flex', justifyContent: 'flex-end', position:'relative' }}>
+                        <Col span={8} style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative' }}>
                             <Card
                                 title="ĐẶT DỊCH VỤ"
                                 style={{

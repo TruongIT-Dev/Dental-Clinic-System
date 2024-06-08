@@ -33,19 +33,11 @@ const PageLayout = () => {
             {/* CONTENT */}
             <Content
                 style={{
-                    padding: '0 48px',
                     textAlign: 'center',
                     backgroundImage: `url(${bg})`,
                 }}
             >
-
-                <div
-                    style={{
-                        padding: 24,
-                        minHeight: 380,
-                        margin: '0 4rem',
-                    }}
-                >
+                <div>
                     <Outlet></Outlet>
                 </div>
             </Content>

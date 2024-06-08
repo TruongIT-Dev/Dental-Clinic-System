@@ -45,3 +45,8 @@ export const DoAppointment = (examination_schedule_id, patient_note, payment_id)
 export const DoListPayment = () => {
     return axios.get('/api/v1/payment-methods');
 }
+
+// Show Thông tin chi tiết của 1 Lịch khám
+export const DoViewExaminationAppointment = () => {
+    return axios.get('/api/v1/patients/me/bookings/examination')
+}

@@ -259,7 +259,7 @@ const Appoinment = () => {
     return (
         <>
             {isAuthenticated === true ?
-                <div className="appointment">
+                <div className="appointment" style={{margin:'2rem 5rem'}}>
                     <div className="container space-1">
                         <div className="w-md-80 w-lg-50 text-center mx-md-auto mb-lg-5 mb-md-3">
                             <h2 style={{ color: '#f6921e', fontWeight: '500', textTransform: 'uppercase', marginBottom: '0.5rem' }}>

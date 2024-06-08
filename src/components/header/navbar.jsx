@@ -8,7 +8,7 @@ import UserProfileDropDown from './UserProfileDropDown';
 
 // CSS
 import '../../scss/navbar.css';
-import { Space, Avatar } from 'antd';
+import { Space } from 'antd';
 
 
 
@@ -83,7 +83,7 @@ const NavBar = () => {
                             <Nav className="justify-content-center">
                                 {isAuthenticated === true ? (
                                     <>
-                                        <Nav.Link href='#user' style={ButtonHeader}>
+                                        <Nav.Link href='/patient/thong-tin-ca-nhan' style={ButtonHeader}>
                                             <Button className='btn btn-primary' type='button'>
                                                 <UserProfileDropDown user={userSelector} />
                                             </Button>
