@@ -14,8 +14,13 @@ import Error from './pages/error'
 import Contact from './pages/contact'
 import Schedule from './pages/schedule'
 import ServiceDetail from './pages/services'
-import AdminDashBoard from './pages/dashboard/admin';
-import UnAuthorizated from './pages/unauthorizated';
+// import AdminDashBoard from './pages/dashboard/admin';
+// import UnAuthorizated from './pages/unauthorizated';
+import PatientDashboard from './pages/dashboard/patient';
+import ChangePassword from './pages/dashboard/patient/ChangePassword';
+import PatientInfo from './pages/dashboard/patient/PatientInfo';
+import Examination from './pages/dashboard/patient/Examination';
+import Treatment from './pages/dashboard/patient/Treament';
 
 function App() {
   const account = useSelector(state => state?.account);
@@ -26,7 +31,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<PageLayout />} >
-          {/* Pages Guest && User */}
+          {/* Pages Guest */}
           <Route index path='/' element={<Home />} />
           <Route path='/loai-hinh-dich-vu' element={<Catergory />} />
           <Route path='/chi-tiet-dich-vu' element={<ServiceDetail />} />
@@ -38,16 +43,24 @@ function App() {
           <Route path='/dang-nhap' element={<SignIn />} />
           <Route path='/dang-ky' element={<SignUp />} />
 
+          {/* Patient Dashboard */}
+          <Route path='/patient' element={<PatientDashboard />} >
+            <Route index path='/patient/thong-tin-ca-nhan' element={<PatientInfo />} />
+            <Route path='/patient/lich-kham' element={<Examination />} />
+            <Route path='/patient/lich-dieu-tri' element={<Treatment />} />
+            <Route path='/patient/doi-mat-khau' element={<ChangePassword />} />
+          </Route>
+
           {/* Error Page */}
           <Route path='/error' element={<Error />} />
         </Route>
 
         {/* Dashboard Admin && Dentist */}
-        {(isAuthenticated === true && isRoleAdmin.role === 'admin') ?
+        {/* {(isAuthenticated === true && isRoleAdmin.role === 'admin') ?
           <Route path='/admin' element={<AdminDashBoard />} />
           :
           <Route path='/admin' element={<UnAuthorizated />} />
-        }
+        } */}
       </Routes>
     </>
   )
