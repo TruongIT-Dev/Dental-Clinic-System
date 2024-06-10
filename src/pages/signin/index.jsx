@@ -95,7 +95,7 @@ const SignIn = () => {
     // *********** JSX **************
     return (
         <>
-            <div className="sign-in" style={{ width: '90%', margin: '4rem auto' }}>
+            <div className="sign-in" style={{ width: '70%', margin: '4rem auto' }}>
                 <div className="container space-1">
                     <div>
                         <Row>

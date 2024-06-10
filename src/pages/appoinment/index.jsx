@@ -9,7 +9,7 @@ const Appoinment = () => {
 
     return (
         <>
-            <div className="appointment d-flex justify-content-center" style={{ margin: '1rem auto' }}>
+            <div className="appointment d-flex justify-content-center" style={{ margin: '4rem auto' }}>
                 <div style={{width:'60%'}}>
                     <Card>
                         <div className="text-center mx-md-auto mb-lg-5 mb-md-3">

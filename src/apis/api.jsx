@@ -48,5 +48,5 @@ export const DoListPayment = () => {
 
 // Show Thông tin chi tiết của 1 Lịch khám
 export const DoViewExaminationAppointment = () => {
-    return axios.get('/api/v1/patients/me/bookings/examination')
+    return axios.get('/api/v1/patients/bookings/examination')
 }

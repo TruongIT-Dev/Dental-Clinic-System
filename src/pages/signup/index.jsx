@@ -176,7 +176,7 @@ const SignUp = () => {
     // *********** JSX **************
     return (
          <>
-            <div className="sign-in" style={{ width: '90%', margin: '1rem auto' }}>
+            <div className="sign-in" style={{ width: '80%', margin: '2rem auto' }}>
                 <div className="container space-1">
                     <div>
                         <Row>
