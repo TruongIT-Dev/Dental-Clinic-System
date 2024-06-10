@@ -14,10 +14,8 @@ import Error from './pages/error'
 import Contact from './pages/contact'
 import Schedule from './pages/schedule'
 import ServiceDetail from './pages/services'
-<<<<<<< HEAD
 import DashBoard from './pages/dashboard'
 import User from './pages/dashboard/user'
-=======
 // import AdminDashBoard from './pages/dashboard/admin';
 // import UnAuthorizated from './pages/unauthorizated';
 import PatientDashboard from './pages/dashboard/patient';
@@ -25,7 +23,6 @@ import ChangePassword from './pages/dashboard/patient/ChangePassword';
 import PatientInfo from './pages/dashboard/patient/PatientInfo';
 import Examination from './pages/dashboard/patient/Examination';
 import Treatment from './pages/dashboard/patient/Treament';
->>>>>>> main
 
 function App() {
   const account = useSelector(state => state?.account);
@@ -48,9 +45,6 @@ function App() {
           <Route path='/dang-nhap' element={<SignIn />} />
           <Route path='/dang-ky' element={<SignUp />} />
 
-<<<<<<< HEAD
-<Route path='/dashboard/user'  element={<User/>}/>
-=======
           {/* Patient Dashboard */}
           <Route path='/patient' element={<PatientDashboard />} >
             <Route index path='/patient/thong-tin-ca-nhan' element={<PatientInfo />} />
@@ -58,7 +52,6 @@ function App() {
             <Route path='/patient/lich-dieu-tri' element={<Treatment />} />
             <Route path='/patient/doi-mat-khau' element={<ChangePassword />} />
           </Route>
->>>>>>> main
 
           {/* Error Page */}
           <Route path='/error' element={<Error />} />
