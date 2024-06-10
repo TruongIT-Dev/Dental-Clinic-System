@@ -1,18 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Button, Form, Input, Row, Col, Image, Space, notification } from 'antd';
+import { Button, Form, Input, Row, Col, Space, notification, Typography } from 'antd';
 
 import { useNavigate } from 'react-router-dom';
 import { GetSignUp } from '../../apis/api';
 
+import FormImage from '../../assets/img/Signin/Logo.png'
+
+// CSS Animation
+import '../../scss/authText.css';
 
 const FormLayout = {
-    backgroundColor: '#fff',
-    borderRadius: '4px',
-    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .14)',
-    boxSizing: 'border - box',
-    overflow: 'hidden',
+    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
 }
 
+const SignupText = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: '100%',
+    padding: '24px'
+}
+
+const { Title, Paragraph } = Typography;
 
 const SignUp = () => {
     // const dispatch = useDispatch();
@@ -39,7 +48,11 @@ const SignUp = () => {
                 navigate('/dang-nhap');
 
                 // Show a success message
-                notification.success("Đăng ký thành công")
+                notification.success({
+                    type: 'success',
+                    message: 'Đăng ký thành công',
+                    duration: 2,
+                })
             }
         } catch (error) {
             // Log the error for debugging
@@ -115,8 +128,8 @@ const SignUp = () => {
         if (!value) {
             return Promise.reject(new Error(''));
         }
-        if (!/[A-Z]/.test(value) || !/[0-9]/.test(value)) {
-            return Promise.reject(new Error('Yêu cầu chứa ít nhất một chữ cái viết hoa và 1 chữ số!'));
+        if (!/^[a-zA-Z]+$/.test(value)) {
+            return Promise.reject(new Error('Yêu cầu chỉ chữ thường và chữ cái in hoa!'));
         }
         return Promise.resolve();
     };
@@ -130,7 +143,7 @@ const SignUp = () => {
         const phoneRegex = /^0[1-9][0-9]{8}$/;
 
         if (!phoneRegex.test(value)) {
-            return Promise.reject(new Error('Vui lòng nhập 10 chữ số, bắt đầu bằng số 0 và chữ số tiếp theo khác 0.'));
+            return Promise.reject(new Error('Số điện thoại không hợp lệ!'));
         }
         return Promise.resolve();
     };
@@ -141,10 +154,10 @@ const SignUp = () => {
             return Promise.reject(new Error(''));
         }
 
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
         if (!passwordRegex.test(value)) {
-            return Promise.reject(new Error('Yêu cầu chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.'));
+            return Promise.reject(new Error('Yêu cầu tối thiểu 8 ký tự chứa chữ in hoa, số và 1 ký tự đặc biệt!'));
         }
         return Promise.resolve();
     };
@@ -162,164 +175,163 @@ const SignUp = () => {
 
     // *********** JSX **************
     return (
-        <>
-            <div className="sign-in" style={{ width: '100%' }}>
+         <>
+            <div className="sign-in" style={{ width: '80%', margin: '2rem auto' }}>
                 <div className="container space-1">
                     <div>
                         <Row>
                             <Col span={12}>
-                                {/* Img */}
-                                <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Image.PreviewGroup
-                                        preview={{
-                                            onChange: (current, prev) => console.log(`current index: ${current}, prev index: ${prev}`),
-                                        }}
-                                    >
-                                        <Image width={200} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Image.PreviewGroup>
-                                </div>
-                            </Col>
-                            <Col span={12}>
                                 {/* Form Inout */}
                                 <div className='w-lg-60 mx-auto p-3' style={FormLayout}>
-                                    <div className="w-md-80 w-lg-50 text-center mx-md-auto mb-lg-5 mb-md-3">
-                                        <h2 style={{ color: '#f6921e', fontWeight: '400', textTransform: 'uppercase' }}>
-                                            Đăng Ký
-                                        </h2>
-                                        <p style={{ lineHeight: '1.5', margin: 0 }}>
-                                            <i style={{ fontStyle: 'italic', fontSize: '0.9625rem' }}>Vui lòng để lại thông tin, nhu cầu của quý khách.</i>
-                                        </p>
-                                        <p style={{ lineHeight: '1.5' }}>
-                                            <i style={{ fontStyle: 'italic', fontSize: '0.9625rem' }}>Nha Khoa Kim sẽ liên hệ đến Quý Khách trong thời gian sớm nhất</i>
-                                        </p>
-                                    </div>
-                                    <Form
-                                        form={form}
-                                        name="signup"
-                                        labelCol={{
-                                            span: 6,
-                                        }}
-                                        wrapperCol={{
-                                            span: 16,
-                                        }}
-                                        style={{
-                                            maxWidth: 600,
-                                            width: '100%',
-                                            display: 'inline-block'
-                                        }}
-                                        initialValues={{
-                                            remember: true,
-                                        }}
-                                        onFinish={onFinish}
-                                        onFinishFailed={onFinishFailed}
-                                        autoComplete="off"
-
-                                    >
-                                        {/* Nhập Email */}
-                                        <Form.Item
-                                            label="Email"
-                                            name="email"
-                                            rules={[
-                                                {
-                                                    type: "email",
-                                                    message: "Dữ liệu nhập không chính xác"
-                                                },
-                                                {
-                                                    required: true,
-                                                    message: 'Yêu cầu nhập email!',
-                                                },
-                                            ]}
-                                            hasFeedback
-                                        >
-                                            <Input placeholder='nhập email' />
-                                        </Form.Item>
-
-                                        {/* Nhập Username */}
-                                        <Form.Item
-                                            label="Họ và Tên"
-                                            name="full_name"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Yêu cầu nhập họ tên!',
-                                                },
-                                                {
-                                                    validator: validateUsername,
-                                                },
-                                            ]}
-                                            hasFeedback
-                                        >
-                                            <Input placeholder='nhập tên đăng nhập' />
-                                        </Form.Item>
-
-                                        {/* Nhập Số Điện Thoại */}
-                                        <Form.Item
-                                            label="Số điện thoại"
-                                            name="phone_number"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Yêu cầu nhập số điện thoại!',
-                                                },
-                                                {
-                                                    validator: validatePhoneNumber,
-                                                },
-                                            ]}
-                                            hasFeedback
-                                        >
-                                            <Input placeholder='nhập số điện thoại' />
-                                        </Form.Item>
-
-                                        {/* Nhập Password */}
-                                        <Form.Item
-                                            label="Mật khẩu"
-                                            name="password"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Yêu cầu nhập mật khẩu!',
-                                                },
-                                                {
-                                                    validator: validatePassword,
-                                                },
-                                            ]}
-                                            hasFeedback
-                                        >
-                                            <Input.Password placeholder='nhập mật khẩu' />
-                                        </Form.Item>
-
-                                        {/* Nhập lại Password */}
-                                        <Form.Item
-                                            label="Nhập lại mật khẩu"
-                                            name="re-password"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Yêu cầu nhập mật khẩu!',
-                                                },
-                                                {
-                                                    validator: validateRePassword,
-                                                },
-                                            ]}
-                                            hasFeedback
-                                        >
-                                            <Input.Password placeholder='nhập mật khẩu' />
-                                        </Form.Item>
-
-
-                                        <Form.Item
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height:'100%' }}>
+                                        <div style={{ textAlign: 'center' }}>
+                                            <img
+                                                src={FormImage}
+                                                style={{ width: '185px' }}
+                                                alt="logo"
+                                            />
+                                            <Title level={2} style={{ marginTop: '16px', marginBottom: '40px', textTransform:'capitalize' }}>đăng ký</Title>
+                                        </div>
+                                        <Form
+                                            form={form}
+                                            name="signup"
+                                            labelCol={{
+                                                span: 6,
+                                            }}
                                             wrapperCol={{
-                                                offset: 8,
                                                 span: 16,
                                             }}
-                                            style={{ display: 'flex', justifyContent: 'center' }}
+                                            style={{
+                                                maxWidth: 600,
+                                                width: '100%',
+                                                display: 'inline-block'
+                                            }}
+                                            initialValues={{
+                                                remember: true,
+                                            }}
+                                            onFinish={onFinish}
+                                            onFinishFailed={onFinishFailed}
+                                            autoComplete="off"
                                         >
-                                            <Space>
-                                                <SubmitButton form={form}>Đăng ký</SubmitButton>
-                                                <Button htmlType="reset">Reset</Button>
-                                            </Space>
-                                        </Form.Item>
-                                    </Form>
+                                            {/* Nhập Email */}
+                                            <Form.Item
+                                                label="Email"
+                                                name="email"
+                                                rules={[
+                                                    {
+                                                        type: "email",
+                                                        message: "Dữ liệu nhập không chính xác"
+                                                    },
+                                                    {
+                                                        required: true,
+                                                        message: 'Yêu cầu nhập email!',
+                                                    },
+                                                ]}
+                                                hasFeedback
+                                            >
+                                                <Input placeholder='nhập email' />
+                                            </Form.Item>
+
+                                            {/* Nhập Username */}
+                                            <Form.Item
+                                                label="Họ và Tên"
+                                                name="full_name"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: 'Yêu cầu nhập họ tên!',
+                                                    },
+                                                    {
+                                                        validator: validateUsername,
+                                                    },
+                                                ]}
+                                                hasFeedback
+                                            >
+                                                <Input placeholder='nhập tên đăng nhập' />
+                                            </Form.Item>
+
+                                            {/* Nhập Số Điện Thoại */}
+                                            <Form.Item
+                                                label="Số điện thoại"
+                                                name="phone_number"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: 'Yêu cầu nhập số điện thoại!',
+                                                    },
+                                                    {
+                                                        validator: validatePhoneNumber,
+                                                    },
+                                                ]}
+                                                hasFeedback
+                                            >
+                                                <Input placeholder='nhập số điện thoại' />
+                                            </Form.Item>
+
+                                            {/* Nhập Password */}
+                                            <Form.Item
+                                                label="Mật khẩu"
+                                                name="password"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: 'Yêu cầu nhập mật khẩu!',
+                                                    },
+                                                    {
+                                                        validator: validatePassword,
+                                                    },
+                                                ]}
+                                                hasFeedback
+                                            >
+                                                <Input.Password placeholder='nhập mật khẩu' />
+                                            </Form.Item>
+
+                                            {/* Nhập lại Password */}
+                                            <Form.Item
+                                                label="Nhập lại mật khẩu"
+                                                name="re-password"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: 'Yêu cầu nhập mật khẩu!',
+                                                    },
+                                                    {
+                                                        validator: validateRePassword,
+                                                    },
+                                                ]}
+                                                hasFeedback
+                                            >
+                                                <Input.Password placeholder='nhập mật khẩu' />
+                                            </Form.Item>
+
+
+                                            <Form.Item
+                                                wrapperCol={{
+                                                    offset: 8,
+                                                    span: 16,
+                                                }}
+                                                style={{ display: 'flex', justifyContent: 'center' }}
+                                            >
+                                                <Space>
+                                                    <SubmitButton form={form}>Đăng ký</SubmitButton>
+                                                </Space>
+                                            </Form.Item>
+                                        </Form>
+                                    </div>
+                                </div>
+                            </Col>
+
+                            <Col span={12}>  
+                                <div className='form-text' style={SignupText}>
+                                    <div style={{ color: 'white', padding: '24px', margin: 'auto' }}>
+                                        <Title level={3} style={{ color: 'white', textTransform:'capitalize' }}>phòng khám nha khoa sức khỏe</Title>
+                                        <Paragraph style={{ color: 'white', textAlign:'justify' }}>
+                                            Tại Phòng khám Nha khoa của chúng tôi, sức khỏe răng miệng của bạn là ưu tiên hàng đầu.
+                                            Chúng tôi cam kết cung cấp dịch vụ chăm sóc nha khoa chất lượng cao với đội ngũ bác sĩ và nhân viên chuyên nghiệp, tận tâm.
+                                            Từ việc kiểm tra định kỳ đến các dịch vụ điều trị phức tạp, chúng tôi luôn sẵn sàng đáp ứng nhu cầu của bạn.
+                                            Hãy để chúng tôi giúp bạn có một nụ cười tươi sáng và khỏe mạnh hơn mỗi ngày.
+                                        </Paragraph>
+                                    </div>
                                 </div>
                             </Col>
                         </Row>

@@ -1,154 +1,84 @@
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { doLogoutAction } from '../../redux/account/accountSlice';
+import { CarryOutOutlined } from '@ant-design/icons';
 
-// Antd
-import { Dropdown, Space } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+// Components
+import CategoryDropdown from './CategoryDropdown';
+import UserProfileDropDown from './UserProfileDropDown';
 
 // CSS
 import '../../scss/navbar.css';
-import { useState } from 'react';
+import { Space } from 'antd';
+
+
+// Logo
+import FormImage from '../../assets/img/Signin/Logo.png'
 
 
 const BrandHeader = {
+    disPlay: 'flex',
+    alignItems: 'center',
     fontSize: '32px',
     fontWeight: 500,
     color: '#005f9d',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    paddingBottom: '0',
 }
 
 const TextHeader = {
     fontSize: '16px',
     color: 'black',
     textDecoration: 'none',
-    height: 'fit-content',
+    textTransform: 'capitalize',
+    marginRight: '12px',
+    paddingBottom: '0',
 }
 
-// Bảng Drop Down cho phần Dịch Vụ
-const LinkDropDownStyle = {
-    textDecoration: 'none',
-    color: '#30374b',
-    marginBottom: '0.5rem',
+const ButtonHeader = {
+    padding: 0,
     fontSize: '16px',
+    color: '#1677ff',
+    textTransform: 'capitalize',
+    paddingBottom: '0',
+    textDecoration: '1px'
 }
-const items = [
-    {
-        key: '1',
-        label: (
-            <a style={LinkDropDownStyle} href="#">
-              Bọc răng sứ
-            </a>
-        ),
-    },
-    {
-        key: '2',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Cấy ghép implant
-            </a>
-        ),
-    },
-    {
-        key: '3',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Niềng răng thẩm mỹ
-            </a>
-        ),
 
-    },
-    {
-        key: '4',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Tẩy trắng răng
-            </a>
-        ),
+const BookingBtn = {
+    color: 'white', fontWeight: '500', textTransform: 'capitalize', cursor: 'pointer'
+}
 
-    },
-    {
-        key: '5',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Nhổ răng khôn
-            </a>
-        ),
-
-    },
-    {
-        key: '6',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Bệnh lý nha chu
-            </a>
-        ),
-
-    },
-    {
-        key: '7',
-        label: (
-            <a style={LinkDropDownStyle}  href="#">
-                Điều trị tủy
-            </a>
-        ),
-
-    },
-];
-
-// Lấy thông tin người dùng từ LocalStorage
-const GetUser = () => {
-    let user = localStorage.getItem('user');
-    if (user) {
-        user = JSON.parse(user);
-    } else {
-        user = null;
-    }
-    return user;
+const OrText = {
+    margin: '0 0.5rem',
+    color: '#a6a4a4',
 }
 
 const NavBar = () => {
     // ********** USESTATE ***********
-    const [user, setUser] = useState(GetUser());
 
     // set biến 'account' chứa all
     const account = useSelector(state => state?.account);
 
     // set biến 'userSelector' chứa thông tin đã đăng nhập
-    const userSelector = useSelector(state => state?.account?.user?.user);
+    const userSelector = useSelector(state => state?.account?.user?.user?.user_info);
 
-    // check biến 'account' đã authenticated là TRUE chưa.
+    // // check biến 'account' đã authenticated là TRUE chưa.
     const isAuthenticated = account.isAuthenticated;
-    const dispatch = useDispatch();
 
-    console.log('account', account)
-    console.log('userSelector', userSelector)
-
-    // Function xử lý thoát đăng nhập
-    const handleLogOut = () => {
-        console.log('Button Logout clicked')
-        localStorage.removeItem('access_token');
-        dispatch(doLogoutAction());
-        setUser(null);
-    }
+    // console.log('User info: ' ,userSelector);
 
     return (
         <>
             <div style={{ width: '100%', maxWidth: '300' }}>
-                <Navbar>
+                <Navbar style={{ padding: '0' }}>
                     <Container>
-                        <div>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <img
+                                src={FormImage}
+                                style={{ width: '100px' }}
+                                alt="logo"
+                            />
                             <Navbar.Brand style={BrandHeader} href="/">
-                                <img
-                                    alt=""
-                                    src="/src/assets/img/logo.svg"
-                                    width="50"
-                                    height="50"
-                                    className="d-inline-block"
-                                />{' '}
-                                Nha Khoa Kim
+                                Nha Khoa Sức Khỏe
                             </Navbar.Brand>
                         </div>
 
@@ -157,20 +87,9 @@ const NavBar = () => {
                             <Nav className="justify-content-center" activeKey="/home">
                                 <Nav.Link style={TextHeader} href="/">Trang chủ</Nav.Link>
                                 <Nav.Link href='/loai-hinh-dich-vu' style={TextHeader} eventKey='link-2'>
-                                    <Dropdown
-                                        menu={{
-                                            items,
-                                        }}
-                                    >
-                                        <Space style={{ color: 'black' }}>
-                                            Dịch vụ
-                                            <DownOutlined />
-                                        </Space>
-                                    </Dropdown>
+                                    <CategoryDropdown />
                                 </Nav.Link>
-                                {/* <Nav.Link href='#gia' style={TextHeader} eventKey="link-3">Bảng giá</Nav.Link> */}
                                 <Nav.Link href='/lich-lam-viec' style={TextHeader} eventKey="link-4">Lịch làm việc</Nav.Link>
-                                <Nav.Link href='/dat-lich-hen' style={TextHeader} eventKey="link-5">Đặt hẹn</Nav.Link>
                                 <Nav.Link href='/lien-he' style={TextHeader} eventKey="link-6">Liên hệ</Nav.Link>
                             </Nav>
                         </div>
@@ -178,25 +97,49 @@ const NavBar = () => {
                         {/* Button Sign IN Sign UP */}
                         <div>
                             <Nav className="justify-content-center">
-
                                 {isAuthenticated === true ? (
-                                    <li>
-                                        <span>Hello, {userSelector.full_name}</span>
-                                        <Button onClick={handleLogOut} type="primary">Logout</Button>
-                                    </li>
+                                    <>
+                                        <Nav.Link href='/dat-lich-hen' style={ButtonHeader}>
+                                            <Button className='btn btn-danger' type='button'>
+                                                <Space style={BookingBtn}>
+                                                    <CarryOutOutlined />
+                                                    Đặt lịch hẹn
+                                                </Space>
+                                            </Button>
+                                        </Nav.Link>
+
+                                        <Nav.Link href='#patien' style={ButtonHeader}>
+                                            <Button className='btn btn-primary' type='button'>
+                                                <UserProfileDropDown user={userSelector} />
+                                            </Button>
+                                        </Nav.Link>
+                                    </>
                                 ) : (
                                     <>
-                                        <Nav.Link href='/dang-nhap' style={TextHeader}>
-                                            <Button type='primary' variant="outline-primary">
+                                        <Nav.Link href='/dang-nhap' style={ButtonHeader}>
+                                            <Button className='btn btn-danger' type='button'>
+                                                <Space style={BookingBtn}>
+                                                    <CarryOutOutlined />
+                                                    Đặt lịch hẹn
+                                                </Space>
+                                            </Button>
+                                        </Nav.Link>
+
+                                        <Nav.Link href='/dang-nhap' style={ButtonHeader}>
+                                            <Button class="btn btn-primary" type='button'>
                                                 Đăng nhập
                                             </Button>
                                         </Nav.Link>
 
-                                        <Nav.Link href='/dang-ky' style={TextHeader}>
-                                            <Button type='primary' variant="primary">
+                                        <div className='d-flex '>
+                                            <div style={OrText}>
+                                                hoặc
+                                            </div>
+
+                                            <Nav.Link className='text-decoration-underline' href='/dang-ky' style={ButtonHeader}>
                                                 Đăng ký
-                                            </Button>
-                                        </Nav.Link>
+                                            </Nav.Link>
+                                        </div>
                                     </>
                                 )}
                             </Nav>

@@ -1,4 +1,4 @@
-import { Button, Form, Input, Row, Col, Image, Checkbox, notification } from 'antd';
+import { Button, Form, Input, Row, Col, Checkbox, notification, Typography } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -6,16 +6,29 @@ import { useNavigate } from 'react-router-dom';
 import { GetLogin } from '../../apis/api';
 import { doLoginAction } from '../../redux/account/accountSlice';
 
+// Ảnh Form Signin
+import FormImage from '../../assets/img/Signin/Logo.png'
+
+// CSS Animation
+import '../../scss/authText.css';
+
+const { Title, Paragraph } = Typography;
+
 const FormLayout = {
-    backgroundColor: '#fff',
-    borderRadius: '4px',
-    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .14)',
-    boxSizing: 'border - box',
-    overflow: 'hidden',
+    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+}
+
+const LoginText = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    // background: 'linear-gradient(to right, #0d6efd, #00bfff)',
+    height: '100%',
+    padding: '24px'
 }
 
 const SignIn = () => {
-
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -29,69 +42,52 @@ const SignIn = () => {
             console.log('Response Login: ', res);
             // set biến token
             accessToken = res.data.access_token;
+            // console.log('token:', accessToken);
             // lưu vào LocalStorage
             localStorage.setItem('access_token', accessToken);
             // Goi Redux
-            dispatch(doLoginAction({ user: res.data.user_info }));
+            dispatch(doLoginAction({
+                // access_token: accessToken,
+                user: res.data
+            }));
 
             if (res.status === 200) {
                 // Navigate to the home page
                 navigate('/');
                 // Show a success message
-                notification.success("Đăng nhập thành công");
+                notification.success({
+                    type: 'success',
+                    message: 'Đăng nhập thành công',
+                    duration: 2,
+                })
             }
         } catch (error) {
             // Log the error for debugging
             console.log(error);
-
-            // Check the error response status code and show corresponding notifications
-            if (error.response) {
+            if (error.response.status) {
                 switch (error.response.status) {
-                    case 400:
-                        notification.error({
-                            message: 'Đăng nhập thất bại',
-                            description: '400 Bad Request',
-                            duration: 5,
-                        });
-                        break;
-                    case 401:
-                        notification.error({
-                            message: 'Đăng nhập thất bại',
-                            description: '401 Unauthorized',
-                            duration: 5,
-                        });
-                        break;
-                    case 404:
-                        notification.error({
-                            message: 'Đăng nhập thất bại',
-                            description: '404 Not Found',
-                            duration: 5,
-                        });
-                        break;
                     case 500:
                         notification.error({
                             message: 'Đăng nhập thất bại',
-                            description: '500 Internal Server Error',
+                            description: 'Hệ thống không phản hồi',
                             duration: 5,
                         });
                         break;
-                    default:
+                    case 400:
                         notification.error({
                             message: 'Đăng nhập thất bại',
-                            description: error.response.data.errors || 'An unknown error occurred',
+                            description: 'Thông tin đăng nhập không hợp lệ.',
                             duration: 5,
                         });
+                        break;
                 }
-            } else {
-                // Handle network errors or other issues that don't have a response
-                notification.error({
-                    message: 'Đăng nhập thất bại',
-                    description: 'An error occurred. Please check your network connection and try again.',
-                    duration: 5,
-                });
             }
+            notification.error({
+                message: 'Đăng nhập thất bại',
+                description: 'Email hoặc mật khẩu không chính xác.',
+                duration: 5,
+            });
         }
-        // setIsLoading(false);
         return;
     };
 
@@ -99,98 +95,104 @@ const SignIn = () => {
     // *********** JSX **************
     return (
         <>
-            <div className="sign-in" style={{ width: '100%' }}>
+            <div className="sign-in" style={{ width: '70%', margin: '4rem auto' }}>
                 <div className="container space-1">
                     <div>
                         <Row>
                             <Col span={12}>
-                                {/* Img */}
-                                <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Image.PreviewGroup
-                                        preview={{
-                                            onChange: (current, prev) => console.log(`current index: ${current}, prev index: ${prev}`),
-                                        }}
-                                    >
-                                        <Image width={200} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Image.PreviewGroup>
-                                </div>
-                            </Col>
-                            <Col span={12}>
                                 {/* Form Inout */}
                                 <div className='w-lg-60 mx-auto p-3' style={FormLayout}>
-                                    <div className="w-md-80 w-lg-50 text-center mx-md-auto mb-lg-5 mb-md-3">
-                                        <h2 style={{ color: '#f6921e', fontWeight: '400', textTransform: 'uppercase' }}>
-                                            Đăng Nhập
-                                        </h2>
-                                        <p style={{ lineHeight: '1.5', margin: 0 }}>
-                                            <i style={{ fontStyle: 'italic', fontSize: '0.9625rem' }}>Vui lòng để lại thông tin, nhu cầu của quý khách.</i>
-                                        </p>
-                                        <p style={{ lineHeight: '1.5' }}>
-                                            <i style={{ fontStyle: 'italic', fontSize: '0.9625rem' }}>Nha Khoa Kim sẽ liên hệ đến Quý Khách trong thời gian sớm nhất</i>
-                                        </p>
-                                    </div>
-                                    <Form
-                                        name="normal_login"
-                                        className="login-form"
-                                        style={{
-                                            width: '100%',
-                                            maxWidth: '300px',
-                                            margin: 'auto',
-                                            display: 'block',
-                                        }}
-                                        initialValues={{
-                                            remember: true,
-                                        }}
-                                        onFinish={onFinish}
-                                    >
-                                        <Form.Item
-                                            name="email"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Vui lòng nhập email!',
-                                                },
-                                            ]}
-                                        >
-                                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
-                                        </Form.Item>
-
-                                        <Form.Item
-                                            name="password"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Vui lòng nhập mật khẩu!',
-                                                },
-                                            ]}
-                                        >
-                                            <Input.Password
-                                                prefix={<LockOutlined className="site-form-item-icon" />}
-                                                type="password"
-                                                placeholder="Mật khẩu"
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height:'100%' }}>
+                                        <div style={{ textAlign: 'center' }}>
+                                            <img
+                                                src={FormImage}
+                                                style={{ width: '185px' }}
+                                                alt="logo"
                                             />
-                                        </Form.Item>
-                                        <Form.Item>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <Form.Item name="remember" valuePropName="checked" noStyle>
-                                                    <Checkbox>Remember me</Checkbox>
-                                                </Form.Item>
-
-                                                <a className="login-form-forgot" href="">
-                                                    Quên mật khẩu
-                                                </a>
-                                            </div>
-                                        </Form.Item>
-                                        <div>
-                                            <Form.Item>
-
-                                                <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
-                                                    Đăng nhập
-                                                </Button>
-                                                Or <a href="">Đăng ký!</a>
-                                            </Form.Item>
+                                            <Title level={2} style={{ marginTop: '16px', marginBottom: '40px', textTransform:'capitalize' }}>đăng nhập</Title>
                                         </div>
-                                    </Form>
+                                        <Form
+                                            name="normal_login"
+                                            className="login-form"
+                                            style={{
+                                                width: '100%',
+                                                maxWidth: '300px',
+                                                margin: 'auto',
+                                                display: 'block',
+                                            }}
+                                            initialValues={{
+                                                remember: true,
+                                            }}
+                                            onFinish={onFinish}
+                                        >
+                                            <Form.Item
+                                                name="email"
+                                                rules={[
+                                                    {
+                                                        type: "email",
+                                                        message: "Email không đúng dịnh dạng!"
+                                                    },
+                                                    {
+                                                        required: true,
+                                                        message: 'Vui lòng nhập email!',
+                                                    },
+                                                ]}
+                                            >
+                                                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+                                            </Form.Item>
+
+                                            <Form.Item
+                                                name="password"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: 'Vui lòng nhập mật khẩu!',
+                                                    },
+                                                ]}
+                                            >
+                                                <Input.Password
+                                                    prefix={<LockOutlined className="site-form-item-icon" />}
+                                                    type="password"
+                                                    placeholder="Mật khẩu"
+                                                />
+                                            </Form.Item>
+                                            <Form.Item>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                    <Form.Item name="remember" valuePropName="checked" noStyle>
+                                                        <Checkbox>Remember me</Checkbox>
+                                                    </Form.Item>
+
+                                                    <a className="login-form-forgot" href="">
+                                                        Quên mật khẩu
+                                                    </a>
+                                                </div>
+                                            </Form.Item>
+                                            <div>
+                                                <Form.Item>
+
+                                                    <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
+                                                        Đăng nhập
+                                                    </Button>
+                                                    Hoặc <a href="/dang-ky">Đăng ký!</a>
+                                                </Form.Item>
+                                            </div>
+                                        </Form>
+                                    </div>
+                                </div>
+                            </Col>
+
+                            <Col span={12}>
+                                
+                                <div className='form-text' style={LoginText}>
+                                    <div style={{ color: 'white', padding: '24px', margin: 'auto' }}>
+                                        <Title level={3} style={{ color: 'white', textTransform:'capitalize' }}>phòng khám nha khoa sức khỏe</Title>
+                                        <Paragraph style={{ color: 'white', textAlign:'justify' }}>
+                                            Tại Phòng khám Nha khoa của chúng tôi, sức khỏe răng miệng của bạn là ưu tiên hàng đầu.
+                                            Chúng tôi cam kết cung cấp dịch vụ chăm sóc nha khoa chất lượng cao với đội ngũ bác sĩ và nhân viên chuyên nghiệp, tận tâm.
+                                            Từ việc kiểm tra định kỳ đến các dịch vụ điều trị phức tạp, chúng tôi luôn sẵn sàng đáp ứng nhu cầu của bạn.
+                                            Hãy để chúng tôi giúp bạn có một nụ cười tươi sáng và khỏe mạnh hơn mỗi ngày.
+                                        </Paragraph>
+                                    </div>
                                 </div>
                             </Col>
                         </Row>
