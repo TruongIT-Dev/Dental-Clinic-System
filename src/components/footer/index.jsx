@@ -1,41 +1,108 @@
+// CSS
+import '../../scss/footer.css';
 
+
+
+// Logo
+import FormImage from '../../assets/img/Signin/Logo.png'
 
 const FooterComponent = () => {
     return (
         <>
-            <footer className="page-footer font-small blue pt-4">
-                <div className="container-fluid text-center text-md-left">
-                    <div className="row">
-                        <div className="col-md-6 mt-md-0 mt-3">
-                            <h5 className="text-uppercase">về chúng tôi</h5>
-                            <p className="text-center w-100 p-3">Chào mừng đến với Nha Khoa Sức Khỏe - nơi chăm sóc cho nụ cười của bạn! Chúng tôi cam kết cung cấp các dịch vụ nha khoa chất lượng cao, từ chăm sóc định kỳ đến điều trị phức tạp, nhằm mang lại nụ cười tự tin và sức khỏe toàn diện cho mỗi bệnh nhân. Với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại, chúng tôi luôn đặt sự thoải mái và hài lòng của bệnh nhân lên hàng đầu. Hãy đồng hành cùng chúng tôi trên hành trình chăm sóc nụ cười và sức khỏe của bạn!</p>
-                        </div>
-
-                        <hr className="clearfix w-100 d-md-none pb-0" />
-
-                        <div className="col-md-3 mb-md-0 mb-3">
-                            <h5 className="text-uppercase">Links</h5>
-                            <ul className="list-unstyled">
-                                <li><a href="#">Trang Chủ</a></li>
-                                <li><a href="#">Dịch Vụ</a></li>
-                                <li><a href="#">Về Chúng Tôi</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Liên Hệ</a></li>
-                            </ul>
-                        </div>
-
-                        <div className="col-md-3 mb-md-0 mb-3">
-                            <h5 className="text-uppercase">Links</h5>
-                            <ul className="list-unstyled">
-                                <li><a href="#!">Link 1</a></li>
-                                <li><a href="#!">Link 2</a></li>
-                                <li><a href="#!">Link 3</a></li>
-                                <li><a href="#!">Link 4</a></li>
-                            </ul>
-                        </div>
-                    </div>
+            <footer className="footer">
+                    <div className="footer__addr">
+                    <h1 className="footer__logo">Nha Khoa Sức Khỏe</h1>
+                    <img
+                        src={FormImage}
+                        style={{ width: '100px' }}
+                        alt="logo"
+                    />
+                        
+                    <h2>Contact</h2>
+                    
+                    <address>
+                    5534 Somewhere In. The World 22193-10212<br></br>
+                        
+                    <a className="footer__btn" href="mailto:example@gmail.com">Email Us</a>
+                    </address>
                 </div>
-            </footer>
+                
+                <ul className="footer__nav">
+                    <li className="nav__item">
+                    <h2 className="nav__title">Media</h2>
+
+                    <ul className="nav__ul">
+                        <li>
+                        <a href="#">Online</a>
+                        </li>
+
+                        <li>
+                        <a href="#">Print</a>
+                        </li>
+                            
+                        <li>
+                        <a href="#">Alternative Ads</a>
+                        </li>
+                    </ul>
+                    </li>
+                    
+                    <li className="nav__item nav__item--extra">
+                    <h2 className="nav__title">Technology</h2>
+                    
+                    <ul className="nav__ul nav__ul--extra">
+                        <li>
+                        <a href="#">Hardware Design</a>
+                        </li>
+                        
+                        <li>
+                        <a href="#">Software Design</a>
+                        </li>
+                        
+                        <li>
+                        <a href="#">Digital Signage</a>
+                        </li>
+                        
+                        <li>
+                        <a href="#">Automation</a>
+                        </li>
+                        
+                        <li>
+                        <a href="#">Artificial Intelligence</a>
+                        </li>
+                        
+                        <li>
+                        <a href="#">IoT</a>
+                        </li>
+                    </ul>
+                    </li>
+                    
+                    <li className="nav__item">
+                    <h2 className="nav__title">Legal</h2>
+                    
+                        <ul className="nav__ul">
+                            <li>
+                            <a href="#">Privacy Policy</a>
+                            </li>
+                            
+                            <li>
+                            <a href="#">Terms of Use</a>
+                            </li>
+                            
+                            <li>
+                            <a href="#">Sitemap</a>
+                            </li>
+                        </ul>
+                        </li>
+                        </ul>
+                
+                    <div className="legal">
+                            <p>&copy; 2019 Something. All rights reserved.</p>
+                            
+                            <div className="legal__links">
+                            <span>Made with <span className="heart">♥</span> remotely from Anywhere</span>
+                            </div>
+                    </div>
+        </footer>
         </>
     )
 }
