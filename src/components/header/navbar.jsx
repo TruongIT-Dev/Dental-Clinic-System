@@ -8,13 +8,15 @@ import UserProfileDropDown from './UserProfileDropDown';
 
 // CSS
 import '../../scss/navbar.css';
-import { Space, Avatar } from 'antd';
+import { Space } from 'antd';
 
+// Logo
+import FormImage from '../../assets/img/Signin/Logo.png'
 
 
 const BrandHeader = {
     disPlay: 'flex',
-    alignItems :'center',
+    alignItems: 'center',
     fontSize: '32px',
     fontWeight: 500,
     color: '#005f9d',
@@ -28,11 +30,25 @@ const TextHeader = {
     textDecoration: 'none',
     textTransform: 'capitalize',
     marginRight: '12px',
-   paddingBottom: '0',
+    paddingBottom: '0',
 }
 
 const ButtonHeader = {
     padding: 0,
+    fontSize: '16px',
+    color: '#1677ff',
+    textTransform: 'capitalize',
+    paddingBottom: '0',
+    textDecoration: '1px'
+}
+
+const BookingBtn = {
+    color: 'white', fontWeight: '500', textTransform: 'capitalize', cursor: 'pointer'
+}
+
+const OrText = {
+    margin: '0 0.5rem',
+    color: '#a6a4a4',
 }
 
 const NavBar = () => {
@@ -54,7 +70,12 @@ const NavBar = () => {
             <div style={{ width: '100%', maxWidth: '300' }}>
                 <Navbar style={{ padding: '0' }}>
                     <Container>
-                        <div style={{display:'flex', alignItems:'center'}}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <img
+                                src={FormImage}
+                                style={{ width: '100px' }}
+                                alt="logo"
+                            />
                             <Navbar.Brand style={BrandHeader} href="/">
                                 Nha Khoa Sức Khỏe
                             </Navbar.Brand>
@@ -69,12 +90,6 @@ const NavBar = () => {
                                 </Nav.Link>
                                 <Nav.Link href='/lich-lam-viec' style={TextHeader} eventKey="link-4">Lịch làm việc</Nav.Link>
                                 <Nav.Link href='/lien-he' style={TextHeader} eventKey="link-6">Liên hệ</Nav.Link>
-                                <Nav.Link href='/dat-lich-hen' style={TextHeader} eventKey="link-5">
-                                    <Space style={{color:'red',fontWeight:'500', textTransform: 'capitalize', cursor: 'pointer' }}>
-                                        <CarryOutOutlined />
-                                        Đặt lịch hẹn
-                                    </Space>
-                                </Nav.Link>
                             </Nav>
                         </div>
 
@@ -83,6 +98,15 @@ const NavBar = () => {
                             <Nav className="justify-content-center">
                                 {isAuthenticated === true ? (
                                     <>
+                                        <Nav.Link href='/dat-lich-hen' style={ButtonHeader}>
+                                            <Button className='btn btn-danger' type='button'>
+                                                <Space style={BookingBtn}>
+                                                    <CarryOutOutlined />
+                                                    Đặt lịch hẹn
+                                                </Space>
+                                            </Button>
+                                        </Nav.Link>
+
                                         <Nav.Link href='#user' style={ButtonHeader}>
                                             <Button className='btn btn-primary' type='button'>
                                                 <UserProfileDropDown user={userSelector} />
@@ -92,16 +116,29 @@ const NavBar = () => {
                                 ) : (
                                     <>
                                         <Nav.Link href='/dang-nhap' style={ButtonHeader}>
-                                            <Button type='primary' variant="outline-primary">
+                                            <Button className='btn btn-danger' type='button'>
+                                                <Space style={BookingBtn}>
+                                                    <CarryOutOutlined />
+                                                    Đặt lịch hẹn
+                                                </Space>
+                                            </Button>
+                                        </Nav.Link>
+
+                                        <Nav.Link href='/dang-nhap' style={ButtonHeader}>
+                                            <Button class="btn btn-primary" type='button'>
                                                 Đăng nhập
                                             </Button>
                                         </Nav.Link>
 
-                                        <Nav.Link href='/dang-ky' style={ButtonHeader}>
-                                            <Button type='primary' variant="primary">
+                                        <div className='d-flex '>
+                                            <div style={OrText}>
+                                                hoặc
+                                            </div>
+
+                                            <Nav.Link className='text-decoration-underline' href='/dang-ky' style={ButtonHeader}>
                                                 Đăng ký
-                                            </Button>
-                                        </Nav.Link>
+                                            </Nav.Link>
+                                        </div>
                                     </>
                                 )}
                             </Nav>

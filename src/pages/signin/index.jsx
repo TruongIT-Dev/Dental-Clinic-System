@@ -1,4 +1,4 @@
-import { Button, Form, Input, Row, Col, Image, Checkbox, notification } from 'antd';
+import { Button, Form, Input, Row, Col, Checkbox, notification, Typography } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -6,12 +6,29 @@ import { useNavigate } from 'react-router-dom';
 import { GetLogin } from '../../apis/api';
 import { doLoginAction } from '../../redux/account/accountSlice';
 
+// Ảnh Form Signin
+import FormImage from '../../assets/img/Signin/Logo.png'
+
+// CSS Animation
+import '../../scss/authText.css';
+
+const { Title, Paragraph } = Typography;
+
 const FormLayout = {
     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
 }
 
-const SignIn = () => {
+const LoginText = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    // background: 'linear-gradient(to right, #0d6efd, #00bfff)',
+    height: '100%',
+    padding: '24px'
+}
 
+const SignIn = () => {
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -83,91 +100,99 @@ const SignIn = () => {
                     <div>
                         <Row>
                             <Col span={12}>
-                                {/* Img */}
-                                <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Image.PreviewGroup
-                                        preview={{
-                                            onChange: (current, prev) => console.log(`current index: ${current}, prev index: ${prev}`),
-                                        }}
-                                    >
-                                        <Image width={200} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                                    </Image.PreviewGroup>
-                                </div>
-                            </Col>
-                            <Col span={12}>
                                 {/* Form Inout */}
                                 <div className='w-lg-60 mx-auto p-3' style={FormLayout}>
-                                    <div className="w-md-80 w-lg-50 text-center mx-md-auto mb-lg-5 mb-md-3">
-                                        <h2 style={{ color: '#f6921e', fontWeight: '400', textTransform: 'uppercase' }}>
-                                            Đăng Nhập
-                                        </h2>
-                                    </div>
-                                    <Form
-                                        name="normal_login"
-                                        className="login-form"
-                                        style={{
-                                            width: '100%',
-                                            maxWidth: '300px',
-                                            margin: 'auto',
-                                            display: 'block',
-                                        }}
-                                        initialValues={{
-                                            remember: true,
-                                        }}
-                                        onFinish={onFinish}
-                                    >
-                                        <Form.Item
-                                            name="email"
-                                            rules={[
-                                                {
-                                                    type: "email",
-                                                    message: "Email không đúng dịnh dạng!"
-                                                },
-                                                {
-                                                    required: true,
-                                                    message: 'Vui lòng nhập email!',
-                                                },
-                                            ]}
-                                        >
-                                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
-                                        </Form.Item>
-
-                                        <Form.Item
-                                            name="password"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Vui lòng nhập mật khẩu!',
-                                                },
-                                            ]}
-                                        >
-                                            <Input.Password
-                                                prefix={<LockOutlined className="site-form-item-icon" />}
-                                                type="password"
-                                                placeholder="Mật khẩu"
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height:'100%' }}>
+                                        <div style={{ textAlign: 'center' }}>
+                                            <img
+                                                src={FormImage}
+                                                style={{ width: '185px' }}
+                                                alt="logo"
                                             />
-                                        </Form.Item>
-                                        <Form.Item>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <Form.Item name="remember" valuePropName="checked" noStyle>
-                                                    <Checkbox>Remember me</Checkbox>
-                                                </Form.Item>
-
-                                                <a className="login-form-forgot" href="">
-                                                    Quên mật khẩu
-                                                </a>
-                                            </div>
-                                        </Form.Item>
-                                        <div>
-                                            <Form.Item>
-
-                                                <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
-                                                    Đăng nhập
-                                                </Button>
-                                                Hoặc <a href="/dang-ky">Đăng ký!</a>
-                                            </Form.Item>
+                                            <Title level={2} style={{ marginTop: '16px', marginBottom: '40px', textTransform:'capitalize' }}>đăng nhập</Title>
                                         </div>
-                                    </Form>
+                                        <Form
+                                            name="normal_login"
+                                            className="login-form"
+                                            style={{
+                                                width: '100%',
+                                                maxWidth: '300px',
+                                                margin: 'auto',
+                                                display: 'block',
+                                            }}
+                                            initialValues={{
+                                                remember: true,
+                                            }}
+                                            onFinish={onFinish}
+                                        >
+                                            <Form.Item
+                                                name="email"
+                                                rules={[
+                                                    {
+                                                        type: "email",
+                                                        message: "Email không đúng dịnh dạng!"
+                                                    },
+                                                    {
+                                                        required: true,
+                                                        message: 'Vui lòng nhập email!',
+                                                    },
+                                                ]}
+                                            >
+                                                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+                                            </Form.Item>
+
+                                            <Form.Item
+                                                name="password"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: 'Vui lòng nhập mật khẩu!',
+                                                    },
+                                                ]}
+                                            >
+                                                <Input.Password
+                                                    prefix={<LockOutlined className="site-form-item-icon" />}
+                                                    type="password"
+                                                    placeholder="Mật khẩu"
+                                                />
+                                            </Form.Item>
+                                            <Form.Item>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                    <Form.Item name="remember" valuePropName="checked" noStyle>
+                                                        <Checkbox>Remember me</Checkbox>
+                                                    </Form.Item>
+
+                                                    <a className="login-form-forgot" href="">
+                                                        Quên mật khẩu
+                                                    </a>
+                                                </div>
+                                            </Form.Item>
+                                            <div>
+                                                <Form.Item>
+
+                                                    <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
+                                                        Đăng nhập
+                                                    </Button>
+                                                    Hoặc <a href="/dang-ky">Đăng ký!</a>
+                                                </Form.Item>
+                                            </div>
+                                        </Form>
+                                    </div>
+                                </div>
+                            </Col>
+
+                            <Col span={12}>
+                                
+                                <div className='form-text' style={LoginText}>
+                                    <div style={{ color: 'white', padding: '24px', margin: 'auto' }}>
+                                        <Title level={3} style={{ color: 'white', textTransform:'capitalize' }}>phòng khám nha khoa sức khỏe</Title>
+                                        <Paragraph style={{ color: 'white', textAlign:'justify' }}>
+                                            Tại Phòng khám Nha khoa của chúng tôi, sức khỏe răng miệng của bạn là ưu tiên hàng đầu.
+                                            Chúng tôi cam kết cung cấp dịch vụ chăm sóc nha khoa chất lượng cao với đội ngũ bác sĩ và nhân viên chuyên nghiệp, tận tâm.
+                                            Từ việc kiểm tra định kỳ đến các dịch vụ điều trị phức tạp, chúng tôi luôn sẵn sàng đáp ứng nhu cầu của bạn.
+                                            Hãy để chúng tôi giúp bạn có một nụ cười tươi sáng và khỏe mạnh hơn mỗi ngày.
+                                        </Paragraph>
+                                    </div>
                                 </div>
                             </Col>
                         </Row>
