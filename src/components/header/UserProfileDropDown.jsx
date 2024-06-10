@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // Antd
 import { Dropdown, Space, Avatar } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+
 
 const LinkDropDownStyle = {
     textDecoration: 'none',
@@ -71,7 +71,7 @@ const UserProfileDropDown = ({ user }) => {
                 }}
                 style={{
                     cursor: 'pointer',
-                    fontSize:'16px',
+                    fontSize: '16px',
                 }}
                 placement="bottom"
             >
