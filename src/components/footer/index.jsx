@@ -1,108 +1,109 @@
-// CSS
-import '../../scss/footer.css';
-
-
-
 // Logo
 import FormImage from '../../assets/img/Signin/Logo.png'
 
 const FooterComponent = () => {
     return (
         <>
-            <footer className="footer">
-                    <div className="footer__addr">
-                    <h1 className="footer__logo">Nha Khoa Sức Khỏe</h1>
-                    <img
-                        src={FormImage}
-                        style={{ width: '100px' }}
-                        alt="logo"
-                    />
-                        
-                    <h2>Contact</h2>
+            <footer
+                    className="text-center text-lg-start text-dark"
+                    style={{backgroundColor: '#ECEFF1'}}
+                    >
+                <section className="">
+                <div className="container text-center text-md-start mt-5">
                     
-                    <address>
-                    5534 Somewhere In. The World 22193-10212<br></br>
-                        
-                    <a className="footer__btn" href="mailto:example@gmail.com">Email Us</a>
-                    </address>
-                </div>
-                
-                <ul className="footer__nav">
-                    <li className="nav__item">
-                    <h2 className="nav__title">Media</h2>
-
-                    <ul className="nav__ul">
-                        <li>
-                        <a href="#">Online</a>
-                        </li>
-
-                        <li>
-                        <a href="#">Print</a>
-                        </li>
-                            
-                        <li>
-                        <a href="#">Alternative Ads</a>
-                        </li>
-                    </ul>
-                    </li>
+                    <div className="row mt-3">
                     
-                    <li className="nav__item nav__item--extra">
-                    <h2 className="nav__title">Technology</h2>
-                    
-                    <ul className="nav__ul nav__ul--extra">
-                        <li>
-                        <a href="#">Hardware Design</a>
-                        </li>
+                    <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <img
+                                src={FormImage}
+                                style={{ width: '100px' }}
+                                alt="logo"
+                            /> 
                         
-                        <li>
-                        <a href="#">Software Design</a>
-                        </li>
+                        <h6 className="text-uppercase fw-bold">Nha Khoa Sức Khỏe</h6>
                         
-                        <li>
-                        <a href="#">Digital Signage</a>
-                        </li>
-                        
-                        <li>
-                        <a href="#">Automation</a>
-                        </li>
-                        
-                        <li>
-                        <a href="#">Artificial Intelligence</a>
-                        </li>
-                        
-                        <li>
-                        <a href="#">IoT</a>
-                        </li>
-                    </ul>
-                    </li>
-                    
-                    <li className="nav__item">
-                    <h2 className="nav__title">Legal</h2>
-                    
-                        <ul className="nav__ul">
-                            <li>
-                            <a href="#">Privacy Policy</a>
-                            </li>
-                            
-                            <li>
-                            <a href="#">Terms of Use</a>
-                            </li>
-                            
-                            <li>
-                            <a href="#">Sitemap</a>
-                            </li>
-                        </ul>
-                        </li>
-                        </ul>
-                
-                    <div className="legal">
-                            <p>&copy; 2019 Something. All rights reserved.</p>
-                            
-                            <div className="legal__links">
-                            <span>Made with <span className="heart">♥</span> remotely from Anywhere</span>
-                            </div>
+                        <hr
+                            className="mb-4 mt-0 d-inline-block mx-auto"
+                            style={{width: '60px', backgroundColor: '#7c4dff', height: '2px'}}
+                            />
+                        <p>
+                        Here you can use rows and columns to organize your footer
+                        content. Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit.
+                        </p>
                     </div>
-        </footer>
+                    
+
+                    
+                    <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 className="text-uppercase fw-bold">Products</h6>
+                        <hr
+                            className="mb-4 mt-0 d-inline-block mx-auto"
+                            style={{width: '60px', backgroundColor: '#7c4dff', height: '2px'}}
+                            />
+                        <p>
+                        <a href="#!" className="text-dark">MDBootstrap</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">MDWordPress</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">BrandFlow</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">Bootstrap Angular</a>
+                        </p>
+                    </div>
+                    
+                    <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        
+                        <h6 className="text-uppercase fw-bold">Useful links</h6>
+                        <hr
+                            className="mb-4 mt-0 d-inline-block mx-auto"
+                            style={{width: '60px', backgroundColor: '#7c4dff', height: '2px'}}
+                            />
+                        <p>
+                        <a href="#!" className="text-dark">Your Account</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">Become an Affiliate</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">Shipping Rates</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">Help</a>
+                        </p>
+                    </div>
+                    
+                    <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        
+                        <h6 className="text-uppercase fw-bold">Contact</h6>
+                        <hr
+                            className="mb-4 mt-0 d-inline-block mx-auto"
+                            style={{width: '60px', backgroundColor: '#7c4dff', height: '2px'}}
+                            />
+                        <p><i className="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+                        <p><i className="fas fa-envelope mr-3"></i> info@example.com</p>
+                        <p><i className="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+                        <p><i className="fas fa-print mr-3"></i> + 01 234 567 89</p>
+                    </div>
+                    
+                    </div>
+                    
+                </div>
+                </section>
+                
+                <div
+                    className="text-center p-3"
+                   style={{backgroundColor: 'rgba(0, 0, 0, 0.2)'}}
+                    >
+                © 2020 Copyright:
+                <a className="text-dark" href="https://mdbootstrap.com/">
+                        MDBootstrap.com
+                    </a>
+                </div>
+            </footer>
         </>
     )
 }
