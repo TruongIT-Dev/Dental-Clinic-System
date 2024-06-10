@@ -14,6 +14,7 @@ import Contact from './pages/contact'
 import Schedule from './pages/schedule'
 import ServiceDetail from './pages/services'
 import DashBoard from './pages/dashboard'
+import User from './pages/dashboard/user'
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
           <Route path='/dang-nhap' element={<SignIn />} />
           <Route path='/dang-ky' element={<SignUp />} />
 
+<Route path='/dashboard/user'  element={<User/>}/>
 
           <Route path='/error' element={<Error />} />
 
