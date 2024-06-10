@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { doLogoutAction } from '../../redux/account/accountSlice';
 import { useNavigate } from 'react-router-dom';
 // Antd
-import { Dropdown, Space, Avatar } from 'antd';
+import { Dropdown, Space } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 
 
@@ -31,7 +31,7 @@ const UserProfileDropDown = ({ user }) => {
         {
             key: '1',
             label: (
-                <a style={LinkDropDownStyle} href="#">
+                <a style={LinkDropDownStyle} href="/patient/thong-tin-ca-nhan">
                     Tài khoản của tôi
                 </a>
             ),

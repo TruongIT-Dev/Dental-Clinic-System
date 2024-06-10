@@ -108,7 +108,7 @@ const NavBar = () => {
                                             </Button>
                                         </Nav.Link>
 
-                                        <Nav.Link href='#user' style={ButtonHeader}>
+                                        <Nav.Link href='#patien' style={ButtonHeader}>
                                             <Button className='btn btn-primary' type='button'>
                                                 <UserProfileDropDown user={userSelector} />
                                             </Button>
