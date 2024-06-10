@@ -14,8 +14,6 @@ import Error from './pages/error'
 import Contact from './pages/contact'
 import Schedule from './pages/schedule'
 import ServiceDetail from './pages/services'
-import DashBoard from './pages/dashboard'
-import User from './pages/dashboard/user'
 // import AdminDashBoard from './pages/dashboard/admin';
 // import UnAuthorizated from './pages/unauthorizated';
 import PatientDashboard from './pages/dashboard/patient';
