@@ -4,7 +4,7 @@ import FormImage from '../../assets/img/Signin/Logo.png'
 const FooterComponent = () => {
     return (
         <>
-            <footer
+            <div
                     className="text-center text-lg-start text-dark"
                     style={{backgroundColor: '#ECEFF1'}}
                     >
@@ -103,7 +103,7 @@ const FooterComponent = () => {
                         MDBootstrap.com
                     </a>
                 </div>
-            </footer>
+            </div>
         </>
     )
 }
