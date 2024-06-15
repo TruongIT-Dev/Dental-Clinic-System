@@ -1,8 +1,8 @@
-const Treatment = () => {
+const PatientTreatment = () => {
     return (
         <>
             Lch5 điều trị như này
         </>
     )
 }
-export default Treatment
+export default PatientTreatment

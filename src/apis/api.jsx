@@ -46,7 +46,12 @@ export const DoListPayment = () => {
     return axios.get('/api/v1/payment-methods');
 }
 
-// Show Thông tin chi tiết của 1 Lịch khám
+// Show Thông tin của 1 Phiếu khám khám
 export const DoViewExaminationAppointment = () => {
-    return axios.get('/api/v1/patients/bookings/examination')
+    return axios.get('/api/v1/patients/appointments/examination')
+}
+
+// Show Thông tin chi tiết của 1 Phiếu khám
+export const DoViewDetailExamination = (card_id) => {
+    return axios.get(`/api/v1/patients/appointments/examination/${card_id}`);
 }
