@@ -3,7 +3,6 @@ import { Button, Form, Select, DatePicker, Input, notification, Radio } from 'an
 import { DoAppointment, DoListPayment, DoListScheduleExamination, DoViewCategory } from '../../apis/api';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SearchOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
