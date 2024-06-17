@@ -39,7 +39,7 @@ const UserProfileDropDown = ({ user }) => {
         {
             key: '2',
             label: (
-                <a style={LinkDropDownStyle} href="#">
+                <a style={LinkDropDownStyle} href="/patient/doi-mat-khau">
                     Đổi mật khẩu
                 </a>
             ),
@@ -47,7 +47,7 @@ const UserProfileDropDown = ({ user }) => {
         {
             key: '3',
             label: (
-                <a style={LinkDropDownStyle} href="#">
+                <a style={LinkDropDownStyle} href="/patient/lich-kham">
                     Lịch khám
                 </a>
             ),

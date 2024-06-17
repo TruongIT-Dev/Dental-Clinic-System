@@ -1,12 +1,12 @@
 import { Button, Space, Table, Image } from 'antd';
 
-import bocRangSu from '../../../assets/img/catergories/icon-boc-rang-su-1.png';
-import cayGhepImplant from '../../../assets/img/catergories/trong-rang-implant.webp';
-import niengRangThamMy from '../../../assets/img/catergories/nieng-rang-tham-my.png';
-import tayTrangRang from '../../../assets/img/catergories/icon-tay-trang-rang-1.png';
-import nhoRangKhon from '../../../assets/img/catergories/icon-nho-rang-khon-1.png';
-import benhLyNhaChu from '../../../assets/img/catergories/icon-benh-ly-nha-chu.png';
-import dieuTriTuy from '../../../assets/img/catergories/dieu-tri-tuy.png';
+import bocRangSu from '../../../../assets/img/catergories/icon-boc-rang-su-1.png';
+import cayGhepImplant from '../../../../assets/img/catergories/trong-rang-implant.webp';
+import niengRangThamMy from '../../../../assets/img/catergories/nieng-rang-tham-my.png';
+import tayTrangRang from '../../../../assets/img/catergories/icon-tay-trang-rang-1.png';
+import nhoRangKhon from '../../../../assets/img/catergories/icon-nho-rang-khon-1.png';
+import benhLyNhaChu from '../../../../assets/img/catergories/icon-benh-ly-nha-chu.png';
+import dieuTriTuy from '../../../../assets/img/catergories/dieu-tri-tuy.png';
 
 const columns = [
     {

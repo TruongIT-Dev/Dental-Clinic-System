@@ -1,5 +1,5 @@
 import { Typography } from 'antd';
-import FormAppoinment from '../../appoinment/FormAppointment';
+import FormAppoinment from '../../../appoinment/FormAppointment';
 
 const CreateTreatment = () => {
 

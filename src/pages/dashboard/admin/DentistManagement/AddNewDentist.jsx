@@ -1,4 +1,4 @@
-import '../../../scss/AdminAddNewDentist.css'
+import '../../../../scss/AdminAddNewDentist.css'
 import { Typography } from 'antd';
 
 const AddNewDentist = () => {

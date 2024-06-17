@@ -6,11 +6,11 @@ import { Link, Outlet } from 'react-router-dom';
 const PatientDashboard = () => {
     return (
         <>
-            <div style={{ minHeight: '50vh', margin: '5rem 12rem' }}>
+            <div style={{ minHeight: '50vh', margin: '5rem 7rem' }}>
                 <div className='m-auto'>
                     <Card>
                         <Row>
-                            <Col span={8}>
+                            <Col span={7}>
                                 <div style={{ width: '80%' }}>
                                     <Menu mode="inline" defaultOpenKeys={['sub1', 'sub2']}>
 
@@ -38,8 +38,10 @@ const PatientDashboard = () => {
                                     </Menu>
                                 </div>
                             </Col>
-                            <Col span={16}>
-                                <Outlet></Outlet>
+                            <Col span={17} style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
+                                <div style={{width:'100%'}}>
+                                    <Outlet></Outlet>
+                                </div>
                             </Col>
                         </Row>
                     </Card>
