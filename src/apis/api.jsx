@@ -24,6 +24,15 @@ export const DoViewCategory = () => {
     return axios.get('/api/v1/service-categories');
 }
 
+// Api chuyển tới trang Chi tiết Dịch vụ
+export const DoViewDetailCategory = (slug) => {
+    return axios.get(`/api/v1/service-categories/${slug}`);
+}
+
+export const DoViewTableDetailService = (slug) => {
+    return axios.get(`/api/v1/service-categories/${slug}/services`)
+}
+
 // Liệt Kê Lịch Khám Trong Ngày
 export const DoListScheduleExamination = (date, category_id) => {
     return axios.get(`/api/v1/schedules/examination?date=${date}&service_category_id=${category_id}`);

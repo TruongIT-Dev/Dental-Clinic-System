@@ -44,7 +44,7 @@ function App() {
         <Route path='/' element={<PageLayout />}>
           <Route index element={<Home />} />
           <Route path='/loai-hinh-dich-vu' element={<Catergory />} />
-          <Route path='/chi-tiet-dich-vu' element={<ServiceDetail />} />
+          <Route path='/loai-hinh-dich-vu/:slug' element={<ServiceDetail />} /> {/* Specific route before catch-all */}
           <Route path='/lich-lam-viec' element={<Schedule />} />
           <Route path='/lien-he' element={<Contact />} />
 
@@ -56,7 +56,6 @@ function App() {
           {isAuthenticated ? (
             <>
               <Route path='/dat-lich-hen' element={<Appoinment />} />
-
               {/* Dashboard Patient */}
               <Route path='/patient' element={<PatientDashboard />}>
                 <Route index path='thong-tin-ca-nhan' element={<PatientInfo />} />
