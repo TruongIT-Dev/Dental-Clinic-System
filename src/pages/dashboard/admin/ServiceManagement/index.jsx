@@ -10,7 +10,7 @@ import dieuTriTuy from '../../../../assets/img/catergories/dieu-tri-tuy.png';
 
 const columns = [
     {
-        title: 'Ảnh đại diện',
+        title: 'Icon',
         dataIndex: 'img',
         key: 'img',
         render: (imgPath) => (
@@ -30,7 +30,7 @@ const columns = [
         key: 'action',
         render: (_, record) => (
             <Space size="middle">
-                <Button>Xem chi tiết</Button>
+                <Button>Chỉnh sửa</Button>
                 <Button danger>Xóa</Button>
             </Space>
         ),

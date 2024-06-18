@@ -33,36 +33,36 @@ const AdminDashboard = () => {
                         <Link style={{ textDecoration: 'none' }} to="#">Dashboard</Link>
                     </Menu.Item>
 
-                    <Menu.SubMenu key="sub2" title="Schedule Management" icon={<ProfileOutlined />}>
+                    <Menu.SubMenu key="sub1" title="Quản lý Dịch vụ" icon={<TeamOutlined />}>
                         <Menu.Item key="2">
-                            <Link style={{ textDecoration: 'none' }} to="/quan-ly-lich-kham">Lịch khám</Link>
+                            <Link style={{ textDecoration: 'none' }} to="/quan-ly-dich-vu">Loại hình Dịch vụ</Link>
                         </Menu.Item>
                         <Menu.Item key="3">
-                            <Link style={{ textDecoration: 'none' }} to="/quan-ly-lich-dieu-tri">Lịch điều trị</Link>
+                            <Link style={{ textDecoration: 'none' }} to="/tao-dich-vu">Tạo Dịch vụ</Link>
                         </Menu.Item>
+                    </Menu.SubMenu>
+
+                    <Menu.SubMenu key="sub2" title="Schedule Management" icon={<ProfileOutlined />}>
                         <Menu.Item key="4">
-                            <Link style={{ textDecoration: 'none' }} to="/tao-lich-kham">Tạo lịch khám</Link>
+                            <Link style={{ textDecoration: 'none' }} to="/quan-ly-lich-kham">Lịch khám</Link>
                         </Menu.Item>
                         <Menu.Item key="5">
+                            <Link style={{ textDecoration: 'none' }} to="/quan-ly-lich-dieu-tri">Lịch điều trị</Link>
+                        </Menu.Item>
+                        <Menu.Item key="6">
+                            <Link style={{ textDecoration: 'none' }} to="/tao-lich-kham">Tạo lịch khám</Link>
+                        </Menu.Item>
+                        <Menu.Item key="7">
                             <Link style={{ textDecoration: 'none' }} to="/tao-lich-dieu-tri">Tạo lịch điều trị</Link>
                         </Menu.Item>
                     </Menu.SubMenu>
                    
-                    <Menu.SubMenu key="sub1" title="Quản lý Nha sĩ" icon={<TeamOutlined />}>
-                        <Menu.Item key="6">
+                    <Menu.SubMenu key="sub3" title="Quản lý Nha sĩ" icon={<TeamOutlined />}>
+                        <Menu.Item key="8">
                             <Link style={{ textDecoration: 'none' }} to="/quan-ly-nha-si">Danh sách Nha sĩ</Link>
                         </Menu.Item>
-                        <Menu.Item key="7">
-                            <Link style={{ textDecoration: 'none' }} to="/tao-nha-si">Tạo tài khoản Nha sĩ</Link>
-                        </Menu.Item>
-                    </Menu.SubMenu>
-
-                    <Menu.SubMenu key="sub3" title="Quản lý Dịch vụ" icon={<TeamOutlined />}>
-                        <Menu.Item key="8">
-                            <Link style={{ textDecoration: 'none' }} to="/quan-ly-dich-vu">Danh sách Dịch vụ</Link>
-                        </Menu.Item>
                         <Menu.Item key="9">
-                            <Link style={{ textDecoration: 'none' }} to="/tao-dich-vu">Tạo Dịch vụ</Link>
+                            <Link style={{ textDecoration: 'none' }} to="/tao-nha-si">Tạo tài khoản Nha sĩ</Link>
                         </Menu.Item>
                     </Menu.SubMenu>
 
