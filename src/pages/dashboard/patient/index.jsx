@@ -6,20 +6,20 @@ import { Link, Outlet } from 'react-router-dom';
 const PatientDashboard = () => {
     return (
         <>
-            <div style={{ minHeight: '50vh', margin: '5rem 12rem' }}>
+            <div style={{ minHeight: '50vh', margin: '5rem 7rem' }}>
                 <div className='m-auto'>
                     <Card>
                         <Row>
-                            <Col span={8}>
+                            <Col span={7}>
                                 <div style={{ width: '80%' }}>
-                                    <Menu mode="inline" defaultOpenKeys={['sub1','sub2']}>
+                                    <Menu mode="inline" defaultOpenKeys={['sub1', 'sub2']}>
 
                                         <Menu.SubMenu key="sub1" title="Tài khoản" icon={<UserOutlined />}>
                                             <Menu.Item key="1">
                                                 <Link className='text-decoration-none' to="/patient/thong-tin-ca-nhan">Thông tin cá nhân</Link>
                                             </Menu.Item>
                                             <Menu.Item key="2">
-                                                <Link className='text-decoration-none' to="">Đổi mật khẩu</Link>
+                                                <Link className='text-decoration-none' to="/patient/doi-mat-khau">Đổi mật khẩu</Link>
                                             </Menu.Item>
                                         </Menu.SubMenu>
 
@@ -38,8 +38,10 @@ const PatientDashboard = () => {
                                     </Menu>
                                 </div>
                             </Col>
-                            <Col span={16}>
-                                <Outlet></Outlet>
+                            <Col span={17} style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
+                                <div style={{width:'100%'}}>
+                                    <Outlet></Outlet>
+                                </div>
                             </Col>
                         </Row>
                     </Card>
