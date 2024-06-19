@@ -1,41 +1,109 @@
-
+// Logo
+import FormImage from '../../assets/img/Signin/Logo.png'
 
 const FooterComponent = () => {
     return (
         <>
-            <footer className="page-footer font-small blue pt-4">
-                <div className="container-fluid text-center text-md-left">
-                    <div className="row">
-                        <div className="col-md-6 mt-md-0 mt-3">
-                            <h5 className="text-uppercase">về chúng tôi</h5>
-                            <p className="text-center w-100 p-3">Chào mừng đến với Nha Khoa Sức Khỏe - nơi chăm sóc cho nụ cười của bạn! Chúng tôi cam kết cung cấp các dịch vụ nha khoa chất lượng cao, từ chăm sóc định kỳ đến điều trị phức tạp, nhằm mang lại nụ cười tự tin và sức khỏe toàn diện cho mỗi bệnh nhân. Với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại, chúng tôi luôn đặt sự thoải mái và hài lòng của bệnh nhân lên hàng đầu. Hãy đồng hành cùng chúng tôi trên hành trình chăm sóc nụ cười và sức khỏe của bạn!</p>
-                        </div>
-
-                        <hr className="clearfix w-100 d-md-none pb-0" />
-
-                        <div className="col-md-3 mb-md-0 mb-3">
-                            <h5 className="text-uppercase">Links</h5>
-                            <ul className="list-unstyled">
-                                <li><a href="#">Trang Chủ</a></li>
-                                <li><a href="#">Dịch Vụ</a></li>
-                                <li><a href="#">Về Chúng Tôi</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Liên Hệ</a></li>
-                            </ul>
-                        </div>
-
-                        <div className="col-md-3 mb-md-0 mb-3">
-                            <h5 className="text-uppercase">Links</h5>
-                            <ul className="list-unstyled">
-                                <li><a href="#!">Link 1</a></li>
-                                <li><a href="#!">Link 2</a></li>
-                                <li><a href="#!">Link 3</a></li>
-                                <li><a href="#!">Link 4</a></li>
-                            </ul>
-                        </div>
+            <div
+                    className="text-center text-lg-start text-dark"
+                    style={{backgroundColor: '#ECEFF1'}}
+                    >
+                <section className="">
+                <div className="container text-center text-md-start mt-5">
+                    
+                    <div className="row mt-3">
+                    
+                    <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <img
+                                src={FormImage}
+                                style={{ width: '100px' }}
+                                alt="logo"
+                            /> 
+                        
+                        <h6 className="text-uppercase fw-bold">Nha Khoa Sức Khỏe</h6>
+                        
+                        <hr
+                            className="mb-4 mt-0 d-inline-block mx-auto"
+                            style={{width: '60px', backgroundColor: '#7c4dff', height: '2px'}}
+                            />
+                        <p>
+                        Here you can use rows and columns to organize your footer
+                        content. Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit.
+                        </p>
                     </div>
+                    
+
+                    
+                    <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 className="text-uppercase fw-bold">Products</h6>
+                        <hr
+                            className="mb-4 mt-0 d-inline-block mx-auto"
+                            style={{width: '60px', backgroundColor: '#7c4dff', height: '2px'}}
+                            />
+                        <p>
+                        <a href="#!" className="text-dark">MDBootstrap</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">MDWordPress</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">BrandFlow</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">Bootstrap Angular</a>
+                        </p>
+                    </div>
+                    
+                    <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        
+                        <h6 className="text-uppercase fw-bold">Useful links</h6>
+                        <hr
+                            className="mb-4 mt-0 d-inline-block mx-auto"
+                            style={{width: '60px', backgroundColor: '#7c4dff', height: '2px'}}
+                            />
+                        <p>
+                        <a href="#!" className="text-dark">Your Account</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">Become an Affiliate</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">Shipping Rates</a>
+                        </p>
+                        <p>
+                        <a href="#!" className="text-dark">Help</a>
+                        </p>
+                    </div>
+                    
+                    <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        
+                        <h6 className="text-uppercase fw-bold">Contact</h6>
+                        <hr
+                            className="mb-4 mt-0 d-inline-block mx-auto"
+                            style={{width: '60px', backgroundColor: '#7c4dff', height: '2px'}}
+                            />
+                        <p><i className="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+                        <p><i className="fas fa-envelope mr-3"></i> info@example.com</p>
+                        <p><i className="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+                        <p><i className="fas fa-print mr-3"></i> + 01 234 567 89</p>
+                    </div>
+                    
+                    </div>
+                    
                 </div>
-            </footer>
+                </section>
+                
+                <div
+                    className="text-center p-3"
+                   style={{backgroundColor: 'rgba(0, 0, 0, 0.2)'}}
+                    >
+                © 2020 Copyright:
+                <a className="text-dark" href="https://mdbootstrap.com/">
+                        MDBootstrap.com
+                    </a>
+                </div>
+            </div>
         </>
     )
 }
