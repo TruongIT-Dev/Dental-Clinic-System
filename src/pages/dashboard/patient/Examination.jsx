@@ -1,6 +1,6 @@
 import { Card, Row, Col } from 'antd';
 import { useEffect, useState } from 'react';
-import { Button, Modal, Pagination } from 'antd';
+import { Button, Modal, Pagination, Empty } from 'antd';
 import { DoViewExaminationAppointment } from '../../../apis/api';
 
 const Examination = () => {
@@ -47,24 +47,20 @@ const Examination = () => {
 
     return (
         <>
-            {currentData.map((data, index) => (
-                <>
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '0 auto 1rem' }}>
+            {/* {dataExamination?.data && dataExamination.length > 0 ? ( */}
+            <>
+                {currentData.map((data, index) => (
+                    <div key={index} style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '0 auto 1rem' }}>
                         <div style={{ width: '50%' }}>
                             <Card
-                                pageSize
-                                extra={<Button onClick=
-                                    {() => {
-                                        setOpen(true)
-                                        console.log('Ấn link: ', open)
-                                    }}>
+                                extra={<Button onClick={() => {
+                                    setOpen(true);
+                                    console.log('Ấn link: ', open);
+                                }}>
                                     Chi tiết
                                 </Button>}
                                 title="Hồ sơ lịch khám"
-                                style={{
-                                    width: '100%',
-                                    textAlign: 'start',
-                                }}
+                                style={{ width: '100%', textAlign: 'start' }}
                             >
                                 <div>
                                     <h5>Ngày {data.appointment_date}</h5>
@@ -78,7 +74,6 @@ const Examination = () => {
                                                     <p>Trạng thái</p>
                                                 </div>
                                             </Col>
-
                                             <Col span={12}>
                                                 <div style={{ textAlign: 'end' }}>
                                                     <p>{data.id}</p>
@@ -93,14 +88,27 @@ const Examination = () => {
                             </Card>
                         </div>
                     </div>
-                </>
-            ))}
-            <Pagination
-                defaultCurrent={1}
-                total={dataExamination.length}
-                pageSize={pageSize}
-                onChange={onPageChange} />
-
+                ))}
+                <Pagination
+                    defaultCurrent={1}
+                    total={dataExamination.length}
+                    pageSize={pageSize}
+                    onChange={onPageChange}
+                />
+            </>
+            {/* ) : (
+                <Empty
+                    image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                    imageStyle={{ height: 100 }}
+                    description={
+                        <span>
+                            KHÔNG CÓ DATA
+                            401 UNAUTHORIZED
+                        </span>
+                    }
+                >
+                </Empty>
+            )} */}
 
             {/* Chi Tiết Thông tin Lịch Khám */}
             <Modal

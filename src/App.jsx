@@ -1,7 +1,7 @@
 import './App.css'
 
 // Libs
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
 import Home from './pages/home'
@@ -28,42 +28,43 @@ function App() {
   const isAuthenticated = account.isAuthenticated;
 
   return (
-    <>
-      <Routes>
-        <Route path='/' element={<PageLayout />} >
-          {/* Pages Guest */}
-          <Route index path='/' element={<Home />} />
-          <Route path='/loai-hinh-dich-vu' element={<Catergory />} />
-          <Route path='/chi-tiet-dich-vu' element={<ServiceDetail />} />
-          <Route path='/dat-lich-hen' element={<Appoinment />} />
-          <Route path='/lich-lam-viec' element={<Schedule />} />
-          <Route path='/lien-he' element={<Contact />} />
 
-          {/* Đăng ký && Đăng nhập */}
-          <Route path='/dang-nhap' element={<SignIn />} />
-          <Route path='/dang-ky' element={<SignUp />} />
+    <Routes>
+      <Route path='/' element={<PageLayout />}>
+        {/* Guest View */}
+        <Route index element={<Home />} />
+        <Route path='/loai-hinh-dich-vu' element={<Catergory />} />
+        <Route path='/chi-tiet-dich-vu' element={<ServiceDetail />} />
+        <Route path='/lich-lam-viec' element={<Schedule />} />
+        <Route path='/lien-he' element={<Contact />} />
+        <Route path='/dang-nhap' element={<SignIn />} />
+        <Route path='/dang-ky' element={<SignUp />} />
 
-          {/* Patient Dashboard */}
-          <Route path='/patient' element={<PatientDashboard />} >
-            <Route index path='/patient/thong-tin-ca-nhan' element={<PatientInfo />} />
-            <Route path='/patient/lich-kham' element={<Examination />} />
-            <Route path='/patient/lich-dieu-tri' element={<Treatment />} />
-            <Route path='/patient/doi-mat-khau' element={<ChangePassword />} />
-          </Route>
+        {/* Conditional Routes */}
+        {isAuthenticated ? (
+          <>
+            {/* Patient View */}
+            <Route path='/dat-lich-hen' element={<Appoinment />} />
+            {/* Patient View - Dashboard */}
+            <Route path='/patient' element={<PatientDashboard />}>
+              <Route path='thong-tin-ca-nhan' element={<PatientInfo />} />
+              <Route path='lich-kham' element={<Examination />} />
+              <Route path='lich-dieu-tri' element={<Treatment />} />
+              <Route path='doi-mat-khau' element={<ChangePassword />} />
+            </Route>
+          </>
+        ) : (
+          <Route path='*' element={<Navigate to="/error" />} />
+        )}
+        {/* Unauthenticated routes */}
+        <Route path='/error' element={<Error />} />
+        {/* Catch-all route for 404 */}
+        <Route path='*' element={<Navigate to="/error" />} />
+      </Route>
+    </Routes>
 
-          {/* Error Page */}
-          <Route path='/error' element={<Error />} />
-        </Route>
+  );
 
-        {/* Dashboard Admin && Dentist */}
-        {/* {(isAuthenticated === true && isRoleAdmin.role === 'admin') ?
-          <Route path='/admin' element={<AdminDashBoard />} />
-          :
-          <Route path='/admin' element={<UnAuthorizated />} />
-        } */}
-      </Routes>
-    </>
-  )
 }
 
 export default App

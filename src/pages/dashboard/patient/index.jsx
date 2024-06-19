@@ -12,23 +12,28 @@ const PatientDashboard = () => {
                         <Row>
                             <Col span={8}>
                                 <div style={{ width: '80%' }}>
-                                    <Menu mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub2']}>
+                                    <Menu mode="inline" defaultOpenKeys={['sub1','sub2']}>
 
-                                        <Menu.Item key="1" icon={<UserOutlined />}>
-                                            <Link className='text-decoration-none' to="/patient/thong-tin-ca-nhan">Thông tin tài khoản</Link>
-                                        </Menu.Item>
+                                        <Menu.SubMenu key="sub1" title="Tài khoản" icon={<UserOutlined />}>
+                                            <Menu.Item key="1">
+                                                <Link className='text-decoration-none' to="/patient/thong-tin-ca-nhan">Thông tin cá nhân</Link>
+                                            </Menu.Item>
+                                            <Menu.Item key="2">
+                                                <Link className='text-decoration-none' to="">Đổi mật khẩu</Link>
+                                            </Menu.Item>
+                                        </Menu.SubMenu>
 
                                         <Menu.SubMenu key="sub2" title="Thông tin lịch khám" icon={<ScheduleOutlined />}>
-                                            <Menu.Item key="2">
+                                            <Menu.Item key="3">
                                                 <Link className='text-decoration-none' to="/patient/lich-kham">Lịch khám</Link>
                                             </Menu.Item>
-                                            <Menu.Item key="3">
+                                            <Menu.Item key="4">
                                                 <Link className='text-decoration-none' to="/patient/lich-dieu-tri">Lịch điều trị</Link>
                                             </Menu.Item>
                                         </Menu.SubMenu>
 
-                                        <Menu.Item key="10" icon={<SettingOutlined />}>
-                                            <Link className='text-decoration-none' to="/patient/doi-mat-khau">Đổi mật khẩu</Link>
+                                        <Menu.Item key="5" icon={<SettingOutlined />}>
+                                            <Link className='text-decoration-none' to="#">Cài đặt</Link>
                                         </Menu.Item>
                                     </Menu>
                                 </div>

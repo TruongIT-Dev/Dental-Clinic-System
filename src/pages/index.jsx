@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import NavBar from '../components/header/Navbar';
+import NavBar from '../components/header/navbar';
 import FooterComponent from '../components/footer';
 import { Outlet } from 'react-router-dom';
 
