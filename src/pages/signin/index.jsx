@@ -28,7 +28,7 @@ const LoginText = {
 }
 
 const SignIn = () => {
-    
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -51,7 +51,16 @@ const SignIn = () => {
                 user: res.data
             }));
 
-            if (res.status === 200) {
+            if (res.status === 200 || res.data.user_info.role === "Admin") {
+                // Navigate to the home page
+                navigate('/admin');
+                // Show a success message
+                notification.success({
+                    type: 'success',
+                    message: 'Chào mừng Admin',
+                    duration: 2,
+                })
+            } else {
                 // Navigate to the home page
                 navigate('/');
                 // Show a success message
@@ -102,14 +111,14 @@ const SignIn = () => {
                             <Col span={12}>
                                 {/* Form Inout */}
                                 <div className='w-lg-60 mx-auto p-3' style={FormLayout}>
-                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height:'100%' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
                                         <div style={{ textAlign: 'center' }}>
                                             <img
                                                 src={FormImage}
                                                 style={{ width: '185px' }}
                                                 alt="logo"
                                             />
-                                            <Title level={2} style={{ marginTop: '16px', marginBottom: '40px', textTransform:'capitalize' }}>đăng nhập</Title>
+                                            <Title level={2} style={{ marginTop: '16px', marginBottom: '40px', textTransform: 'capitalize' }}>đăng nhập</Title>
                                         </div>
                                         <Form
                                             name="normal_login"
@@ -182,11 +191,11 @@ const SignIn = () => {
                             </Col>
 
                             <Col span={12}>
-                                
+
                                 <div className='form-text' style={LoginText}>
                                     <div style={{ color: 'white', padding: '24px', margin: 'auto' }}>
-                                        <Title level={3} style={{ color: 'white', textTransform:'capitalize' }}>phòng khám nha khoa sức khỏe</Title>
-                                        <Paragraph style={{ color: 'white', textAlign:'justify' }}>
+                                        <Title level={3} style={{ color: 'white', textTransform: 'capitalize' }}>phòng khám nha khoa sức khỏe</Title>
+                                        <Paragraph style={{ color: 'white', textAlign: 'justify' }}>
                                             Tại Phòng khám Nha khoa của chúng tôi, sức khỏe răng miệng của bạn là ưu tiên hàng đầu.
                                             Chúng tôi cam kết cung cấp dịch vụ chăm sóc nha khoa chất lượng cao với đội ngũ bác sĩ và nhân viên chuyên nghiệp, tận tâm.
                                             Từ việc kiểm tra định kỳ đến các dịch vụ điều trị phức tạp, chúng tôi luôn sẵn sàng đáp ứng nhu cầu của bạn.

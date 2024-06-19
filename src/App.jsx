@@ -35,127 +35,70 @@ import AddNewRoom from './pages/dashboard/admin/RoomManagement/AddNewRoom';
 
 function App() {
   const account = useSelector(state => state?.account);
-  // const isRoleAdmin = useSelector(state => state?.account?.user?.user);
-  const isAuthenticated = account.isAuthenticated;
+
+  const isAuthenticated = {
+    loggedIn: account.isAuthenticated, // check đã đăng nhập chưa
+    role: account?.user?.user?.user_info?.role //Check role
+  };
+
 
   return (
-    <>
-      <Routes>
-        <Route path='/' element={<PageLayout />}>
-          <Route index element={<Home />} />
-          <Route path='/loai-hinh-dich-vu' element={<Catergory />} />
-          <Route path='/loai-hinh-dich-vu/:slug' element={<ServiceDetail />} /> {/* Specific route before catch-all */}
-          <Route path='/lich-lam-viec' element={<Schedule />} />
-          <Route path='/lien-he' element={<Contact />} />
+    <Routes>
+      {/* Guest View */}
+      <Route path='/' element={<PageLayout />}>
+        <Route index element={<Home />} />
+        <Route path='/loai-hinh-dich-vu' element={<Catergory />} />
+        <Route path='/loai-hinh-dich-vu/:slug' element={<ServiceDetail />} /> {/* Specific route before catch-all */}
+        <Route path='/lich-lam-viec' element={<Schedule />} />
+        <Route path='/lien-he' element={<Contact />} />
 
-          {/* Đăng nhập - Đăng ký */}
-          <Route path='/dang-nhap' element={<SignIn />} />
-          <Route path='/dang-ky' element={<SignUp />} />
+        {/* Đăng nhập - Đăng ký */}
+        <Route path='/dang-nhap' element={<SignIn />} />
+        <Route path='/dang-ky' element={<SignUp />} />
 
-
-          {isAuthenticated ? (
-            <>
-              <Route path='/dat-lich-hen' element={<Appoinment />} />
-              {/* Dashboard Patient */}
-              <Route path='/patient' element={<PatientDashboard />}>
-                <Route index path='thong-tin-ca-nhan' element={<PatientInfo />} />
-                <Route path='lich-kham' element={<PatientExamination />} />
-                <Route path='lich-dieu-tri' element={<PatientTreatment />} />
-                <Route path='doi-mat-khau' element={<PatientChangePassword />} />
-              </Route>
-            </>
-          ) : (
-            <Route path='*' element={<Navigate to="/error" />} />
-          )}
-          <Route path='/error' element={<Error />} />
-          <Route path='*' element={<Navigate to="/error" />} />
-        </Route>
-
-        {isAuthenticated.role === 'admin' ? (
+        {/* Patient View */}
+        {isAuthenticated.loggedIn && isAuthenticated.role === "Patient" ? (
           <>
-            {/* Dashboard Admin */}
-            <Route path='/' element={<AdminDashboard />}>
-              <Route index path='/dashboard' element={<MainDashboard />} />
-              {/* Quản lý lịch khám điều trị */}
-              <Route path='quan-ly-lich-kham' element={<Examination />} />
-              <Route path='tao-lich-kham' element={<CreateExamination />} />
-              <Route path='quan-ly-lich-dieu-tri' element={<Treatment />} />
-              <Route path='tao-lich-dieu-tri' element={<CreateTreatment />} />
-
-              {/* Quản lý Dentist */}
-              <Route path='quan-ly-nha-si' element={<DentistManagement />} />
-              <Route path='tao-nha-si' element={<AddNewDentist />} />
-
-              {/* Quản lý Dịch vụ */}
-              <Route path='quan-ly-dich-vu' element={<ServiceManagement />} />
-              <Route path='tao-dich-vu' element={<AddNewService />} />
-
-              {/* Quản lý Room */}
-              <Route path='quan-ly-phong-kham' element={<RoomManagement />} />
-              <Route path='tao-phong-kham' element={<AddNewRoom />} />
+            <Route path='/dat-lich-hen' element={<Appoinment />} />
+            {/* Dashboard Patient */}
+            <Route path='/patient' element={<PatientDashboard />}>
+              <Route index path='thong-tin-ca-nhan' element={<PatientInfo />} />
+              <Route path='lich-kham' element={<PatientExamination />} />
+              <Route path='lich-dieu-tri' element={<PatientTreatment />} />
+              <Route path='doi-mat-khau' element={<PatientChangePassword />} />
             </Route>
           </>
-        ) : (
-          <Route path='*' element={<Navigate to="/error" />} />
-        )}
-      </Routes>
-    </>
-    // <>
-    //   <Routes>
-    //     <Route path='/' element={<PageLayout />} >
-    //       {/* Pages Guest && User */}
-    //       <Route index path='/' element={<Home />} />
-    //       <Route path='/loai-hinh-dich-vu' element={<Catergory />} />
-    //       <Route path='/chi-tiet-dich-vu' element={<ServiceDetail />} />
+        ) : null}
+      </Route>
 
-    //       {/* Đặt lịch hẹn */}
-    //       <Route path='/dat-lich-hen' element={<Appoinment />} />
+      {/* Admin View */}
+      {isAuthenticated.loggedIn && isAuthenticated.role === "Admin" ? (
+        <Route path='/admin' element={<AdminDashboard />}>
+          <Route index element={<MainDashboard />} />
+          {/* Quản lý lịch khám điều trị */}
+          <Route path='quan-ly-lich-kham' element={<Examination />} />
+          <Route path='tao-lich-kham' element={<CreateExamination />} />
+          <Route path='quan-ly-lich-dieu-tri' element={<Treatment />} />
+          <Route path='tao-lich-dieu-tri' element={<CreateTreatment />} />
 
-    //       <Route path='/lich-lam-viec' element={<Schedule />} />
-    //       <Route path='/lien-he' element={<Contact />} />
+          {/* Quản lý Dentist */}
+          <Route path='quan-ly-nha-si' element={<DentistManagement />} />
+          <Route path='tao-nha-si' element={<AddNewDentist />} />
 
+          {/* Quản lý Dịch vụ */}
+          <Route path='quan-ly-dich-vu' element={<ServiceManagement />} />
+          <Route path='tao-dich-vu' element={<AddNewService />} />
 
-    //       {/* Đăng ký && Đăng nhập */}
-    //       <Route path='/dang-nhap' element={<SignIn />} />
-    //       <Route path='/dang-ky' element={<SignUp />} />
+          {/* Quản lý Room */}
+          <Route path='quan-ly-phong-kham' element={<RoomManagement />} />
+          <Route path='tao-phong-kham' element={<AddNewRoom />} />
+        </Route>
+      ) : null}
 
-    //       {/* Dashboard Patient */}
-    //       <Route path='/patient' element={<PatientDashboard />}>
-    //         <Route path='thong-tin-ca-nhan' element={<PatientInfo />} />
-    //         <Route path='lich-kham' element={<PatientExamination />} />
-    //         <Route path='lich-dieu-tri' element={<PatientTreatment />} />
-    //         <Route path='doi-mat-khau' element={<PatientChangePassword />} />
-    //       </Route>
-
-
-    //       {/* Error Page */}
-    //       <Route path='/error' element={<Error />} />
-    //     </Route>
-
-
-    //     {/* Dashboard Admin */}
-    //     <Route path='/' element={<AdminDashboard />}>
-    //       <Route index path='/dashboard' element={<MainDashboard />} />
-    //       {/* Quản lý lịch khám điều trị */}
-    //       <Route path='/quan-ly-lich-kham' element={<Examination />} />
-    //       <Route path='/tao-lich-kham' element={<CreateExamination />} />
-    //       <Route path='/quan-ly-lich-dieu-tri' element={<Treatment />} />
-    //       <Route path='/tao-lich-dieu-tri' element={<CreateTreatment />} />
-
-    //       {/* Quản lý Dentist */}
-    //       <Route path='/quan-ly-nha-si' element={<DentistManagement />} />
-    //       <Route path='/tao-nha-si' element={<AddNewDentist />} />
-
-    //       {/* Quản lý Dịch vụ */}
-    //       <Route path='/quan-ly-dich-vu' element={<ServiceManagement />} />
-    //       <Route path='/tao-dich-vu' element={<AddNewService />} />
-
-    //       {/* Quản lý Room */}
-    //       <Route path='/quan-ly-phong-kham' element={<RoomManagement />} />
-    //       <Route path='/tao-phong-kham' element={<AddNewRoom />} />
-    //     </Route>
-    //   </Routes>
-    // </>
+      {/* Error Page */}
+      <Route path='/error' element={<Error />} />
+      <Route path='*' element={<Navigate to="/error" />} />
+    </Routes>
 
   );
 
