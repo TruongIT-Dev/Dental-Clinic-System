@@ -10,76 +10,28 @@ const { Title } = Typography;
 
 const PatientChangePassword = () => (
     <>
-        <div>
-            <Title level={3}>ĐỔI MẬT KHẨU</Title>
-            <Form
-                name="basic"
-                labelCol={{
-                    span: 8,
-                }}
-                wrapperCol={{
-                    span: 16,
-                }}
-                style={{
-                    minWidth: 400,
-                }}
-                initialValues={{
-                    remember: true,
-                }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
-            >
-                <Form.Item
-                    label="Mật khẩu hiện tại"
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your username!',
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label="Mật khẩu mới"
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password!',
-                        },
-                    ]}
-                >
-                    <Input.Password />
-                </Form.Item>
-
-                <Form.Item
-                    label="Nhập mật khẩu mới"
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password!',
-                        },
-                    ]}
-                >
-                    <Input.Password />
-                </Form.Item>
-
-                <Form.Item
-                    wrapperCol={{
-                        offset: 8,
-                        span: 16,
-                    }}
-                >
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
+        <Title level={3}>ĐỔI MẬT KHẨU</Title>
+        <div className="col-lg-12 pb-5">
+            <form className="row">
+                <div className="col-md-12">
+                    <div className="form-group">
+                        <label for="account-pass">New Password</label>
+                        <input className="form-control" type="password" id="account-pass"/>
+                    </div>
+                </div>
+                <div className="col-md-12">
+                    <div className="form-group">
+                        <label for="account-confirm-pass">Confirm Password</label>
+                        <input className="form-control" type="password" id="account-confirm-pass"/>
+                    </div>
+                </div>
+                <div className="col-12">
+                    <hr className="mt-2 mb-3"/>
+                    <div className="d-flex flex-wrap justify-content-between align-items-center">
+                        <button className="btn btn-style-1 btn-primary" type="button" data-toast="" data-toast-position="topRight" data-toast-type="success" data-toast-icon="fe-icon-check-circle" data-toast-title="Success!" data-toast-message="Your profile updated successfuly.">Update Profile</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </>
 );
