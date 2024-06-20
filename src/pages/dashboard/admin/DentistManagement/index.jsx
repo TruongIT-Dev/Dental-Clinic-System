@@ -1,40 +1,37 @@
-import { Space, Table, Tag, Input, Button, Typography } from 'antd';
+import { Space, Table, Input, Button, Typography } from 'antd';
+import { DoViewAllDentistByAdmin } from '../../../../apis/api';
+import { useEffect, useState } from 'react';
 const columns = [
     {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
+        title: 'Họ và tên',
+        dataIndex: 'full_name',
+        key: 'full_name',
         render: (text) => <a>{text}</a>,
     },
     {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
     },
     {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
+        title: 'Số điện thoại',
+        dataIndex: 'phone_number',
+        key: 'phone_number',
     },
     {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
+        title: 'Ngày sinh',
+        dataIndex: 'date_of_birth',
+        key: 'date_of_birth',
+    },
+    {
+        title: 'Giới tính',
+        dataIndex: 'sex',
+        key: 'sex',
+    },
+    {
+        title: 'Chuyên khoa',
+        dataIndex: 'specialty',
+        key: 'specialty',
     },
     {
         title: 'Action',
@@ -47,33 +44,44 @@ const columns = [
         ),
     },
 ];
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['doctor'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
-];
+// const data = [
+//     {
+//         key: '1',
+//         name: 'John Brown',
+//         age: 32,
+//         address: 'New York No. 1 Lake Park',
+//         tags: ['nice', 'developer'],
+//     },
+//     {
+//         key: '2',
+//         name: 'Jim Green',
+//         age: 42,
+//         address: 'London No. 1 Lake Park',
+//         tags: ['doctor'],
+//     },
+//     {
+//         key: '3',
+//         name: 'Joe Black',
+//         age: 32,
+//         address: 'Sydney No. 1 Lake Park',
+//         tags: ['cool', 'teacher'],
+//     },
+// ];
 const DentistManagement = () => {
 
     const { Search } = Input;
     const { Title } = Typography;
+
+    const [listDentist, setListDentst] = useState([]);
+
+    const fetchAllDentist = async () => {
+        const APIAllDentist = await DoViewAllDentistByAdmin();
+        const GetDataAllDentist = APIAllDentist?.data || {};
+        setListDentst(GetDataAllDentist);
+    }
+    useEffect(() => {
+        fetchAllDentist();
+    }, [])
 
     return (
         <>
@@ -94,7 +102,7 @@ const DentistManagement = () => {
             </div>
             <br></br>
 
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={listDentist} />;
 
         </>
     )

@@ -46,6 +46,7 @@ const PatientExamination = () => {
 
     // Calculate the data to be displayed on the current page
     const currentData = dataExamination.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    console.log("currentData", currentData)
 
     const formatCurrency = (amount) => {
         // Check if amount is a number
@@ -120,6 +121,7 @@ const PatientExamination = () => {
     const fetchDetailExamination = async (card_id) => {
         try {
             const ApiDetailExamination = await DoViewDetailExamination(card_id);
+            console.log('ApiDetailExamination: ', ApiDetailExamination);
             const GetDataDetailExamination = ApiDetailExamination?.data || {};
             console.log('Data Detail Examination: ', GetDataDetailExamination);
             setDataDetailExamination(GetDataDetailExamination);
@@ -140,7 +142,7 @@ const PatientExamination = () => {
             {dataExamination.length > 0 ? (
                 <>
                     <div className='content'>
-                        <div className='card-examination' style={{ display: 'flex', width: '100%', marginBottom:'2rem' }}>
+                        <div className='card-examination' style={{ display: 'flex', width: '100%', marginBottom: '2rem' }}>
                             {currentData.map((data) => (
                                 <div key={data.id}>
                                     <div style={{ marginRight: '12px', minWidth: '250px' }}>
@@ -220,7 +222,6 @@ const PatientExamination = () => {
                                     <div>
                                         <p style={ExaminationDetailText}>Trạng thái</p>
                                         <p style={ExaminationDetailText}>Trạng thái thanh toán</p>
-                                        <p style={ExaminationDetailText}>Lý do</p>
                                     </div>
                                 </Col>
 
@@ -244,7 +245,7 @@ const PatientExamination = () => {
                                         <p style={ExaminationDetailText}>Ngày khám</p>
                                         <p style={ExaminationDetailText}>Phòng</p>
                                         <p style={ExaminationDetailText}>Giờ khám</p>
-                                        <p style={ExaminationDetailText}>BS CK1</p>
+                                        <p style={ExaminationDetailText}>Nha sĩ</p>
                                         <p style={ExaminationDetailText}>Chuyên khoa</p>
                                         <p style={ExaminationDetailText}>Phí khám bệnh</p>
                                     </div>
