@@ -32,6 +32,7 @@ import ServiceManagement from './pages/dashboard/admin/ServiceManagement';
 import AddNewService from './pages/dashboard/admin/ServiceManagement/AddNewService';
 import RoomManagement from './pages/dashboard/admin/RoomManagement';
 import AddNewRoom from './pages/dashboard/admin/RoomManagement/AddNewRoom';
+import DetailService from './pages/dashboard/admin/ServiceManagement/DetailService';
 
 function App() {
   const account = useSelector(state => state?.account);
@@ -87,6 +88,7 @@ function App() {
 
           {/* Quản lý Dịch vụ */}
           <Route path='quan-ly-dich-vu' element={<ServiceManagement />} />
+          <Route path='quan-ly-dich-vu/:slug' element={<DetailService />} />
           <Route path='tao-dich-vu' element={<AddNewService />} />
 
           {/* Quản lý Room */}

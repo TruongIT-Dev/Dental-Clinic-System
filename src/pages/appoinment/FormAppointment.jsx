@@ -175,7 +175,7 @@ const FormAppoinment = () => {
             day: '2-digit',
             hour: '2-digit',
             minute: '2-digit',
-            second: '2-digit',
+            // second: '2-digit',
         };
         return date.toLocaleString('en-US', options);
     };
@@ -259,7 +259,7 @@ const FormAppoinment = () => {
                     rules={[
                         {
                             required: true,
-                            message:'Vui lòng chọn ngày'
+                            message: 'Vui lòng chọn ngày'
                         },
                     ]}
                 >
@@ -281,7 +281,7 @@ const FormAppoinment = () => {
                     rules={[
                         {
                             required: true,
-                            message:'Vui lòng chọn phòng và giờ khám'
+                            message: 'Vui lòng chọn phòng và giờ khám'
                         },
                     ]}
                 >
@@ -302,7 +302,7 @@ const FormAppoinment = () => {
                     rules={[
                         {
                             required: true,
-                            message:'Vui lòng chọn loại hình dịch vụ'
+                            message: 'Vui lòng chọn loại hình dịch vụ'
                         },
                     ]}
                 >

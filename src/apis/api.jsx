@@ -63,3 +63,78 @@ export const DoViewExaminationAppointment = () => {
 export const DoViewDetailExamination = (card_id) => {
     return axios.get(`/api/v1/patients/appointments/examination/${card_id}`);
 }
+
+//************************************************************************************** */
+//************************************API ADMIN***************************************** */
+
+// Quản Lý Dịch vụ
+
+// Loại hình dịch vụ API
+
+// View - Lấy Tất Cả Thông Tin Loại Hình Dịch Vụ
+export const DoViewCategoryByAdmin = () => {
+    return axios.get('/api/v1/service-categories');
+}
+// View - Lấy Thông Tin Chi tiết Của 1 Loại Hình Dịch Vụ
+export const DoViewDetailCategoryByAdmin = (slug) => {
+    return axios.get(`/api/v1/service-categories/${slug}`)
+}
+// Update - Cập nhật thông tin của 1 Loại hình dịch vụ
+export const DoUpdateCategoryByAdmin = (id, name, icon_url, banner_url, description) => {
+    return axios.patch(`/api/v1/service-categories/${id}`,
+        {
+            id: id,
+            name: name,
+            icon_url: icon_url,
+            banner_url: banner_url,
+            description: description,
+        }
+    )
+}
+// Delete - Xóa 1 Loại hình dịch vụ
+export const DoDeleteCategoryByAdmin = (id_delete) => {
+    return axios.delete(`/api/v1/service-categories/${id_delete}`)
+}
+// Add - Thêm mới 1 Loại hình dịch vụ
+export const DoAddCategoryByAdmin = (banner_url, description, icon_url, name) => {
+    return axios.post(`/api/v1/service-categories`,
+        {
+            banner_url: banner_url,
+            description: description,
+            icon_url: icon_url,
+            name: name,
+        }
+    )
+}
+
+// ************************************************************************************
+
+// Chi tiết Dịch vụ API
+
+// View - Lấy Thông tin của 1 Dịch vụ 
+export const DoViewDataServiceByAdmin = (slug) => {
+    return axios.get(`/api/v1/service-categories/${slug}/services`)
+}
+
+// Delete - Xóa 1 Dịch vụ
+export const DoDeleteDataServiceByAdmin = (id) => {
+    return axios.delete(`/api/v1/services/${id}`);
+}
+
+// Add - Thêm mới 1 Dịch vụ
+export const DoAddNewServiceByAdmin = (category_id, cost, name, unit, warranty_duration) => {
+    return axios.post(`/api/v1/services`,
+        {
+            category_id: category_id,
+            cost: cost,
+            name: name,
+            unit: unit,
+            warranty_duration: warranty_duration
+        }
+    )
+}
+
+// Quản Lý Nha Sĩ
+export const DoViewAllDentistByAdmin = () => {
+    return axios.get('/api/v1/dentists');
+}

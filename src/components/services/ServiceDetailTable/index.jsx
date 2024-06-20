@@ -7,7 +7,7 @@ const formatCurrency = (amount) => {
     if (isNaN(amount)) {
         return "Invalid amount";
     }
-    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " VND";
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 const columns = [
@@ -79,7 +79,7 @@ const columns = [
 //     },
 // ];
 const ServiceDetailTable = ({ data }) => {
-    
+
     return (
         <>
             <Table pagination={false} columns={columns} dataSource={data} />;

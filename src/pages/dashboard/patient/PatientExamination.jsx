@@ -222,7 +222,6 @@ const PatientExamination = () => {
                                     <div>
                                         <p style={ExaminationDetailText}>Trạng thái</p>
                                         <p style={ExaminationDetailText}>Trạng thái thanh toán</p>
-                                        <p style={ExaminationDetailText}>Lý do</p>
                                     </div>
                                 </Col>
 
@@ -246,7 +245,7 @@ const PatientExamination = () => {
                                         <p style={ExaminationDetailText}>Ngày khám</p>
                                         <p style={ExaminationDetailText}>Phòng</p>
                                         <p style={ExaminationDetailText}>Giờ khám</p>
-                                        <p style={ExaminationDetailText}>BS CK1</p>
+                                        <p style={ExaminationDetailText}>Nha sĩ</p>
                                         <p style={ExaminationDetailText}>Chuyên khoa</p>
                                         <p style={ExaminationDetailText}>Phí khám bệnh</p>
                                     </div>
