@@ -34,18 +34,17 @@ export const DoViewTableDetailService = (slug) => {
 }
 
 // Liệt Kê Lịch Khám Trong Ngày
-export const DoListScheduleExamination = (date, category_id) => {
-    return axios.get(`/api/v1/schedules/examination?date=${date}&service_category_id=${category_id}`);
+export const DoListSchedule = (date) => {
+    return axios.get(`/api/v1/schedules/examination?date=${date}`);
 
 }
 
 // Đặt Lịch Khám
-export const DoAppointment = (examination_schedule_id, patient_note, payment_id) => {
+export const DoAppointment = (examination_schedule_id, service_category_id) => {
     return axios.post('/api/v1/patients/appointments/examination',
         {
             examination_schedule_id: examination_schedule_id,
-            patient_note: patient_note,
-            payment_id: payment_id,
+            service_category_id: service_category_id,
         }
     )
 }

@@ -1,10 +1,8 @@
 // Thư viện
-import { Button, Form, Select, DatePicker, Input, notification, Radio } from 'antd';
-import { DoAppointment, DoListPayment, DoListScheduleExamination, DoViewCategory } from '../../apis/api';
+import { Button, Form, Select, DatePicker, notification } from 'antd';
+import { DoAppointment, DoListSchedule, DoViewCategory } from '../../apis/api';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const { TextArea } = Input;
 
 // Function Disabled những ngày sau ngày hôm nay
 // const disabledDate = (current) => {
@@ -29,7 +27,7 @@ const formItemLayout = {
             span: 24,
         },
         sm: {
-            span: 16,
+            span: 15,
         },
     },
 };
@@ -62,35 +60,31 @@ const FormAppoinment = () => {
     const [form] = Form.useForm();
     // *********************** UseState ***********************
     const [getDate, setGetDate] = useState('');
-    const [getIdCategory, setGetIdCategory] = useState('');
     const [dentistSchedule, setDentistSchedule] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
-    const [selectedPayment, setSelectedPayment] = useState([]);
-    // console.log('Date: ', getDate)
-    // console.log('Id Category: ', getIdCategory);
 
-
+    // const [getIdCategory, setGetIdCategory] = useState('');
 
     // ******************** FETCH API *************************
     // API Hiện Lịch Khám của Dentist
-    const ListScheduleExamination = async (date, category_id) => {
-        if (!date && !category_id) {
+    const ListScheduleExamination = async (date) => {
+        if (!date) {
             return (null);
         }
-        if (date && category_id) {
+        if (date) {
             try {
-                const fetchListScheduleExamination = await DoListScheduleExamination(date, category_id);
-                const getDataDentistSchedule = fetchListScheduleExamination?.data || [];
-                // console.log('Display Fetch List Schedule: ', getDataDentistSchedule);
+                const fetchListSchedule = await DoListSchedule(date);
+                const getDataDentistSchedule = fetchListSchedule?.data || {};
                 setDentistSchedule(getDataDentistSchedule);
+                // console.log("dentistSchedule", getDataDentistSchedule)
             } catch (error) {
                 return (error);
             }
         }
     }
     useEffect(() => {
-        ListScheduleExamination(getDate, getIdCategory);
-    }, [getDate, getIdCategory])
+        ListScheduleExamination(getDate);
+    }, [getDate])
 
 
     // API Hiện Options Danh sách các Dịch vụ
@@ -98,12 +92,13 @@ const FormAppoinment = () => {
         try {
             const res = await DoViewCategory();
             const APICategory = res?.data || [];
-            const adjustedCategory = APICategory.map((category, index) => ({
-                ...category,
-                id: index + 1,
-            }));
-            setDataCategory(adjustedCategory);
-            // console.log('Data Category: ', adjustedCategory);
+            // const adjustedCategory = APICategory.map((category, index) => ({
+            //     ...category,
+            //     id: index + 1,
+            // }));
+            // setDataCategory(adjustedCategory);
+            setDataCategory(APICategory);
+            // console.log('Data Category: ', APICategory);
         } catch (error) {
             return (error)
         }
@@ -112,40 +107,27 @@ const FormAppoinment = () => {
         fetchCategory();
     }, [])
 
-    // API Hiện Options Danh sách các Hình thức thanh toán
-    const fetchPayment = async () => {
-        try {
-            const res = await DoListPayment();
-            const APIPayment = res?.data || [];
-            setSelectedPayment(APIPayment);
-            // console.log('Payment I Have: ', APIPayment);
-        } catch (error) {
-            console.log('Payment Error: ', error)
-        }
-    }
-    useEffect(() => {
-        fetchPayment();
-    }, []);
-
     // ******************** FORM ******************************
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
+
+    // Submit Form - API Submit Form
     const onFinish = async (values) => {
-        const { examination_schedule_id, patient_note, payment_id } = values;
+
+        const { examination_schedule_id, service_category_id } = values;
         console.log('Check Form data: ', values);
         try {
-            const doAppointment = await DoAppointment(examination_schedule_id, patient_note, payment_id);
-            console.log('doAppointment API: ', doAppointment);
+            const doAppointment = await DoAppointment(examination_schedule_id, service_category_id);
+
             if (doAppointment.status === 201) {
-                navigate('/');
+                navigate('/dat-lich-hen');
                 notification.success({
                     type: 'success',
                     message: 'Đặt lịch khám thành công',
                 })
             }
-            console.log('Check Form data: ', values);
         } catch (error) {
             console.log(error);
             // Check the error response status code and show corresponding notifications
@@ -181,17 +163,7 @@ const FormAppoinment = () => {
                 });
             }
         }
-
-        // console.log('Check Form data: ', values);
     }
-
-    // Danh sách Options các Dịch Vụ
-    const categoryOptions = dataCategory.map((data) => (
-        {
-            value: data.id,
-            label: data.name,
-        }
-    ))
 
     const toVietnamTime = (timeString) => {
         const date = new Date(timeString);
@@ -215,52 +187,70 @@ const FormAppoinment = () => {
     };
 
 
+    // Danh sách Options các Dịch Vụ
+    const categoryOptions = dataCategory.map((data) => (
+        {
+            label: data.name,
+            value: data.id,
+        }
+    ))
+
     // Danh Sách các Schedule của Nha sĩ
     const dentistScheduleOptions = dentistSchedule.map((data) => (
         {
-            label: 'Thông tin phòng khám',
-            // title: data.room_name,
-            options: [
-                {
-                    label:
-                        [
-                            `Nha sĩ ${data.dentist_name} | `,
-                            `Phòng ${data.room_name} | `,
-                            `${extractTime(toVietnamTime(data.start_time))} - `,
-                            `${extractTime(toVietnamTime(data.end_time))}.`,
-                        ].join(''),
-                    value: data.schedule_id,
-                },
-            ],
+            // label: 'Thông tin phòng khám',
+            // // title: data.room_name,
+            // options: [
+            //     {
+            //         label:
+            //             [
+            //                 `Nha sĩ ${data.dentist_name} | `,
+            //                 `Phòng ${data.room_name} | `,
+            //                 `${extractTime(toVietnamTime(data.start_time))} - `,
+            //                 `${extractTime(toVietnamTime(data.end_time))}.`,
+            //             ].join(''),
+            //         value: data.schedule_id,
+            //     },
+            // ],
+            label:
+                [
+                    `Nha sĩ ${data.dentist_name} | `,
+                    `Phòng ${data.room_name} | `,
+                    `${extractTime(toVietnamTime(data.start_time))} - `,
+                    `${extractTime(toVietnamTime(data.end_time))}.`,
+                ].join(''),
+            value: data.schedule_id,
         }
     ))
+    // console.log("List of dentistSchedule: ", dentistSchedule)
 
     const handleDateChange = (date, dateString) => {
         console.log('Selected Date:', dateString);
         setGetDate(dateString);
     };
 
-    const handlePayment = (value) => {
-        console.log('Click Payment:', value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
-    };
-
     const handleDentistScheduleChange = (value) => {
         console.log(`selected dentist schedule ${value}`);
+    };
+
+    const handleCategoryChange = (value) => {
+        console.log(`selected category ${value}`);
     };
 
     return (
         <>
             {/* Form Inout */}
             <Form
+                name="basic"
                 form={form}
                 {...formItemLayout}
-                name="basic"
                 style={{
                     minWidth: '600px'
                 }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
+                initialValues={{ service_category_id: undefined }}
             >
 
                 {/* Chọn ngày khám */}
@@ -269,6 +259,7 @@ const FormAppoinment = () => {
                     rules={[
                         {
                             required: true,
+                            message:'Vui lòng chọn ngày'
                         },
                     ]}
                 >
@@ -276,95 +267,60 @@ const FormAppoinment = () => {
                         <DatePicker
                             placeholder='YYYY-MM-DD'
                             format="YYYY-MM-DD"
-                            // disabledDate={disabledDate}
                             onChange={handleDateChange}
+                        // disabledDate={disabledDate}
                         />
                     </div>
                 </Form.Item>
 
 
-                {/* Chọn loại hình dịch vụ */}
+                {/* Chọn phòng và giờ khám */}
                 <Form.Item
-                    label="Chọn dịch vụ"
-                    rules={[
-                        {
-                            required: true,
-                        },
-                    ]}
-                >
-                    <div className='d-flex flex-start' style={{ width: '100%' }}>
-                        <>
-                            <Select
-                                style={{ width: '70%' }}
-                                onChange={
-                                    (e) => {
-                                        const selectedIndex = e - 1; // Subtract 1 from the index
-                                        if (selectedIndex >= 0 && selectedIndex < categoryOptions.length) {
-                                            console.log('Select Category:', categoryOptions[selectedIndex].value);
-                                            setGetIdCategory(categoryOptions[selectedIndex].value);
-                                        }
-                                    }
-                                }
-                                placeholder="Chọn dịch vụ"
-                                options={categoryOptions}
-                            />
-                        </>
-                    </div>
-                </Form.Item>
-
-                {/* Chọn bác sĩ */}
-                <Form.Item
-                    label="Chọn phòng và giờ khám"
                     name="examination_schedule_id"
+                    label="Chọn phòng và giờ khám"
                     rules={[
                         {
                             required: true,
+                            message:'Vui lòng chọn phòng và giờ khám'
                         },
                     ]}
                 >
                     <Select
+                        allowClear
                         style={{
                             width: '100%',
                         }}
-                        onChange={handleDentistScheduleChange}
                         options={dentistScheduleOptions}
+                        onChange={handleDentistScheduleChange}
                     />
                 </Form.Item>
 
-                {/* Lý do đi khám răng */}
+                {/* Chọn loại hình dịch vụ */}
                 <Form.Item
-                    label="Lý do đặt khám"
-                    name="patient_note"
-                >
-                    <div className='d-flex flex-start' style={{ width: '100%' }}>
-                        <TextArea rows={2} />
-                    </div>
-                </Form.Item>
-
-                {/* Phương thức thanh toán */}
-                <Form.Item
-                    label="Phương thức thanh toán"
-                    name="payment_id"
+                    name="service_category_id"
+                    label="Loại hình dịch vụ quan tâm"
                     rules={[
                         {
                             required: true,
+                            message:'Vui lòng chọn loại hình dịch vụ'
                         },
                     ]}
                 >
-                    <Radio.Group style={{ display: 'flex', justifyContent: 'flex-start' }} >
-                        {selectedPayment.map((data, index) => (
-                            <Radio.Button onClick={handlePayment} key={index.id} value={data.id}>{data.name}</Radio.Button>
-                        ))}
-                    </Radio.Group>
+                    <Select
+                        placeholder="Chọn dịch vụ"
+                        allowClear
+                        style={{ width: '100%' }}
+                        options={categoryOptions}
+                        onChange={handleCategoryChange}
+                    />
                 </Form.Item>
 
-
                 <Form.Item>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                         <SubmitButton form={form}>Đặt Lịch Hẹn</SubmitButton>
                     </div>
                 </Form.Item>
-            </Form>
+            </Form >
         </>
     )
 }

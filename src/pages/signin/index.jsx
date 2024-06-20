@@ -51,7 +51,7 @@ const SignIn = () => {
                 user: res.data
             }));
 
-            if (res.status === 200 || res.data.user_info.role === "Admin") {
+            if (res.status === 200 && res.data.user_info.role === "Admin") {
                 // Navigate to the home page
                 navigate('/admin');
                 // Show a success message

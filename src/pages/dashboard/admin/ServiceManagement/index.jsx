@@ -11,44 +11,105 @@ import dieuTriTuy from '../../../../assets/img/catergories/dieu-tri-tuy.png';
 import { useState } from 'react';
 
 
+// Data Bảng Loại hình dịch vụ
 const data = [
     {
         key: '1',
         img: bocRangSu, // Path to the image for the first item
         category: 'Bọc răng sứ',
+        description: 'Etiam ullamcorper metus augue, vitae pretium velit pellentesque at. Vestibulum tempor nibh eget ex lobortis vestibulum. Proin vitae laoreet ex, vitae ultrices nisl. Suspendisse congue nisl at purus porta, finibus mollis est maximus. Aliquam sed lacus risus. Nam accumsan, libero non rhoncus viverra, urna odio pretium ex, in dapibus lacus lacus vitae dolor. Morbi mattis facilisis arcu, non dignissim dolor cursus at.'
     },
     {
         key: '2',
         img: cayGhepImplant, // Path to the image for the second item
         category: 'Cấy ghép Implement',
+        description: 'Etiam ullamcorper metus augue, vitae pretium velit pellentesque at. Vestibulum tempor nibh eget ex lobortis vestibulum. Proin vitae laoreet ex, vitae ultrices nisl. Suspendisse congue nisl at purus porta, finibus mollis est maximus. Aliquam sed lacus risus. Nam accumsan, libero non rhoncus viverra, urna odio pretium ex, in dapibus lacus lacus vitae dolor. Morbi mattis facilisis arcu, non dignissim dolor cursus at.'
     },
     {
         key: '3',
         img: niengRangThamMy, // Path to the image for the third item
         category: 'Niềng răng thẩm mỹ',
+        description: 'Etiam ullamcorper metus augue, vitae pretium velit pellentesque at. Vestibulum tempor nibh eget ex lobortis vestibulum. Proin vitae laoreet ex, vitae ultrices nisl. Suspendisse congue nisl at purus porta, finibus mollis est maximus. Aliquam sed lacus risus. Nam accumsan, libero non rhoncus viverra, urna odio pretium ex, in dapibus lacus lacus vitae dolor. Morbi mattis facilisis arcu, non dignissim dolor cursus at.'
     },
     {
         key: '4',
         img: tayTrangRang, // Path to the image for the third item
         category: 'Tẩy trắng răng',
+        description: 'Etiam ullamcorper metus augue, vitae pretium velit pellentesque at. Vestibulum tempor nibh eget ex lobortis vestibulum. Proin vitae laoreet ex, vitae ultrices nisl. Suspendisse congue nisl at purus porta, finibus mollis est maximus. Aliquam sed lacus risus. Nam accumsan, libero non rhoncus viverra, urna odio pretium ex, in dapibus lacus lacus vitae dolor. Morbi mattis facilisis arcu, non dignissim dolor cursus at.'
     },
     {
         key: '5',
         img: nhoRangKhon, // Path to the image for the third item
         category: 'Nhổ răng khôn',
+        description: 'Etiam ullamcorper metus augue, vitae pretium velit pellentesque at. Vestibulum tempor nibh eget ex lobortis vestibulum. Proin vitae laoreet ex, vitae ultrices nisl. Suspendisse congue nisl at purus porta, finibus mollis est maximus. Aliquam sed lacus risus. Nam accumsan, libero non rhoncus viverra, urna odio pretium ex, in dapibus lacus lacus vitae dolor. Morbi mattis facilisis arcu, non dignissim dolor cursus at.'
     },
     {
         key: '6',
         img: benhLyNhaChu, // Path to the image for the third item
         category: 'Bệnh lý nha chu',
+        description: 'Etiam ullamcorper metus augue, vitae pretium velit pellentesque at. Vestibulum tempor nibh eget ex lobortis vestibulum. Proin vitae laoreet ex, vitae ultrices nisl. Suspendisse congue nisl at purus porta, finibus mollis est maximus. Aliquam sed lacus risus. Nam accumsan, libero non rhoncus viverra, urna odio pretium ex, in dapibus lacus lacus vitae dolor. Morbi mattis facilisis arcu, non dignissim dolor cursus at.'
     },
     {
         key: '7',
         img: dieuTriTuy, // Path to the image for the third item
         category: 'Niềng răng thẩm mỹ',
+        description: 'Etiam ullamcorper metus augue, vitae pretium velit pellentesque at. Vestibulum tempor nibh eget ex lobortis vestibulum. Proin vitae laoreet ex, vitae ultrices nisl. Suspendisse congue nisl at purus porta, finibus mollis est maximus. Aliquam sed lacus risus. Nam accumsan, libero non rhoncus viverra, urna odio pretium ex, in dapibus lacus lacus vitae dolor. Morbi mattis facilisis arcu, non dignissim dolor cursus at.'
     },
 ];
 
+
+// NEST Table
+const expandedRowRender = () => {
+    // Cột Chi tiết dịch vụ
+    const columns = [
+        {
+            title: 'Tên dịch vụ',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Giá',
+            dataIndex: 'cost',
+            key: 'cost',
+        },
+        {
+            title: 'ĐVT',
+            dataIndex: 'dvt',
+            key: 'dvt',
+        },
+        {
+            title: 'Bảo hành',
+            dataIndex: 'baohanh',
+            key: 'baohanh',
+        },
+        {
+            title: 'Action',
+            key: 'operation',
+            render: () => (
+                <Space size="middle">
+                    <Button type="text">Chỉnh sửa</Button>
+                    <Button type="text" danger>Xóa</Button>
+                </Space>
+            ),
+        },
+    ];
+    // Data Chi tiết dịch vụ
+    const data = [];
+    for (let i = 0; i < 3; ++i) {
+        data.push({
+            key: i.toString(),
+            name: 'Bọc răng sứ',
+            cost: '120.000 VNĐ',
+            dvt: 'Trụ',
+            baohanh: '3 năm',
+        });
+    }
+    // Bảng Chi tiết Dịch vụ
+    return <Table columns={columns} dataSource={data} pagination={false} />;
+};
+
+
+// Main
 const ServiceManagement = () => {
     const { Search } = Input;
     const { Title } = Typography;
@@ -83,11 +144,28 @@ const ServiceManagement = () => {
             key: 'category',
         },
         {
+            title: 'Mô tả',
+            dataIndex: 'description',
+            key: 'description',
+            // className: 'ellipsis', // Apply the ellipsis class
+            onCell: () => {
+                return {
+                    style: {
+                        maxWidth: 300,
+                        whiteSpace: 'normal',
+                        overflow: 'hidden',
+                        wordBreak:'break-word',
+                        // textOverflow: 'ellipsis',
+                    }
+                };
+            },
+        },
+        {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button onClick={showDetailServiceModal}>Chỉnh sửa</Button>
+                    <Button onClick={showDetailServiceModal} type='primary'>Cập nhật</Button>
                     <Button danger>Xóa</Button>
                 </Space>
             ),
@@ -98,7 +176,7 @@ const ServiceManagement = () => {
         <>
             {/* Header */}
             <div>
-                <Title level={2}>Quản lý Dịch vụ</Title>
+                <Title level={2}>Quản lý loại hình dịch vụ</Title>
             </div>
 
             {/* Top-Bar Btn*/}
@@ -116,31 +194,41 @@ const ServiceManagement = () => {
                     type="primary"
                     style={{ width: 'fit-content', margin: '20px', backgroundColor: '#4096FF' }}
                 >
-                    Thêm Dịch Vụ
+                    Thêm Loại Hình Dịch Vụ
                 </Button>
             </div>
             <br></br>
-            <Table columns={columns} dataSource={data} />
 
-
-
+            {/* Bảng Loại hình dịch vụ */}
+            <Table columns={columns} dataSource={data} expandable={{
+                expandedRowRender,
+                defaultExpandedRowKeys: ['0'],
+            }} />
 
             {/* Detail Service Modal */}
             <Modal
                 centered
                 open={detailServiceModal}
+                width={800}
                 onOk={handleOk}
                 onCancel={handleCancel}
-                width={1000}
+                footer={[
+                    <Button danger key="back" onClick={handleCancel}>
+                        Hủy
+                    </Button>,
+                    <Button key="submit" type="primary" onClick={handleOk}>
+                        Cập nhật
+                    </Button>,
+                ]}
             >
                 {/* Form Loại hình dịch vụ */}
                 <div>
-                    <Title level={4}>Loại hình Dịch vụ</Title>
+                    <Title level={4}>Cập nhật loại hình dịch vụ</Title>
                     <Form
                         name='form-category'
                         layout="vertical"
                         labelCol={{
-                            span: 4,
+                            span: 12,
                         }}
                         wrapperCol={{
                             span: 20,
@@ -152,62 +240,16 @@ const ServiceManagement = () => {
                                     label="Icon"
                                     name="vertical"
                                 >
-                                    <Input />
+                                    <Input placeholder='link ảnh icon' />
                                 </Form.Item>
                             </Col>
 
                             <Col span={12}>
                                 <Form.Item
-                                    label="Tên"
+                                    label="Tên loại hình dịch vụ"
                                     name="vertical"
                                 >
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    </Form>
-                </div>
-
-                <br/>
-                {/* Form Chi tiết Dịch vụ */}
-                <div>
-                    <Title level={4}>Loại hình Dịch vụ</Title>
-                    <Form
-                        name='form-category'
-                        layout="vertical"
-                        labelCol={{
-                            span: 4,
-                        }}
-                        wrapperCol={{
-                            span: 20,
-                        }}
-                    >
-                        <Row>
-                            <Col span={12}>
-                                <Form.Item
-                                    label="vertical"
-                                    name="vertical"
-                                    rules={[
-                                        {
-                                            required: true,
-                                        },
-                                    ]}
-                                >
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-
-                            <Col span={12}>
-                                <Form.Item
-                                    label="vertical"
-                                    name="vertical"
-                                    rules={[
-                                        {
-                                            required: true,
-                                        },
-                                    ]}
-                                >
-                                    <Input />
+                                    <Input placeholder='Bọc răng sứ' />
                                 </Form.Item>
                             </Col>
                         </Row>

@@ -14,7 +14,7 @@ const Appoinment = () => {
                     <Card>
                         <div className="text-center mx-md-auto mb-lg-5 mb-md-3">
                             <h2 style={{ color: '#f6921e', fontWeight: '500', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-                                đặt lịch hẹn
+                                đặt lịch khám tổng quát miễn phí
                             </h2>
                         </div>
 
