@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 const FormAddNewService = ({ data }) => {
 
-    // console.log("prop data: ", data);
+    console.log("prop data: ", data);
     const [categoryId, setCategoryId] = useState(data.length > 0 ? data[0].category_id : null);
 
     const [form] = Form.useForm();
