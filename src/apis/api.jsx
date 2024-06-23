@@ -3,7 +3,7 @@ import axios from '../ultils/axios-custom';
 
 // Đăng nhập && Đăng ký
 export const GetSignUp = (email, full_name, phone_number, password) => {
-    return axios.post('/api/v1/users',
+    return axios.post('/api/v1/patients',
         {
             email: email,
             full_name: full_name,
@@ -83,7 +83,6 @@ export const DoViewDetailCategoryByAdmin = (slug) => {
 export const DoUpdateCategoryByAdmin = (id, name, icon_url, banner_url, description) => {
     return axios.patch(`/api/v1/service-categories/${id}`,
         {
-            id: id,
             name: name,
             icon_url: icon_url,
             banner_url: banner_url,
@@ -107,13 +106,27 @@ export const DoAddCategoryByAdmin = (banner_url, description, icon_url, name) =>
     )
 }
 
+// Search - Tìm kiếm Loại hình dịch vụ theo Tên
+export const DoSearchCategoryByAdmin = (name) => {
+    return axios.get(`/api/v1/service-categories?q=${name}`)
+}
 // ************************************************************************************
 
 // Chi tiết Dịch vụ API
 
-// View - Lấy Thông tin của 1 Dịch vụ 
+// View - Liệt kê tất cả Dịch vụ của 1 Category
 export const DoViewDataServiceByAdmin = (slug) => {
-    return axios.get(`/api/v1/service-categories/${slug}/services`)
+    return axios.get(`/api/v1/services?category=${slug}`)
+}
+
+// Search - Tìm kiếm 1 Dịch vụ
+export const DoSearchServiceByAdmin = (slug, name) => {
+    return axios.get(`/api/v1/services?category=${slug}&q=${name}`);
+}
+
+// View detail - Liệt kê tất cả Thông tin của 1 Dịch vụ
+export const DoViewDetailServiceByAdmin = (id) => {
+    return axios.get(`/api/v1/services/${id}`);
 }
 
 // Delete - Xóa 1 Dịch vụ
@@ -133,6 +146,17 @@ export const DoAddNewServiceByAdmin = (category_id, cost, name, unit, warranty_d
         }
     )
 }
+
+// Update - Chỉnh sửa 1 Dịch vụ
+export const DoUpdateServiceByAdmin = (id, name, cost, unit, warranty_duration) => {
+    return axios.patch(`/api/v1/services/${id}`, {
+        name: name,
+        cost: cost,
+        unit: unit,
+        warranty_duration: warranty_duration,
+    })
+}
+
 
 // Quản Lý Nha Sĩ
 export const DoViewAllDentistByAdmin = () => {

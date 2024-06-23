@@ -5,23 +5,7 @@ const AddNewDentist = () => {
     const { Title } = Typography;
     return (
         <>
-            {/* <div>
-                <Title level={2}> Tạo tài khoản Nha sĩ </Title>
-            </div> */}
             <div className="wrapper">
-                {/* <div className="form-left">
-                    <h2 className="text-uppercase">information</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et molestie ac feugiat sed. Diam volutpat commodo.
-                    </p>
-                    <p className="text">
-                        <span>Sub Head:</span>
-                        Vitae auctor eu augudsf ut. Malesuada nunc vel risus commodo viverra. Praesent elementum facilisis leo vel.
-                    </p>
-                    <div className="form-field">
-                        <input type="submit" className="account" value="Have an Account?" />
-                    </div>
-                </div> */}
                 <form className="form-right">
                     <h2 className="text-uppercase">Đăng ký Nha sĩ</h2>
                     <div className="row">

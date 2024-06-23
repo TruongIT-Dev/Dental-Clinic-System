@@ -127,7 +127,7 @@ const FormAddNewCategory = () => {
                     }}
                 >
                     <Button type="primary" htmlType="submit">
-                        Thêm mới dịch vụ
+                        Thêm
                     </Button>
 
                     <Button style={{ marginLeft: '12px' }} htmlType="button" onClick={onReset}>

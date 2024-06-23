@@ -1,11 +1,10 @@
 import { Button, Form, Input, message, InputNumber } from 'antd';
 import { DoAddNewServiceByAdmin } from '../../../../apis/api';
-import { useState } from 'react';
 
-const FormAddNewService = ({ data }) => {
+const FormAddNewService = ({ data, id }) => {
 
     console.log("prop data: ", data);
-    const [categoryId, setCategoryId] = useState(data.length > 0 ? data[0].category_id : null);
+    // const [categoryId, setCategoryId] = useState(data.length > 0 ? data[0].category_id : null);
 
     const [form] = Form.useForm();
 
@@ -22,7 +21,7 @@ const FormAddNewService = ({ data }) => {
         console.log("Check Form Data: ", values);
         try {
             const APIAddNewService = await DoAddNewServiceByAdmin(category_id, cost, name, unit, warranty_duration);
-            console.log("Input data new service: ", APIAddNewService);
+            // console.log("Input data new service: ", APIAddNewService);
 
             switch (APIAddNewService.status) {
                 case 201:
@@ -45,9 +44,6 @@ const FormAddNewService = ({ data }) => {
 
     };
 
-    // // Extract category_id from the first object in data array
-    // const categoryId = data.length > 0 ? data[0].category_id : null;
-
     return (
         <>
             <Form
@@ -63,7 +59,7 @@ const FormAddNewService = ({ data }) => {
                     maxWidth: 600,
                 }}
                 initialValues={{
-                    category_id: categoryId, // Initialize categoryId in form
+                    category_id: id, // Initialize categoryId in form
                     remember: true,
                 }}
 
@@ -74,11 +70,7 @@ const FormAddNewService = ({ data }) => {
                 <Form.Item
                     label="Loại Hình Dịch Vụ"
                     name="category_id"
-                // rules={[
-                //     {
-                //         required: true,
-                //     },
-                // ]}
+                    style={{ display: 'none' }}
                 >
                     <InputNumber disabled />
                 </Form.Item>

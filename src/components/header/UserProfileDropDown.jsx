@@ -12,8 +12,6 @@ const LinkDropDownStyle = {
     fontSize: '16px',
 }
 
-
-
 const UserProfileDropDown = ({ user }) => {
 
     const dispatch = useDispatch();

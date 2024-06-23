@@ -1,41 +1,34 @@
-import { Space, Table, Button, Typography, Input, Popconfirm, message, Modal } from 'antd';
+import { Space, Table, Button, Input, Popconfirm, message, Modal, Breadcrumb } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { DoDeleteDataServiceByAdmin, DoViewDataServiceByAdmin } from '../../../../apis/api';
-import { useParams } from 'react-router-dom';
+import { DoDeleteDataServiceByAdmin, DoSearchServiceByAdmin, DoViewDataServiceByAdmin, DoViewDetailCategoryByAdmin } from '../../../../apis/api';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import FormAddNewService from './FormAddNewService';
 
-
-
-// Data Chi tiết dịch vụ
-// const data = [];
-// for (let i = 0; i < 3; ++i) {
-//     data.push({
-//         key: i.toString(),
-//         name: 'Bọc răng sứ',
-//         cost: '120.000 VNĐ',
-//         dvt: 'Trụ',
-//         baohanh: '3 năm',
-//     });
-// }
-
+// Main
 const DetailService = () => {
-    const { Title } = Typography;
+    // const { Title } = Typography;
     const { Search } = Input;
     const { slug } = useParams();
 
+
     // useState Chứa API Data của Dịch vụ của 1 Category
     const [dataService, setDataService] = useState([]);
-
+    const [categoryId, setCategoryId] = useState(null);
+    // const [searchService, setSearchService] = useState([]);
     const [addServiceModal, setAddServiceModal] = useState(false);
+    const [detailCategory, setDetailCategory] = useState({});
 
+    // console.log("dataService", dataService)
+    // console.log("categoryId", categoryId)
     // ************************************************
     // API Lấy Thông tin Chi tiết Dịch vụ của 1 Category
     const fetchDataService = async (slug) => {
         try {
             const APIDataService = await DoViewDataServiceByAdmin(slug);
-            // console.log("Data Service nè: ", APIDataService)
+
             const GetDataService = APIDataService?.data || {};
+            // console.log("Data Service nè: ", GetDataService)
             setDataService(GetDataService);
         } catch (error) {
             console.log("Failed to get data service: ", error);
@@ -67,6 +60,36 @@ const DetailService = () => {
         console.log(e);
         message.error('Hủy');
     };
+
+    // API Lấy tên Của Dịch vụ
+    const fetchDoViewDetailCategoryByAdmin = async () => {
+        const APIDoViewDetailCategory = await DoViewDetailCategoryByAdmin(slug);
+
+        const GetDataDetailCategory = APIDoViewDetailCategory?.data || {};
+        setDetailCategory(GetDataDetailCategory);
+    }
+    useEffect(() => {
+        fetchDoViewDetailCategoryByAdmin(slug);
+    }, [slug])
+
+
+
+    // API Seach Dịch vụ
+    const fetchSearchService = async (name) => {
+        try {
+            const APISearchService = await DoSearchServiceByAdmin(slug, name);
+
+            const GetDataSearchService = APISearchService?.data || [];
+            setDataService(GetDataSearchService);
+            // console.log("APISearchService", APISearchService)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        fetchSearchService();
+    }, [slug])
+
     // ***********************************************************
 
 
@@ -113,7 +136,9 @@ const DetailService = () => {
             key: 'operation',
             render: (text, record) => (
                 <Space size="middle">
-                    <Button type="primary">Chỉnh sửa</Button>
+                    <Button type="primary">
+                        <Link to={`/admin/quan-ly-dich-vu/detail/${record.id}`} style={{ textDecoration: 'none' }}> Chỉnh sửa</Link>
+                    </Button>
                     <Popconfirm
                         title="Bạn có chắc chắn muốn xóa?"
                         onConfirm={() => confirm(record.id)}
@@ -128,21 +153,53 @@ const DetailService = () => {
             ),
         },
     ];
+
+    // Lấy id từ url
+    const location = useLocation();
+    // Use useEffect hook to run some code once the component mounts
+    useEffect(() => {
+        // Get the URLSearchParams object from the location.search property
+        const params = new URLSearchParams(location.search);
+
+        // Get the value of the 'id' parameter from the URL
+        const id = params.get('id');
+        setCategoryId(Number(id));
+        // Log the value of 'id' to the console to verify
+        // console.log('ID from URL:', id);
+
+        // You can use 'id' in your component state or for any other logic here
+    }, [location.search]); // Re-run the effect whenever location.search changes
+
+
     return (
         <>
             {/* Header */}
-            <div>
-                <Title level={2}>Quản lý dịch vụ</Title>
-            </div>
+            <Breadcrumb
+                style={{
+                    margin: '16px 0',
+                }}
+            >
+                <Breadcrumb.Item>
+                    <Link to='/admin/quan-ly-dich-vu' style={{ textDecoration: 'none' }}>Loại hình dịch vụ</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                    <Link to={`#`} style={{ textDecoration: 'none' }}>{detailCategory.name}</Link>
+                </Breadcrumb.Item>
+            </Breadcrumb>
+
+            {/* <div>
+                <Title level={2}>Quản lý dịch vụ {slug}</Title>
+            </div> */}
 
             {/* Top-Bar Btn*/}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Search
-                    placeholder="input search text"
+                    placeholder="Nhập tên dịch vụ"
                     allowClear
-                    enterButton="Search"
+                    enterButton="Tìm kiếm"
                     size="large"
                     style={{ margin: '20px', width: '33%' }}
+                    onSearch={fetchSearchService}
                 />
                 <Button
                     icon={<PlusOutlined />}
@@ -154,7 +211,7 @@ const DetailService = () => {
                     Thêm Dịch Vụ
                 </Button>
                 <Modal title="Thêm Dịch Vụ" open={addServiceModal} onOk={handleAddServiceOk} onCancel={handleAddSerivceCancel} footer={[null]}>
-                    <FormAddNewService data={dataService} />
+                    <FormAddNewService data={dataService} id={categoryId} />
                 </Modal>
             </div>
             <br></br>

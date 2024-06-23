@@ -1,47 +1,79 @@
-import { useState } from 'react';
 import {
     PieChartOutlined,
     TeamOutlined,
     ProfileOutlined,
+    UserOutlined,
+    SettingOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Avatar, Col, Layout, Menu, Row, theme, Breadcrumb } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+
+
 const { Content, Footer, Sider } = Layout;
 
-
 const AdminDashboard = () => {
-    const [collapsed, setCollapsed] = useState(false);
+
+    // set biến 'userSelector' chứa thông tin đã đăng nhập
+    const account = useSelector(state => state?.account?.user?.user?.user_info);
+    // const dispatch = useDispatch();
+    // const navigate = useNavigate();
+
+    console.log("account", account)
+
+    // Function xử lý thoát đăng nhập
+    // const handleLogOut = () => {
+    //     console.log('Button Logout clicked')
+    //     localStorage.removeItem('access_token');
+    //     dispatch(doLogoutAction());
+    //     navigate('/');
+    // }
+
+    // const [collapsed, setCollapsed] = useState(false);
+
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
     return (
         <Layout hasSider
             style={{
-                minHeight: '100vh',
+                // minHeight: '100vh',
             }}
         >
-            <Sider width={270} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} >
+
+            <Sider width={270} >
                 <div className="demo-logo-vertical" style={{ height: 40, }} />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}
-                    defaultOpenKeys={['sub2', 'sub1', 'sub3']}>
+
+                <div style={{ color: "#fff", padding: "0 15px", marginBottom: "1rem" }}>
+                    <Row>
+                        <Col span={6}>
+                            <Avatar icon={<UserOutlined />} />
+                        </Col>
+                        <Col span={12}>
+                            <Row>
+                                <Col span={24} style={{ color: "#FFF" }}>{account.full_name}</Col>
+                                <Col span={24} style={{ color: "#AAABAF" }}>{account.email}</Col>
+                            </Row>
+                        </Col>
+                        <Col span={6}>
+                            <Link to='#'>
+                                <SettingOutlined style={{ color: "#DB0D4B" }} />
+                            </Link>
+                        </Col>
+                    </Row>
+                </div>
+
+                <Menu theme="dark" mode="inline"
+                    defaultOpenKeys={['sub1', 'sub2', 'sub3']}>
 
                     {/* Dashboard */}
                     <Menu.Item key="1" icon={<PieChartOutlined />}>
                         <Link style={{ textDecoration: 'none' }} to="/admin">Dashboard</Link>
                     </Menu.Item>
 
-                    {/* Quản Lý Loại Hình Dịch Vụ */}
-                    {/* <Menu.SubMenu key="sub1" title="Quản lý Dịch vụ" icon={<TeamOutlined />}>
-                        <Menu.Item key="2">
-                            <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-dich-vu">Loại hình Dịch vụ</Link>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Link style={{ textDecoration: 'none' }} to="/admin/tao-dich-vu">Tạo Dịch vụ</Link>
-                        </Menu.Item>
-                    </Menu.SubMenu> */}
-
                     <Menu.Item key="2" icon={<TeamOutlined />}>
-                        <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-dich-vu">Loại hình Dịch vụ</Link>
+                        <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-dich-vu">Quản lý Dịch vụ</Link>
                     </Menu.Item>
 
                     {/* Quản Lý Các Lịch Khám và Lịch Điều Trị */}
@@ -61,7 +93,7 @@ const AdminDashboard = () => {
                     </Menu.SubMenu>
 
                     {/* Quản Lý Tài Khoản Nha Sĩ */}
-                    <Menu.SubMenu key="sub3" title="Quản lý Nha sĩ" icon={<TeamOutlined />}>
+                    <Menu.SubMenu key="sub2" title="Quản lý Nha sĩ" icon={<TeamOutlined />}>
                         <Menu.Item key="7">
                             <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-nha-si">Danh sách Nha sĩ</Link>
                         </Menu.Item>
@@ -92,7 +124,11 @@ const AdminDashboard = () => {
                             margin: '16px 0',
                         }}
                     >
+                        {/* <Breadcrumb.Item>Home</Breadcrumb.Item>
+                        <Breadcrumb.Item>List</Breadcrumb.Item>
+                        <Breadcrumb.Item>App</Breadcrumb.Item> */}
                     </Breadcrumb>
+
                     <div
                         style={{
                             padding: 24,
