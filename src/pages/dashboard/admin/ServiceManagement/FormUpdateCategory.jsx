@@ -21,7 +21,7 @@ const FormUpdateCategory = () => {
 
     // Liệt kê Chi tiết Loại hình dịch vụ
     const [detailCategory, setDetailCategory] = useState({});
-
+    console.log("detailCategory", detailCategory)
     const [iconVisible, setIconVisible] = useState(false);
     const [bannerVisible, setBannerVisible] = useState(false);
 
@@ -72,16 +72,24 @@ const FormUpdateCategory = () => {
     useEffect(() => {
         fetchDoViewDetailCategoryByAdmin(slug);
     }, [slug])
+
+    useEffect(() => {
+        // Check if detailCategory is set and then set form values
+        if (detailCategory) {
+            form.setFieldsValue({
+                name: detailCategory.name,
+                icon_url: detailCategory.icon_url,
+                banner_url: detailCategory.banner_url,
+                description: detailCategory.description,
+            });
+        }
+    }, [detailCategory, form]);
     //-----------------------------------------------------------------
     //*****************************************************************
 
     //*****************************************************************
     //--------------------------Function-------------------------------
 
-    // Form submit Success
-    // const onFinish = (values) => {
-    //     console.log('Success:', values);
-    // };
     // Form submit Failed
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -119,7 +127,6 @@ const FormUpdateCategory = () => {
                             span: 16,
                         }}
                         form={form}
-                        initialValues={detailCategory}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
@@ -128,15 +135,19 @@ const FormUpdateCategory = () => {
                             wrapperCol={{
                                 span: 12
                             }}
-                            label="Tên"
+                            label="name"
                             name="name"
                         >
-                            <Input value={detailCategory.name} placeholder={detailCategory.name} defaultValue={detailCategory.name} />
+                            <Input />
                         </Form.Item>
 
-                        <Form.Item label="Link icon" name="icon_url">
-                            <Space>
-                                <Input placeholder={detailCategory.icon_url} />
+
+                        <Form.Item
+                            label="Link icon"
+                            name="icon_url"
+                        >
+                            <Input value={detailCategory.icon_url} />
+                            {/* <Space>
                                 <Button type="primary" onClick={() => setIconVisible(true)}>
                                     Xem ảnh
                                 </Button>
@@ -154,12 +165,15 @@ const FormUpdateCategory = () => {
                                         },
                                     }}
                                 />
-                            </Space>
+                            </Space> */}
                         </Form.Item>
 
-                        <Form.Item label="Link banner" name="banner_url">
-                            <Space>
-                                <Input placeholder={detailCategory.banner_url} />
+                        <Form.Item
+                            label="Link banner"
+                            name="banner_url"
+                        >      
+                            <Input value={detailCategory.banner_url} />
+                            {/* <Space>
                                 <Button type="primary" onClick={() => setBannerVisible(true)}>
                                     Xem ảnh
                                 </Button>
@@ -177,14 +191,14 @@ const FormUpdateCategory = () => {
                                         },
                                     }}
                                 />
-                            </Space>
+                            </Space> */}
                         </Form.Item>
 
                         <Form.Item
                             label="Mô tả"
                             name="description"
                         >
-                            <TextArea rows={5} placeholder={detailCategory.description} />
+                            <TextArea rows={5} value={detailCategory.description} />
                         </Form.Item>
                         <Form.Item
                             wrapperCol={{

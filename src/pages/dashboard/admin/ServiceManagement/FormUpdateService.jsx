@@ -10,7 +10,7 @@ const FormUpdateService = () => {
     const { id } = useParams();
 
     const { Title } = Typography;
-
+    const [form] = Form.useForm();
     //-----------------------------------------------------------------
     //*****************************************************************
 
@@ -18,8 +18,7 @@ const FormUpdateService = () => {
     //--------------------------useState------------------------------
 
     // Liệt kê Chi tiết Thông tin của 1 dịch vụ
-    const [detailService, setDetailService] = useState([]);
-
+    const [detailService, setDetailService] = useState({});
     //-----------------------------------------------------------------
     //*****************************************************************
 
@@ -27,10 +26,16 @@ const FormUpdateService = () => {
     //--------------------------Call API-------------------------------
     // API Show Thông tin Chi tiết 1 dịch vụ
     const fetchDoViewDetailServiceByAdmin = async (id) => {
-        const APIDoViewDetailService = await DoViewDetailServiceByAdmin(id);
 
-        const GetDataDetailCategory = APIDoViewDetailService?.data || {};
-        setDetailService(GetDataDetailCategory);
+        try {
+            const APIDoViewDetailService = await DoViewDetailServiceByAdmin(id);
+
+            const GetDataDetailCategory = APIDoViewDetailService?.data || {};
+            setDetailService(GetDataDetailCategory);
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     // API Update Loại hình dịch vụ
@@ -64,6 +69,17 @@ const FormUpdateService = () => {
     useEffect(() => {
         fetchDoViewDetailServiceByAdmin(id);
     }, [id])
+
+    useEffect(() => {
+        if (detailService) {
+            form.setFieldsValue({
+                name: detailService.name,
+                cost: detailService.cost,
+                unit: detailService.unit,
+                warranty_duration: detailService.warranty_duration,
+            });
+        }
+    }, [detailService, form])
     //-----------------------------------------------------------------
     //*****************************************************************
 
@@ -98,7 +114,13 @@ const FormUpdateService = () => {
                         style={{
 
                         }}
-
+                        form={form}
+                        initialValues={{
+                            name: detailService.name,
+                            cost: detailService.cost,
+                            unit: detailService.unit,
+                            warranty_duration: detailService.warranty_duration,
+                        }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
@@ -107,28 +129,28 @@ const FormUpdateService = () => {
                             label="Tên"
                             name="name"
                         >
-                            <Input placeholder={detailService.name} />
+                            <Input value={detailService.name} />
                         </Form.Item>
 
                         <Form.Item
                             label="Giá"
                             name="cost"
                         >
-                            <InputNumber placeholder={detailService.cost} />
+                            <InputNumber value={detailService.cost} />
                         </Form.Item>
 
                         <Form.Item
                             label="Đơn vị"
                             name="unit"
                         >
-                            <Input placeholder={detailService.unit} />
+                            <Input value={detailService.unit} />
                         </Form.Item>
 
                         <Form.Item
                             label="Thời hạn bảo hành"
                             name="warranty_duration"
                         >
-                            <Input placeholder={detailService.warranty_duration} />
+                            <Input value={detailService.warranty_duration} />
                         </Form.Item>
                         <Form.Item
                             wrapperCol={{

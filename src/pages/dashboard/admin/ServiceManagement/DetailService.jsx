@@ -1,4 +1,4 @@
-import { Space, Table, Button, Input, Popconfirm, message, Modal, Breadcrumb } from 'antd';
+import { Space, Table, Button, Input, Popconfirm, message, Modal, Breadcrumb, notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { DoDeleteDataServiceByAdmin, DoSearchServiceByAdmin, DoViewDataServiceByAdmin, DoViewDetailCategoryByAdmin } from '../../../../apis/api';
 import { useParams, useLocation, Link } from 'react-router-dom';
@@ -83,11 +83,27 @@ const DetailService = () => {
             setDataService(GetDataSearchService);
             // console.log("APISearchService", APISearchService)
         } catch (error) {
-            console.log(error);
+            console.log(error)
+            // if (error.response.status) {
+            //     switch (error.response.status) {
+            //         case 500:
+            //             notification.error({
+            //                 message: 'Không tìm thấy tên',
+            //                 duration: 1,
+            //             });
+            //             break;
+            //         case 404:
+            //             notification.error({
+            //                 message: 'Không tìm thấy tên',
+            //                 duration: 1,
+            //             });
+            //             break;
+            //     }
+            // }
         }
     }
     useEffect(() => {
-        fetchSearchService();
+        fetchSearchService(slug);
     }, [slug])
 
     // ***********************************************************

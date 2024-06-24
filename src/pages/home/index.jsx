@@ -18,6 +18,7 @@ import in3 from '../../assets/img/home/in3.webp';
 import in4 from '../../assets/img/home/in4.webp';
 import in5 from '../../assets/img/home/in5.webp';
 import in6 from '../../assets/img/home/in6.webp';
+import { Input } from 'antd';
 
 
 
