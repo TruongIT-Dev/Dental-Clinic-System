@@ -153,7 +153,7 @@ const DetailService = () => {
             render: (text, record) => (
                 <Space size="middle">
                     <Button type="primary">
-                        <Link to={`/admin/quan-ly-dich-vu/detail/${record.id}`} style={{ textDecoration: 'none' }}> Chỉnh sửa</Link>
+                        <Link to={`/admin/quan-ly-dich-vu/chi-tiet/${record.id}`} style={{ textDecoration: 'none' }}> Chỉnh sửa</Link>
                     </Button>
                     <Popconfirm
                         title="Bạn có chắc chắn muốn xóa?"

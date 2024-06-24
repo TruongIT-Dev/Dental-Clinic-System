@@ -1,7 +1,7 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { DoUpdateServiceByAdmin, DoViewDetailServiceByAdmin } from "../../../../apis/api";
 import { useEffect, useState } from "react";
-import { Form, Input, Button, Typography, notification, InputNumber, message } from 'antd';
+import { Form, Input, Button, Typography, notification, InputNumber, message, Breadcrumb } from 'antd';
 
 
 const FormUpdateService = () => {
@@ -98,6 +98,21 @@ const FormUpdateService = () => {
         <div className="container" style={{ height: '100vh' }}>
             <div>
                 {/* Header */}
+                <Breadcrumb
+                    style={{
+                        margin: '16px 0',
+                    }}
+                >
+                    <Breadcrumb.Item>
+                        <Link to='/admin/quan-ly-dich-vu' style={{ textDecoration: 'none' }}>Loại hình dịch vụ</Link>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        <Link to='#' style={{ textDecoration: 'none' }}>Dịch vụ</Link>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        <Link style={{ textDecoration: 'none' }}>{detailService.name}</Link>
+                    </Breadcrumb.Item>
+                </Breadcrumb>
                 <div>
                     <Title level={2}>Chi tiết dịch vụ</Title>
                 </div>
@@ -106,10 +121,10 @@ const FormUpdateService = () => {
                     <Form
                         name="basic"
                         labelCol={{
-                            span: 6,
+                            span: 4,
                         }}
                         wrapperCol={{
-                            span: 10,
+                            span: 16,
                         }}
                         style={{
 

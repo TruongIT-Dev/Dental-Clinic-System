@@ -93,7 +93,7 @@ function App() {
             <Route path='quan-ly-dich-vu/:slug' element={<DetailService />} />
 
             <Route path='quan-ly-dich-vu/:slug/:id' element={<FormUpdateCategory />} />
-            <Route path='quan-ly-dich-vu/detail/:id' element={<FormUpdateService />} />
+            <Route path='quan-ly-dich-vu/chi-tiet/:id' element={<FormUpdateService />} />
 
             {/* Quản lý Room */}
             <Route path='quan-ly-phong-kham' element={<RoomManagement />} />

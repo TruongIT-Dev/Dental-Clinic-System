@@ -135,7 +135,7 @@ const FormUpdateCategory = () => {
                             wrapperCol={{
                                 span: 12
                             }}
-                            label="name"
+                            label="Tên"
                             name="name"
                         >
                             <Input />
@@ -171,7 +171,7 @@ const FormUpdateCategory = () => {
                         <Form.Item
                             label="Link banner"
                             name="banner_url"
-                        >      
+                        >
                             <Input value={detailCategory.banner_url} />
                             {/* <Space>
                                 <Button type="primary" onClick={() => setBannerVisible(true)}>

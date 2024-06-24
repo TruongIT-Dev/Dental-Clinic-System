@@ -158,7 +158,12 @@ export const DoUpdateServiceByAdmin = (id, name, cost, unit, warranty_duration) 
 }
 
 
-// Quản Lý Nha Sĩ
-export const DoViewAllDentistByAdmin = () => {
-    return axios.get('/api/v1/dentists');
+//Search và View Quản Lý Nha Sĩ
+export const DoViewAllDentistByAdmin = (name) => {
+    return axios.get(`/api/v1/dentists?q=${name}`);
+}
+
+// View Thông tin Info của 1 Dentist
+export const DoViewInfoDentistByAdmin = (id) => {
+    return axios.get(`/api/v1/dentists/${id}`);
 }
