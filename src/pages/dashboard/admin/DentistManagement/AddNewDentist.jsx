@@ -1,175 +1,235 @@
 import { Link } from 'react-router-dom';
 import '../../../../scss/AdminAddNewDentist.css'
-import { Breadcrumb, Button, Card, Col, Form, Input, Row, Typography } from 'antd';
+import { Breadcrumb, Button, Card, Col, DatePicker, Form, Image, Input, Radio, Row, Select, Typography, message } from 'antd';
+import { useState } from 'react';
+import banner from '../../../../assets/img/add_dentist/add-dentist-banner.jpg'
+import { DoAddNewDentistByAdmin } from '../../../../apis/api';
 
 const AddNewDentist = () => {
-    const { Title } = Typography;
 
+
+    // ****************************************
+    // --------------Variables-----------------
+    const { Title } = Typography;
+    const [value, setValue] = useState(1);
     const [form] = Form.useForm();
+
+
+    // ****************************************
+    // --------------useState-----------------
+
+    const [date, setDate] = useState('');
+
+
+    // ****************************************
+    // --------------API Function--------------
 
     const onFinish = (values) => {
         console.log('Success:', values);
+        const { email, full_name, phone_number, gender, date_of_birth, specialty, password } = values;
+        const formattedValues = {
+            ...values,
+            dateOfBirth: values.dateOfBirth ? values.dateOfBirth.format('YYYY-MM-DD') : null,
+        };
+        console.log('Success:', formattedValues);
+        try {
+            const APIAddNewDentist = DoAddNewDentistByAdmin(email, full_name, phone_number, gender, date_of_birth, specialty, password);
+            console.log("APIAddNewDentist", APIAddNewDentist)
+            switch (APIAddNewDentist.status) {
+                case 201:
+                    message.success('Thêm Nha sĩ thành công');
+                    // window.location.reload();
+                    break;
+                case 400:
+                    message.error('Bad Request');
+                    break;
+                default:
+                    message.error('Thêm thất bại');
+                    break;
+            }
+        } catch (error) {
+            console.log(error)
+        }
     };
+
+
+    // ****************************************
+    // --------------useEffect-----------------
+
+
+    // ****************************************
+    // --------------Other Functions-----------
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
+    const handleChange = (value) => {
+        console.log(`selected ${value}`);
+    };
+
+    const handleChangeDate = (date, dateString) => {
+        console.log(dateString);
+        setDate(dateString)
+    };
+
+
     return (
         <>
             {/* Header */}
-            {/* <Breadcrumb
-                style={{
-                    margin: '16px 0',
-                }}
-            >
-                <Breadcrumb.Item>
-                    <Link to='/admin/quan-ly-nha-si' style={{ textDecoration: 'none' }}>Loại hình dịch vụ</Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                    <Link to={`#`} style={{ textDecoration: 'none' }}>text</Link>
-                </Breadcrumb.Item>
-            </Breadcrumb> */}
-
             <div>
                 <Title level={2}>Tạo tài khoản Nha sĩ</Title>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Card style={{ width: '80%' }}>
-                    <Form
-                        name="basic"
-                        layout='horizontal'
-                        labelCol={{
-                            span: 6,
-                        }}
-                        wrapperCol={{
-                            span: 10,
-                        }}
-                        style={{
-                            width: '100%'
-                        }}
-                        initialValues={{
-                            remember: true,
-                        }}
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                        autoComplete="off"
+            <div style={{ marginTop: '3rem' }}>
+                {/* <Card style={{ width: '80%' }}> */}
+
+
+                <Form
+                    form={form}
+                    name="basic"
+                    layout='horizontal'
+
+                    labelCol={{
+                        span: 6,
+                    }}
+                    wrapperCol={{
+                        span: 10,
+                    }}
+                    style={{
+                        width: '100%'
+                    }}
+                    initialValues={{
+                        date_of_birth: date,
+                        remember: true,
+                    }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off"
+                >
+                    <Form.Item
+                        label="Email"
+                        name="email"
+                        rules={[
+                            {
+
+                                message: 'Vui lòng nhập email!',
+                            },
+                        ]}
                     >
-                        <Form.Item
-                            label="Email"
-                            name="email"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Vui lòng nhập email!',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
+                        <Input />
+                    </Form.Item>
 
-                        <Form.Item
-                            label="Họ và Tên"
-                            name="fullname"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Vui lòng nhập họ tên!',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
+                    <Form.Item
+                        label="Họ và Tên"
+                        name="fullname"
+                        rules={[
+                            {
 
-                        <Form.Item
-                            label="Số điện thoại"
-                            name="phone_number"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Vui lòng nhập số điện thoại!',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
+                                message: 'Vui lòng nhập họ tên!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
 
-                        <Form.Item
-                            label="Giới tính"
-                            name="gender"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Vui lòng chọn giới tính!',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
+                    <Form.Item
+                        label="Số điện thoại"
+                        name="phone_number"
+                        rules={[
+                            {
 
-                        <Form.Item
-                            label="Chuyên khoa"
-                            name="specialty_id"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Vui lòng nhập chuyên khoa!',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
+                                message: 'Vui lòng nhập số điện thoại!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
 
-                        <Form.Item
-                            label="Mật khẩu"
-                            name="password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Vui lòng nhập mật khẩu!',
-                                },
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
+                    <Form.Item
+                        label="Giới tính"
+                        name="gender"
+                        rules={[
+                            {
 
-                        <Form.Item
-                            label="Nhập lại mật khẩu"
-                            rules={[
+                                message: 'Vui lòng chọn giới tính!',
+                            },
+                        ]}
+                    >
+                        <Select
+                            defaultValue="Chọn giới tính"
+                            onChange={handleChange}
+                            allowClear
+                            options={[
                                 {
-                                    required: true,
-                                    message: 'Vui lòng nhập lại mật khẩu!',
+                                    value: 'male',
+                                    label: 'Nam',
                                 },
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Thời gian tạo tài khoản"
-                            name="date"
-                            rules={[
                                 {
-                                    required: true,
-                                    message: 'Vui lòng chọn ngày!',
+                                    value: 'female',
+                                    label: 'Nữ',
                                 },
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
 
-                        <Form.Item
-                            wrapperCol={{
-                                offset: 6,
-                                span: 16,
-                            }}
-                        >
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Card>
+                            ]}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Ngày sinh"
+                        name="date_of_birth"
+                        rules={[
+                            {
+                                message: 'Vui lòng chọn ngày!',
+                            },
+                        ]}
+                    >
+                        {/* <DatePicker
+                            placeholder='YYYY-MM-DD'
+                            format="YYYY-MM-DD"
+                            onChange={handleChangeDate}
+                        /> */}
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Chuyên khoa"
+                        name="specialty"
+                        rules={[
+                            {
+
+                                message: 'Vui lòng nhập chuyên khoa!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Mật khẩu"
+                        name="password"
+                        rules={[
+                            {
+
+                                message: 'Vui lòng nhập mật khẩu!',
+                            },
+                        ]}
+                    >
+                        <Input.Password />
+                    </Form.Item>
+
+                    <Form.Item
+                        wrapperCol={{
+                            offset: 6,
+                            span: 16,
+                        }}
+                    >
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
+
+                {/* </Card> */}
             </div>
         </>
     )

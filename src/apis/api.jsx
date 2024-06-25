@@ -30,7 +30,7 @@ export const DoViewDetailCategory = (slug) => {
 }
 
 export const DoViewTableDetailService = (slug) => {
-    return axios.get(`/api/v1/service-categories/${slug}/services`)
+    return axios.get(`/api/v1/services?category=${slug}`)
 }
 
 // Liệt Kê Lịch Khám Trong Ngày
@@ -166,4 +166,17 @@ export const DoViewAllDentistByAdmin = (name) => {
 // View Thông tin Info của 1 Dentist
 export const DoViewInfoDentistByAdmin = (id) => {
     return axios.get(`/api/v1/dentists/${id}`);
+}
+
+// Add - Thêm mới 1 Dentist
+export const DoAddNewDentistByAdmin = (email, full_name, phone_number, gender, date_of_birth, specialty, password) => {
+    return axios.post('/api/v1/dentists', {
+        email: email,
+        full_name: full_name,
+        phone_number: phone_number,
+        gender: gender,
+        date_of_birth: date_of_birth,
+        specialty: specialty,
+        password: password,
+    })
 }
