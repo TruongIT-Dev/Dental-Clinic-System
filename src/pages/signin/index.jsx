@@ -39,7 +39,8 @@ const SignIn = () => {
         try {
             // lấy API
             let res = await GetLogin(email, password);
-            console.log('Response Login: ', res);
+            // console.log('Response Login: ', res);
+            const role = res.data.user_info.role.toLowerCase();
             // set biến token
             accessToken = res.data.access_token;
             // console.log('token:', accessToken);
@@ -51,9 +52,9 @@ const SignIn = () => {
                 user: res.data
             }));
 
-            if (res.status === 200 && res.data.user_info.role === "Admin") {
+            if (res.status === 200 && (role === "admin" || role === "dentist")) {
                 // Navigate to the home page
-                navigate('/admin');
+                navigate(`/${role}`);
                 // Show a success message
                 notification.success({
                     type: 'success',

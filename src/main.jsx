@@ -20,8 +20,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <PersistGate persistor={persistor}>
         <BrowserRouter>
           <App />
-        </BrowserRouter>,
+        </BrowserRouter>
       </PersistGate>
-    </Provider>,
-  </React.StrictMode>,
+    </Provider>
+  </React.StrictMode>
 )

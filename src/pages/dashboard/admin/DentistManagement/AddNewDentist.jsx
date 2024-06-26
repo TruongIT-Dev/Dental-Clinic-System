@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../../../../scss/AdminAddNewDentist.css'
-import { Breadcrumb, Button, Card, Col, Form, Input, Row, Typography } from 'antd';
+import { Breadcrumb, Button, Card, Col, DatePicker, Form, Input, Radio, Row, Select, Typography } from 'antd';
 
 const AddNewDentist = () => {
     const { Title } = Typography;
@@ -13,6 +13,10 @@ const AddNewDentist = () => {
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
+    };
+
+    const onChangeDate = (date, dateString) => {
+        console.log(date, dateString);
     };
     return (
         <>
@@ -34,7 +38,7 @@ const AddNewDentist = () => {
                 <Title level={2}>Tạo tài khoản Nha sĩ</Title>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
                 <Card style={{ width: '80%' }}>
                     <Form
                         name="basic"
@@ -65,7 +69,7 @@ const AddNewDentist = () => {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder='---' />
                         </Form.Item>
 
                         <Form.Item
@@ -78,7 +82,7 @@ const AddNewDentist = () => {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder='---' />
                         </Form.Item>
 
                         <Form.Item
@@ -91,7 +95,20 @@ const AddNewDentist = () => {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder='---' />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Ngày sinh"
+                            name="date_of_birth"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Vui lòng chọn ngày!',
+                                },
+                            ]}
+                        >
+                            <DatePicker onChange={onChangeDate} placeholder='YYY-MM-DD' />
                         </Form.Item>
 
                         <Form.Item
@@ -104,7 +121,10 @@ const AddNewDentist = () => {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Radio.Group name="radiogroup">
+                                <Radio value={1}>Nam</Radio>
+                                <Radio value={2}>Nữ</Radio>
+                            </Radio.Group>
                         </Form.Item>
 
                         <Form.Item
@@ -117,7 +137,27 @@ const AddNewDentist = () => {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Select
+                                style={{
+                                    width: 200,
+                                }}
+                                placeholder="---"
+                                allowClear
+                                options={[
+                                    {
+                                        value: '1',
+                                        label: 'Chuyên khoa 1',
+                                    },
+                                    {
+                                        value: '2',
+                                        label: 'Chuyên khoa 2',
+                                    },
+                                    {
+                                        value: '3',
+                                        label: 'Chuyên khoa 3',
+                                    },
+                                ]}
+                            />
                         </Form.Item>
 
                         <Form.Item
@@ -130,32 +170,7 @@ const AddNewDentist = () => {
                                 },
                             ]}
                         >
-                            <Input.Password />
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Nhập lại mật khẩu"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Vui lòng nhập lại mật khẩu!',
-                                },
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Thời gian tạo tài khoản"
-                            name="date"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Vui lòng chọn ngày!',
-                                },
-                            ]}
-                        >
-                            <Input.Password />
+                            <Input.Password placeholder='---' />
                         </Form.Item>
 
                         <Form.Item

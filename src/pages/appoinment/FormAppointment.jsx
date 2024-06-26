@@ -3,13 +3,14 @@ import { Button, Form, Select, DatePicker, notification } from 'antd';
 import { DoAppointment, DoListSchedule, DoViewCategory } from '../../apis/api';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 // Function Disabled những ngày sau ngày hôm nay
-// const disabledDate = (current) => {
-//     const today = moment().startOf('day'); // Start of today (00:00:00)
-//     const endOfMonth = moment().endOf('month'); // End of the current month (23:59:59)
-//     return current && (current < today || current > endOfMonth);
-// };
+const disabledDate = (current) => {
+    const today = moment().startOf('day'); // Start of today (00:00:00)
+    const endOfMonth = moment().endOf('month'); // End of the current month (23:59:59)
+    return current && (current < today || current > endOfMonth);
+};
 
 // *********************** FUNCTION ****************************
 // *************************************************************
@@ -60,7 +61,12 @@ const FormAppoinment = () => {
     const [form] = Form.useForm();
     // *********************** UseState ***********************
     const [getDate, setGetDate] = useState('');
+
+    // console.log("Date nè: ", getDate)
+    // useState Lấy danh sách các Bác sĩ và Phòng khám
     const [dentistSchedule, setDentistSchedule] = useState([]);
+
+    // useState Liệt kê danh sách các Loại hình dịch vụ
     const [dataCategory, setDataCategory] = useState([]);
 
     // const [getIdCategory, setGetIdCategory] = useState('');
@@ -69,7 +75,7 @@ const FormAppoinment = () => {
     // API Hiện Lịch Khám của Dentist
     const ListScheduleExamination = async (date) => {
         if (!date) {
-            return (null);
+            return setDentistSchedule([]);
         }
         if (date) {
             try {
@@ -92,11 +98,6 @@ const FormAppoinment = () => {
         try {
             const res = await DoViewCategory();
             const APICategory = res?.data || [];
-            // const adjustedCategory = APICategory.map((category, index) => ({
-            //     ...category,
-            //     id: index + 1,
-            // }));
-            // setDataCategory(adjustedCategory);
             setDataCategory(APICategory);
             // console.log('Data Category: ', APICategory);
         } catch (error) {
@@ -122,7 +123,7 @@ const FormAppoinment = () => {
             const doAppointment = await DoAppointment(examination_schedule_id, service_category_id);
 
             if (doAppointment.status === 201) {
-                navigate('/dat-lich-hen');
+                navigate('/patient/lich-kham');
                 notification.success({
                     type: 'success',
                     message: 'Đặt lịch khám thành công',
@@ -196,22 +197,9 @@ const FormAppoinment = () => {
     ))
 
     // Danh Sách các Schedule của Nha sĩ
+    console.log("dentistSchedule", dentistSchedule)
     const dentistScheduleOptions = dentistSchedule.map((data) => (
         {
-            // label: 'Thông tin phòng khám',
-            // // title: data.room_name,
-            // options: [
-            //     {
-            //         label:
-            //             [
-            //                 `Nha sĩ ${data.dentist_name} | `,
-            //                 `Phòng ${data.room_name} | `,
-            //                 `${extractTime(toVietnamTime(data.start_time))} - `,
-            //                 `${extractTime(toVietnamTime(data.end_time))}.`,
-            //             ].join(''),
-            //         value: data.schedule_id,
-            //     },
-            // ],
             label:
                 [
                     `Nha sĩ ${data.dentist_name} | `,
@@ -222,11 +210,15 @@ const FormAppoinment = () => {
             value: data.schedule_id,
         }
     ))
-    // console.log("List of dentistSchedule: ", dentistSchedule)
 
     const handleDateChange = (date, dateString) => {
         console.log('Selected Date:', dateString);
         setGetDate(dateString);
+        form.resetFields(['examination_schedule_id']);
+        form.setFieldsValue({
+            // service_category_id: undefined,
+            examination_schedule_id: undefined,
+        })
     };
 
     const handleDentistScheduleChange = (value) => {
@@ -250,7 +242,10 @@ const FormAppoinment = () => {
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
-                initialValues={{ service_category_id: undefined }}
+                initialValues={{
+                    service_category_id: undefined,
+                    examination_schedule_id: undefined,
+                }}
             >
 
                 {/* Chọn ngày khám */}
@@ -268,7 +263,7 @@ const FormAppoinment = () => {
                             placeholder='YYYY-MM-DD'
                             format="YYYY-MM-DD"
                             onChange={handleDateChange}
-                        // disabledDate={disabledDate}
+                            disabledDate={disabledDate}
                         />
                     </div>
                 </Form.Item>
@@ -290,6 +285,7 @@ const FormAppoinment = () => {
                         style={{
                             width: '100%',
                         }}
+                        placeholder="Chọn phòng và giờ khám"
                         options={dentistScheduleOptions}
                         onChange={handleDentistScheduleChange}
                     />
