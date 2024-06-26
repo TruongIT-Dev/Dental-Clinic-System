@@ -3,6 +3,7 @@ import { Button, Form, Select, DatePicker, notification } from 'antd';
 import { DoAppointment, DoListSchedule, DoViewCategory } from '../../apis/api';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 // Function Disabled những ngày sau ngày hôm nay
 // const disabledDate = (current) => {
@@ -299,12 +300,12 @@ const FormAppoinment = () => {
                 <Form.Item
                     name="service_category_id"
                     label="Loại hình dịch vụ quan tâm"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Vui lòng chọn loại hình dịch vụ'
-                        },
-                    ]}
+                // rules={[
+                //     {
+                //         required: true,
+                //         message: 'Vui lòng chọn loại hình dịch vụ'
+                //     },
+                // ]}
                 >
                     <Select
                         placeholder="Chọn dịch vụ"
