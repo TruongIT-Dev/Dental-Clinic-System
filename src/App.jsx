@@ -34,13 +34,17 @@ import AddNewRoom from './pages/dashboard/admin/RoomManagement/AddNewRoom';
 import DetailService from './pages/dashboard/admin/ServiceManagement/DetailService';
 import FormUpdateCategory from './pages/dashboard/admin/ServiceManagement/FormUpdateCategory';
 import FormUpdateService from './pages/dashboard/admin/ServiceManagement/FormUpdateService';
+import DentistDashboard from './pages/dashboard/dentist/home';
+import DentistExaminationManagement from './pages/dashboard/dentist/SheduleManagement/Examination';
+import DentistTreatmentManagement from './pages/dashboard/dentist/SheduleManagement/Treatment';
+import DentistPatientManagement from './pages/dashboard/dentist/PatientManagement';
 
 function App() {
   const account = useSelector(state => state?.account);
 
   const isAuthenticated = {
-    loggedIn: account.isAuthenticated, // check đã đăng nhập chưa
-    role: account?.user?.user?.user_info?.role //Check role
+    loggedIn: account.isAuthenticated, // check if logged in
+    role: account?.user?.user?.user_info?.role?.toLowerCase() // convert role to lowercase
   };
 
 
@@ -51,7 +55,7 @@ function App() {
         <Route path='/' element={<PageLayout />}>
           <Route index element={<Home />} />
           <Route path='/loai-hinh-dich-vu' element={<Catergory />} />
-          <Route path='/loai-hinh-dich-vu/:slug' element={<ServiceDetail />} /> {/* Specific route before catch-all */}
+          <Route path='/loai-hinh-dich-vu/:slug' element={<ServiceDetail />} />
           <Route path='/lich-lam-viec' element={<Schedule />} />
           <Route path='/lien-he' element={<Contact />} />
 
@@ -60,7 +64,7 @@ function App() {
           <Route path='/dang-ky' element={<SignUp />} />
 
           {/* Patient View */}
-          {isAuthenticated.loggedIn && isAuthenticated.role === "Patient" ? (
+          {isAuthenticated.loggedIn && isAuthenticated.role === 'patient' ? (
             <>
               <Route path='/dat-lich-hen' element={<Appoinment />} />
               {/* Dashboard Patient */}
@@ -75,7 +79,7 @@ function App() {
         </Route>
 
         {/* Admin View */}
-        {isAuthenticated.loggedIn && isAuthenticated.role === "Admin" ? (
+        {isAuthenticated.loggedIn && isAuthenticated.role === 'admin' && (
           <Route path='/admin' element={<AdminDashboard />}>
             <Route index element={<MainDashboard />} />
             {/* Quản lý lịch khám điều trị */}
@@ -99,15 +103,30 @@ function App() {
             <Route path='quan-ly-phong-kham' element={<RoomManagement />} />
             <Route path='tao-phong-kham' element={<AddNewRoom />} />
           </Route>
-        ) : null}
+        )}
+
+        {/* Dentist View */}
+        {isAuthenticated.loggedIn && isAuthenticated.role === 'dentist' && (
+          <Route path='/dentist' element={<AdminDashboard />}>
+            <Route index element={<DentistDashboard />} />
+
+            {/* Quản lý lịch khám điều trị */}
+            <Route path='quan-ly-lich-kham' element={<DentistExaminationManagement />} />
+            <Route path='quan-ly-lich-dieu-tri' element={<DentistTreatmentManagement />} />
+
+            {/* Quản lý Bệnh nhân */}
+            <Route path='quan-ly-benh-nhan' element={<DentistPatientManagement />} />
+
+          </Route>
+        )}
 
         {/* Error Page */}
         <Route path='/error' element={<Error />} />
         <Route path='*' element={<Navigate to="/error" />} />
       </Routes>
-    </>
-  );
 
+    </>
+  )
 }
 
 export default App

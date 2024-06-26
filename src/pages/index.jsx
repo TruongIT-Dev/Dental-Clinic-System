@@ -43,14 +43,8 @@ const PageLayout = () => {
             </Content>
 
             {/* FOOTER */}
-            <Footer
-                style={{
-                    textAlign: 'center',
-                }}
-            >
-                <FooterComponent />
-            </Footer>
+            <FooterComponent />
         </Layout>
-    );
-};
-export default PageLayout;
+    )
+}
+export default PageLayout

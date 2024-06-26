@@ -49,36 +49,38 @@ const Catergory = () => {
         fetchDetailIdService(slug)
     }
     console.log('idService:', idService)
-    
+
     return (
         <>
-            <div id="service-content" className='w-100 p-3'>
-                <div className="w-100 p-3">
-                    <div className="container space-2">
-                        <h2 className="text-primary font-weight-normal text-center text-uppercase">dịch vụ</h2>
-                        <div className="row">
-                            {dataCategory.map((data, index) => (
-                                <article key={data.id} // Add key prop here
-                                    onClick={() => {
-                                        handleClickCategory(data.id);
-                                    }}
-                                    className="col-md-4 p-2 col-sm-4 col-6">
-                                    <div className="d-flex card shadow mb-1 br-0 transition-3d-hover">
-                                        <a className="transition-3d-hover text-decoration-none" title="Bọc răng sứ" href={`/loai-hinh-dich-vu/${data.slug}`}>
-                                            <div className="justify-content-center d-flex">
-                                                <img className="img-fluid" width='232' height='150' src={data.icon_url} alt="Service Image" />
-                                            </div>
-                                            <h4 className='h6 text-body mb-0 text-center py-4'>{data.name}</h4>
-                                        </a>
-                                    </div>
-                                </article>
-                            ))}
+            <div className='container' >
+                <div id="service-content" className='w-100 p-3'>
+                    <div className="w-100 p-3">
+                        <div className="container space-2">
+                            <h2 className="text-primary font-weight-normal text-center text-uppercase">dịch vụ</h2>
+                            <div className="row">
+                                {dataCategory.map((data, index) => (
+                                    <article key={data.id} // Add key prop here
+                                        onClick={() => {
+                                            handleClickCategory(data.id);
+                                        }}
+                                        className="col-md-4 p-2 col-sm-4 col-6">
+                                        <div className="d-flex card shadow mb-1 br-0 transition-3d-hover">
+                                            <a className="transition-3d-hover text-decoration-none" title="Bọc răng sứ" href={`/loai-hinh-dich-vu/${data.slug}`}>
+                                                <div className="justify-content-center d-flex">
+                                                    <img className="img-fluid" width='232' height='150' src={data.icon_url} alt="Service Image" />
+                                                </div>
+                                                <h4 className='h6 text-body mb-0 text-center py-4'>{data.name}</h4>
+                                            </a>
+                                        </div>
+                                    </article>
+                                ))}
 
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </div >
+                </div >
+            </div>
         </>
     )
 }

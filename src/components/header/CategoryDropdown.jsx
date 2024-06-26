@@ -77,16 +77,16 @@ const items = [
 const CategoryDropdown = () => {
     return (
         <>
-            <Dropdown
+            {/* <Dropdown
                 menu={{
                     items,
                 }}
-            >
-                <Space style={{ color: 'black' }}>
-                    Dịch vụ
-                    <DownOutlined />
-                </Space>
-            </Dropdown>
+            > */}
+            <Space style={{ color: 'black' }}>
+                Dịch vụ
+                {/* <DownOutlined /> */}
+            </Space>
+            {/* </Dropdown> */}
         </>
     )
 }

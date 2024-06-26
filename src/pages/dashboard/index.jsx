@@ -4,11 +4,12 @@ import {
     ProfileOutlined,
     UserOutlined,
     SettingOutlined,
+    CalendarOutlined
 } from '@ant-design/icons';
-import { Avatar, Col, Layout, Menu, Row, theme, Breadcrumb } from 'antd';
-import { Link, Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
+import { Avatar, Layout, Menu, theme, Breadcrumb, Button, Popconfirm } from 'antd';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { doLogoutAction } from '../../redux/account/accountSlice'
 
 
 const { Content, Footer, Sider } = Layout;
@@ -17,24 +18,32 @@ const AdminDashboard = () => {
 
     // set biến 'userSelector' chứa thông tin đã đăng nhập
     const account = useSelector(state => state?.account?.user?.user?.user_info);
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     console.log("account", account)
 
     // Function xử lý thoát đăng nhập
-    // const handleLogOut = () => {
-    //     console.log('Button Logout clicked')
-    //     localStorage.removeItem('access_token');
-    //     dispatch(doLogoutAction());
-    //     navigate('/');
-    // }
+    const handleLogOut = () => {
+        console.log('Button Logout clicked')
+        localStorage.removeItem('access_token');
+        dispatch(doLogoutAction());
+        navigate('/');
+    }
 
     // const [collapsed, setCollapsed] = useState(false);
 
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
+
+    const confirm = (e) => {
+        console.log(e);
+        handleLogOut();
+    };
+    const cancel = (e) => {
+        console.log(e);
+    };
     return (
         <Layout hasSider
             style={{
@@ -45,26 +54,32 @@ const AdminDashboard = () => {
             <Sider width={270} >
                 <div className="demo-logo-vertical" style={{ height: 40, }} />
 
-                <div style={{ color: "#fff", padding: "0 15px", marginBottom: "1rem" }}>
-                    <Row>
-                        <Col span={6}>
-                            <Avatar icon={<UserOutlined />} />
-                        </Col>
-                        <Col span={12}>
-                            <Row>
-                                <Col span={24} style={{ color: "#FFF" }}>{account.full_name}</Col>
-                                <Col span={24} style={{ color: "#AAABAF" }}>{account.email}</Col>
-                            </Row>
-                        </Col>
-                        <Col span={6}>
-                            <Link to='#'>
-                                <SettingOutlined style={{ color: "#DB0D4B" }} />
-                            </Link>
-                        </Col>
-                    </Row>
+                <div style={{ textAlign: 'center', color: "#fff", marginBottom: "2rem" }}>
+
+                    <div>
+                        <Avatar
+                            icon={<UserOutlined />}
+                            size={50}
+                        />
+                    </div>
+
+                    <div>
+                        <p>{account.email}</p>
+                    </div>
+
+                    <Popconfirm
+                        description="Bạn muốn đăng xuất? Xác nhận có!"
+                        onConfirm={confirm}
+                        onCancel={cancel}
+                        okText="Có"
+                        cancelText="Không"
+                    >
+                        <Button danger ghost>Đăng xuất</Button>
+                    </Popconfirm>
                 </div>
 
-                <Menu theme="dark" mode="inline"
+                {/* Tài khoản Admin */}
+                {account.role === "Admin" ? (<Menu theme="dark" mode="inline"
                     defaultOpenKeys={['sub1', 'sub2', 'sub3']}>
 
                     {/* Dashboard */}
@@ -112,6 +127,38 @@ const AdminDashboard = () => {
                         </Menu.Item>
                     </Menu.SubMenu>
                 </Menu>
+                ) : (
+                    // Tài khoản Dentist
+                    <Menu theme="dark" mode="inline"
+                    // defaultOpenKeys={['sub1', 'sub2', 'sub3']}
+                    >
+
+                        {/* Dashboard */}
+                        <Menu.Item key="1" icon={<PieChartOutlined />}>
+                            <Link style={{ textDecoration: 'none' }} to="/dentist">Dashboard</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="2" icon={<CalendarOutlined />}>
+                            <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-lich-kham">Quản lý lịch khám</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="3" icon={<CalendarOutlined />}>
+                            <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-lich-dieu-tri">Quản lý lịch điều trị</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="4" icon={<TeamOutlined />}>
+                            <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-benh-nhan">Quản lý bệnh nhân</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="5" icon={<SettingOutlined />}>
+                            <Link style={{ textDecoration: 'none' }} to="#">Cài đặt</Link>
+                        </Menu.Item>
+
+                    </Menu>
+                )}
+
+
+
             </Sider>
             <Layout>
                 <Content
