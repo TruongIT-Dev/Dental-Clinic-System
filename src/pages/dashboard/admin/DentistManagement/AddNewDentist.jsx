@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import '../../../../scss/AdminAddNewDentist.css'
-import { Breadcrumb, Button, Card, Col, DatePicker, Form, Input, Radio, Row, Select, Typography } from 'antd';
+import { Breadcrumb, Button, Card, Col, DatePicker, Form, Input, Radio, Row, Select, Typography, message } from 'antd';
+import { DoAddNewDentistByAdmin } from '../../../../apis/api'
 
 const AddNewDentist = () => {
 
@@ -206,19 +207,19 @@ const AddNewDentist = () => {
                             <Input.Password placeholder='---' />
                         </Form.Item>
 
-                    <Form.Item
-                        wrapperCol={{
-                            offset: 6,
-                            span: 16,
-                        }}
-                    >
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
-                    </Form.Item>
-                </Form>
+                        <Form.Item
+                            wrapperCol={{
+                                offset: 6,
+                                span: 16,
+                            }}
+                        >
+                            <Button type="primary" htmlType="submit">
+                                Submit
+                            </Button>
+                        </Form.Item>
+                    </Form>
 
-                {/* </Card> */}
+                </Card>
             </div>
         </>
     )
