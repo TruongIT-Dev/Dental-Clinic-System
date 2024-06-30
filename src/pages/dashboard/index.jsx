@@ -108,54 +108,55 @@ const AdminDashboard = () => {
                     </Menu.SubMenu>
 
                     {/* Quản Lý Tài Khoản Nha Sĩ */}
-                    <Menu.SubMenu key="sub2" title="Quản lý Nha sĩ" icon={<TeamOutlined />}>
-                        <Menu.Item key="7">
-                            <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-nha-si">Danh sách Nha sĩ</Link>
-                        </Menu.Item>
-                        <Menu.Item key="8">
-                            <Link style={{ textDecoration: 'none' }} to="/admin/tao-nha-si">Tạo tài khoản Nha sĩ</Link>
-                        </Menu.Item>
-                    </Menu.SubMenu>
+                    <Menu.Item key="7" icon={<TeamOutlined />}>
+                        <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-nha-si">Quản lý Nha sĩ</Link>
+                    </Menu.Item>
+
+
 
                     {/* Quản Lý Phòng Khám */}
-                    <Menu.SubMenu key="sub3" title="Quản lý Phòng khám" icon={<TeamOutlined />}>
-                        <Menu.Item key="9">
+                    <Menu.SubMenu key="sub2" title="Quản lý Phòng khám" icon={<TeamOutlined />}>
+                        <Menu.Item key="8">
                             <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-phong-kham">Danh sách Phòng khám</Link>
                         </Menu.Item>
-                        <Menu.Item key="10">
+                        <Menu.Item key="9">
                             <Link style={{ textDecoration: 'none' }} to="/admin/tao-phong-kham">Tạo Phòng khám</Link>
                         </Menu.Item>
                     </Menu.SubMenu>
                 </Menu>
-                ) : (
-                    // Tài khoản Dentist
-                    <Menu theme="dark" mode="inline"
-                    // defaultOpenKeys={['sub1', 'sub2', 'sub3']}
-                    >
+                )
+                    
+                :
 
-                        {/* Dashboard */}
-                        <Menu.Item key="1" icon={<PieChartOutlined />}>
-                            <Link style={{ textDecoration: 'none' }} to="/dentist">Dashboard</Link>
-                        </Menu.Item>
+                (
+                        // Tài khoản Dentist
+                        <Menu theme="dark" mode="inline"
+                        // defaultOpenKeys={['sub1', 'sub2', 'sub3']}
+                        >
 
-                        <Menu.Item key="2" icon={<CalendarOutlined />}>
-                            <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-lich-kham">Quản lý lịch khám</Link>
-                        </Menu.Item>
+                            {/* Dashboard */}
+                            <Menu.Item key="1" icon={<PieChartOutlined />}>
+                                <Link style={{ textDecoration: 'none' }} to="/dentist">Dashboard</Link>
+                            </Menu.Item>
 
-                        <Menu.Item key="3" icon={<CalendarOutlined />}>
-                            <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-lich-dieu-tri">Quản lý lịch điều trị</Link>
-                        </Menu.Item>
+                            <Menu.Item key="2" icon={<CalendarOutlined />}>
+                                <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-lich-kham">Quản lý lịch khám</Link>
+                            </Menu.Item>
 
-                        <Menu.Item key="4" icon={<TeamOutlined />}>
-                            <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-benh-nhan">Quản lý bệnh nhân</Link>
-                        </Menu.Item>
+                            <Menu.Item key="3" icon={<CalendarOutlined />}>
+                                <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-lich-dieu-tri">Quản lý lịch điều trị</Link>
+                            </Menu.Item>
 
-                        <Menu.Item key="5" icon={<SettingOutlined />}>
-                            <Link style={{ textDecoration: 'none' }} to="#">Cài đặt</Link>
-                        </Menu.Item>
+                            <Menu.Item key="4" icon={<TeamOutlined />}>
+                                <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-benh-nhan">Quản lý bệnh nhân</Link>
+                            </Menu.Item>
 
-                    </Menu>
-                )}
+                            <Menu.Item key="5" icon={<SettingOutlined />}>
+                                <Link style={{ textDecoration: 'none' }} to="#">Cài đặt</Link>
+                            </Menu.Item>
+
+                        </Menu>
+                    )}
 
 
 

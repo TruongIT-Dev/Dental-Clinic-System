@@ -1,11 +1,50 @@
-import { Link } from 'react-router-dom';
 import '../../../../scss/AdminAddNewDentist.css'
-import { Breadcrumb, Button, Card, Col, DatePicker, Form, Input, Radio, Row, Select, Typography } from 'antd';
+import { Button, Card, DatePicker, Form, Input, Radio, Select, Typography } from 'antd';
 
 const AddNewDentist = () => {
-    const { Title } = Typography;
 
-    const [form] = Form.useForm();
+    // *****************************************
+    // ------------- Variables ------------------
+    const { Title } = Typography;
+    // const [form] = Form.useForm();
+
+
+    // -----------------------------------------
+    // *****************************************
+
+
+    // *****************************************
+    // ------------- useState ------------------
+
+
+
+    // -----------------------------------------
+    // *****************************************
+
+
+
+    // *****************************************
+    // ------------- API Function -------------
+
+
+
+    // -----------------------------------------
+    // *****************************************
+
+
+
+    // *****************************************
+    // ------------- useEffect -----------------
+
+
+
+    // -----------------------------------------
+    // *****************************************
+
+
+
+    // *****************************************
+    // ------------- Others Function -----------
 
     const onFinish = (values) => {
         console.log('Success:', values);
@@ -18,6 +57,11 @@ const AddNewDentist = () => {
     const onChangeDate = (date, dateString) => {
         console.log(date, dateString);
     };
+
+
+    // -----------------------------------------
+    // *****************************************
+
     return (
         <>
             {/* Header */}

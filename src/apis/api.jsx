@@ -167,3 +167,7 @@ export const DoViewAllDentistByAdmin = (name) => {
 export const DoViewInfoDentistByAdmin = (id) => {
     return axios.get(`/api/v1/dentists/${id}`);
 }
+
+export const DoViewSpecialityByAdmin = () => {
+    return axios.get('/api/v1/specialties')
+}

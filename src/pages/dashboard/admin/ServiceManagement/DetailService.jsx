@@ -84,22 +84,22 @@ const DetailService = () => {
             // console.log("APISearchService", APISearchService)
         } catch (error) {
             console.log(error)
-            // if (error.response.status) {
-            //     switch (error.response.status) {
-            //         case 500:
-            //             notification.error({
-            //                 message: 'Không tìm thấy tên',
-            //                 duration: 1,
-            //             });
-            //             break;
-            //         case 404:
-            //             notification.error({
-            //                 message: 'Không tìm thấy tên',
-            //                 duration: 1,
-            //             });
-            //             break;
-            //     }
-            // }
+            if (error.response.status) {
+                switch (error.response.status) {
+                    case 500:
+                        notification.error({
+                            message: 'Lỗi server',
+                            duration: 1,
+                        });
+                        break;
+                    case 404:
+                        notification.error({
+                            message: 'Không tìm thấy tên',
+                            duration: 1,
+                        });
+                        break;
+                }
+            }
         }
     }
     useEffect(() => {
@@ -138,7 +138,7 @@ const DetailService = () => {
             )
         },
         {
-            title: 'ĐVT',
+            title: 'Đơn vị',
             dataIndex: 'unit',
             key: 'unit',
         },
@@ -148,7 +148,7 @@ const DetailService = () => {
             key: 'warranty_duration',
         },
         {
-            title: 'Action',
+            title: 'Thao tác',
             key: 'operation',
             render: (text, record) => (
                 <Space size="middle">

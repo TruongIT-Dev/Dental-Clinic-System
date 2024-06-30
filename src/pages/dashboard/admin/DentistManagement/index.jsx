@@ -1,7 +1,8 @@
-import { Space, Table, Input, Button, Typography, Modal, Form, Descriptions } from 'antd';
+import { Space, Table, Input, Button, Typography, Modal, Descriptions, notification } from 'antd';
 import { DoViewAllDentistByAdmin, DoViewInfoDentistByAdmin } from '../../../../apis/api';
 import { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 
 const DentistManagement = () => {
@@ -37,6 +38,16 @@ const DentistManagement = () => {
             setListDentst(GetDataAllDentist);
         } catch (error) {
             console.log(error)
+            if (error.response.status) {
+                switch (error.response.status) {
+                    case 404:
+                        notification.error({
+                            message: 'Không tìm thấy tên',
+                            duration: 2,
+                        });
+                        break;
+                }
+            }
         }
     }
 
@@ -153,7 +164,7 @@ const DentistManagement = () => {
         <>
             {/* Header */}
             <div>
-                <Title level={2}>Quản lý Nha sĩ</Title>
+                <Title level={2}>Danh sách Nha sĩ</Title>
             </div>
 
             {/* Top-Bar Btn*/}
@@ -172,7 +183,7 @@ const DentistManagement = () => {
                     type="primary"
                     style={{ width: 'fit-content', margin: '20px', backgroundColor: '#4096FF' }}
                 >
-                    Tạo tài khoản
+                    <Link to='/admin/tao-nha-si' style={{ textDecoration: 'none' }}>Tạo tài khoản</Link>
                 </Button>
             </div>
             <br></br>
