@@ -106,9 +106,9 @@ const FormUpdateService = () => {
                     <Breadcrumb.Item>
                         <Link to='/admin/quan-ly-dich-vu' style={{ textDecoration: 'none' }}>Loại hình dịch vụ</Link>
                     </Breadcrumb.Item>
-                    <Breadcrumb.Item>
+                    {/* <Breadcrumb.Item>
                         <Link to='#' style={{ textDecoration: 'none' }}>Dịch vụ</Link>
-                    </Breadcrumb.Item>
+                    </Breadcrumb.Item> */}
                     <Breadcrumb.Item>
                         <Link style={{ textDecoration: 'none' }}>{detailService.name}</Link>
                     </Breadcrumb.Item>
