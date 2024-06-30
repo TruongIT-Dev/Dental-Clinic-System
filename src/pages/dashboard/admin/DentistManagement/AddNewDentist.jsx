@@ -46,51 +46,9 @@ const AddNewDentist = () => {
     // *****************************************
     // ------------- Others Function -----------
 
-
-    // ****************************************
-    // --------------useState-----------------
-
-    const [date, setDate] = useState('');
-
-
-    // ****************************************
-    // --------------API Function--------------
-
     const onFinish = (values) => {
         console.log('Success:', values);
-        const { email, full_name, phone_number, gender, date_of_birth, specialty, password } = values;
-        const formattedValues = {
-            ...values,
-            dateOfBirth: values.dateOfBirth ? values.dateOfBirth.format('YYYY-MM-DD') : null,
-        };
-        console.log('Success:', formattedValues);
-        try {
-            const APIAddNewDentist = DoAddNewDentistByAdmin(email, full_name, phone_number, gender, date_of_birth, specialty, password);
-            console.log("APIAddNewDentist", APIAddNewDentist)
-            switch (APIAddNewDentist.status) {
-                case 201:
-                    message.success('Thêm Nha sĩ thành công');
-                    // window.location.reload();
-                    break;
-                case 400:
-                    message.error('Bad Request');
-                    break;
-                default:
-                    message.error('Thêm thất bại');
-                    break;
-            }
-        } catch (error) {
-            console.log(error)
-        }
     };
-
-
-    // ****************************************
-    // --------------useEffect-----------------
-
-
-    // ****************************************
-    // --------------Other Functions-----------
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -107,6 +65,19 @@ const AddNewDentist = () => {
     return (
         <>
             {/* Header */}
+            {/* <Breadcrumb
+                style={{
+                    margin: '16px 0',
+                }}
+            >
+                <Breadcrumb.Item>
+                    <Link to='/admin/quan-ly-nha-si' style={{ textDecoration: 'none' }}>Loại hình dịch vụ</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                    <Link to={`#`} style={{ textDecoration: 'none' }}>text</Link>
+                </Breadcrumb.Item>
+            </Breadcrumb> */}
+
             <div>
                 <Title level={2}>Tạo tài khoản Nha sĩ</Title>
             </div>
@@ -257,7 +228,6 @@ const AddNewDentist = () => {
                             </Button>
                         </Form.Item>
                     </Form>
-
                 </Card>
             </div>
         </>

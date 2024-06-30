@@ -113,6 +113,9 @@ const DentistManagement = () => {
             title: 'Ngày sinh',
             dataIndex: 'date_of_birth',
             key: 'date_of_birth',
+            render: (text, record) => (
+                formatDate(text)
+            )
         },
         {
             title: 'Giới tính',
@@ -197,7 +200,7 @@ const DentistManagement = () => {
                     <Descriptions.Item label="Họ và Tên">{infoDentist.full_name}</Descriptions.Item>
                     <Descriptions.Item label="Số điện thoại">{infoDentist.phone_number}</Descriptions.Item>
                     <Descriptions.Item label="Giới tính">{infoDentist.gender}</Descriptions.Item>
-                    <Descriptions.Item label="Ngày sinh">{infoDentist.date_of_birth}</Descriptions.Item>
+                    <Descriptions.Item label="Ngày sinh">{formatDate(infoDentist.date_of_birth)}</Descriptions.Item>
                     <Descriptions.Item label="Chuyên khoa">{infoDentist.specialty_name}</Descriptions.Item>
                     <Descriptions.Item label="Ngày tạo tài khoản">
                         {formatDate(infoDentist.created_at)}
