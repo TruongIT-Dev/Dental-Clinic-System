@@ -4,6 +4,7 @@ import { DoAddNewServiceByAdmin } from '../../../../apis/api';
 const FormAddNewService = ({ data, id }) => {
 
     console.log("prop data: ", data);
+    console.log("prop id: ", id);
     // const [categoryId, setCategoryId] = useState(data.length > 0 ? data[0].category_id : null);
 
     const [form] = Form.useForm();
@@ -70,7 +71,7 @@ const FormAddNewService = ({ data, id }) => {
                 <Form.Item
                     label="Loại Hình Dịch Vụ"
                     name="category_id"
-                    style={{ display: 'none' }}
+                // style={{ display: 'none' }}
                 >
                     <InputNumber disabled />
                 </Form.Item>

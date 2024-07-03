@@ -197,7 +197,7 @@ const ServiceManagement = () => {
                     icon={<PlusOutlined />}
                     size={'large'}
                     type="primary"
-                    style={{ width: 'fit-content', margin: '20px', backgroundColor: 'green' }}
+                    style={{ width: 'fit-content', margin: '20px', backgroundColor: '#1677FF' }}
                     onClick={showAddCategoryModal}
                 >
                     Thêm Mới

@@ -1,13 +1,18 @@
+import { useEffect, useState } from 'react';
 import '../../../../scss/AdminAddNewDentist.css'
-import { Button, Card, DatePicker, Form, Input, Radio, Select, Typography } from 'antd';
+import { Button, Card, DatePicker, Form, Input, Radio, Select, Typography, notification } from 'antd';
+import { DoAddNewDentistByAdmin, DoViewSpecialityByAdmin } from '../../../../apis/api';
+import dayjs from 'dayjs';
+import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 const AddNewDentist = () => {
 
     // *****************************************
     // ------------- Variables ------------------
     const { Title } = Typography;
-    // const [form] = Form.useForm();
-
+    const [form] = Form.useForm();
+    const navigate = useNavigate();
 
     // -----------------------------------------
     // *****************************************
@@ -15,8 +20,9 @@ const AddNewDentist = () => {
 
     // *****************************************
     // ------------- useState ------------------
+    const [dentistSpeciality, setDentistSpeciality] = useState([]);
 
-
+    const [dateForm, setDateForm] = useState('');
 
     // -----------------------------------------
     // *****************************************
@@ -25,9 +31,43 @@ const AddNewDentist = () => {
 
     // *****************************************
     // ------------- API Function -------------
+    const fecthDentistSpeciality = async () => {
+        const APIDentistSpeciality = await DoViewSpecialityByAdmin();
+        // console.log("APIDentistSpeciality", APIDentistSpeciality)
+        const GetDataDentistSpeciality = APIDentistSpeciality?.data || {};
+        setDentistSpeciality(GetDataDentistSpeciality);
+    }
 
+    const onFinish = async (values) => {
+        console.log('Success:', values);
+        values.date_of_birth = dayjs(values.date_of_birth).format("YYYY-MM-DD");
+        // const { date_of_birth } = dateForm;
+        const { email, full_name, phone_number, date_of_birth, gender, specialty_id, password } = values;
 
+        try {
+            const APIAddNewDentistByAdmin = await DoAddNewDentistByAdmin(email, full_name, phone_number, date_of_birth, gender, specialty_id, password);
+            console.log("APIAddNewDentistByAdmin", APIAddNewDentistByAdmin)
+            switch (APIAddNewDentistByAdmin.status) {
+                case 201:
+                    notification.success({
+                        message: 'Thêm Nha sĩ thành công',
+                        duration: 2,
+                    });
+                    navigate('/admin/quan-ly-nha-si');
+                    break;
 
+                default:
+                    notification.error({
+                        message: 'Thêm Nha sĩ thất bại',
+                        duration: 2,
+                    });
+                    break;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
     // -----------------------------------------
     // *****************************************
 
@@ -35,7 +75,9 @@ const AddNewDentist = () => {
 
     // *****************************************
     // ------------- useEffect -----------------
-
+    useEffect(() => {
+        fecthDentistSpeciality();
+    }, [])
 
 
     // -----------------------------------------
@@ -46,18 +88,73 @@ const AddNewDentist = () => {
     // *****************************************
     // ------------- Others Function -----------
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
-    };
-
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
-    const onChangeDate = (date, dateString) => {
-        console.log(date, dateString);
+    const onChangeDate = (date) => {
+        // console.log("Date log:", date);
+        // console.log("Date String log:", dateString);
+        setDateForm(date)
+
     };
 
+    const DentistSpecialityOps = dentistSpeciality.map((data) => (
+        {
+            value: data.id,
+            label: data.name,
+        }
+    ))
+
+    // ************ Checked Mở Button Nếu Người Dùng Nhập Đủ Form thì Cho Đăng Ký ***************
+    const SubmitButton = ({ form, children }) => {
+        const [submittable, setSubmittable] = useState(false);
+
+        // Watch all values
+        const values = Form.useWatch([], form);
+        useEffect(() => {
+            form
+                .validateFields({
+                    validateOnly: true,
+                })
+                .then(() => setSubmittable(true))
+                .catch(() => setSubmittable(false));
+        }, [form, values]);
+        return (
+            <Button type="primary" htmlType="submit" disabled={!submittable}>
+                {children}
+            </Button>
+        );
+    };
+
+    // *********** Validate Dữ Liệu Người Dùng Nhập *****************
+    // Validate Số Diện Thoại
+    const validatePhoneNumber = (_, value) => {
+        if (!value) {
+            return Promise.reject(new Error(''));
+        }
+
+        const phoneRegex = /^0[1-9][0-9]{8}$/;
+
+        if (!phoneRegex.test(value)) {
+            return Promise.reject(new Error('Số điện thoại không hợp lệ!'));
+        }
+        return Promise.resolve();
+    };
+
+    // Validate Email
+    const validateEmail = (_, value) => {
+        if (!value) {
+            return Promise.reject(new Error('Email không được để trống!'));
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(value)) {
+            return Promise.reject(new Error('Email không hợp lệ!'));
+        }
+        return Promise.resolve();
+    };
 
     // -----------------------------------------
     // *****************************************
@@ -98,8 +195,11 @@ const AddNewDentist = () => {
                         }}
                         initialValues={{
                             remember: true,
+                            date_of_birth: dateForm,
+                            password: '123456',
                         }}
                         onFinish={onFinish}
+                        form={form}
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
                     >
@@ -108,17 +208,21 @@ const AddNewDentist = () => {
                             name="email"
                             rules={[
                                 {
+                                    type: "email",
+                                    message: "Email nhập không chính xác"
+                                },
+                                {
                                     required: true,
-                                    message: 'Vui lòng nhập email!',
+                                    message: 'Yêu cầu nhập email!',
                                 },
                             ]}
                         >
-                            <Input placeholder='---' />
+                            <Input />
                         </Form.Item>
 
                         <Form.Item
                             label="Họ và Tên"
-                            name="fullname"
+                            name="full_name"
                             rules={[
                                 {
                                     required: true,
@@ -126,7 +230,7 @@ const AddNewDentist = () => {
                                 },
                             ]}
                         >
-                            <Input placeholder='---' />
+                            <Input />
                         </Form.Item>
 
                         <Form.Item
@@ -136,10 +240,11 @@ const AddNewDentist = () => {
                                 {
                                     required: true,
                                     message: 'Vui lòng nhập số điện thoại!',
+                                    validator: validatePhoneNumber,
                                 },
                             ]}
                         >
-                            <Input placeholder='---' />
+                            <Input />
                         </Form.Item>
 
                         <Form.Item
@@ -152,7 +257,12 @@ const AddNewDentist = () => {
                                 },
                             ]}
                         >
-                            <DatePicker onChange={onChangeDate} placeholder='YYY-MM-DD' />
+                            {/* <span>{JSON.stringify(dateForm)}</span> */}
+                            <DatePicker
+                                onChange={onChangeDate}
+                                format={moment(dateForm).format('YYYY-MM-DD')}
+                            // value={dateForm}
+                            />
                         </Form.Item>
 
                         <Form.Item
@@ -166,8 +276,8 @@ const AddNewDentist = () => {
                             ]}
                         >
                             <Radio.Group name="radiogroup">
-                                <Radio value={1}>Nam</Radio>
-                                <Radio value={2}>Nữ</Radio>
+                                <Radio value='Nam'>Nam</Radio>
+                                <Radio value='Nữ'>Nữ</Radio>
                             </Radio.Group>
                         </Form.Item>
 
@@ -177,7 +287,7 @@ const AddNewDentist = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Vui lòng nhập chuyên khoa!',
+                                    message: 'Vui lòng chọn chuyên khoa!',
                                 },
                             ]}
                         >
@@ -187,20 +297,7 @@ const AddNewDentist = () => {
                                 }}
                                 placeholder="---"
                                 allowClear
-                                options={[
-                                    {
-                                        value: '1',
-                                        label: 'Chuyên khoa 1',
-                                    },
-                                    {
-                                        value: '2',
-                                        label: 'Chuyên khoa 2',
-                                    },
-                                    {
-                                        value: '3',
-                                        label: 'Chuyên khoa 3',
-                                    },
-                                ]}
+                                options={DentistSpecialityOps}
                             />
                         </Form.Item>
 
@@ -214,7 +311,7 @@ const AddNewDentist = () => {
                                 },
                             ]}
                         >
-                            <Input.Password placeholder='---' />
+                            <Input disabled />
                         </Form.Item>
 
                         <Form.Item
@@ -223,9 +320,7 @@ const AddNewDentist = () => {
                                 span: 16,
                             }}
                         >
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                            </Button>
+                            <SubmitButton form={form}>Đăng ký Nha sĩ</SubmitButton>
                         </Form.Item>
                     </Form>
                 </Card>

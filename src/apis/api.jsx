@@ -1,7 +1,7 @@
 import axios from '../ultils/axios-custom';
 
-
-// Đăng nhập && Đăng ký
+// ********************************* GUEST ********************************
+// Đăng ký
 export const GetSignUp = (email, full_name, phone_number, password) => {
     return axios.post('/api/v1/patients',
         {
@@ -11,6 +11,7 @@ export const GetSignUp = (email, full_name, phone_number, password) => {
             password: password,
         })
 }
+// Đăng Nhập
 export const GetLogin = (email, password) => {
     return axios.post('/api/v1/users/login',
         {
@@ -24,18 +25,21 @@ export const DoViewCategory = () => {
     return axios.get('/api/v1/service-categories');
 }
 
-// Api chuyển tới trang Chi tiết Dịch vụ
+// Api View trang Chi tiết Dịch vụ
 export const DoViewDetailCategory = (slug) => {
     return axios.get(`/api/v1/service-categories/${slug}`);
 }
 
+// API View Table Chi tiết Dịch vụ
 export const DoViewTableDetailService = (slug) => {
     return axios.get(`/api/v1/services?category=${slug}`)
 }
 
+
+// ********************************* PATIENT ********************************
 // Liệt Kê Lịch Khám Trong Ngày
-export const DoListSchedule = (date) => {
-    return axios.get(`/api/v1/schedules/examination?date=${date}`);
+export const DoListSchedule = (date, patient_id) => {
+    return axios.get(`/api/v1/schedules/examination/available?date=${date}&patient_id=${patient_id}`);
 
 }
 
@@ -50,9 +54,9 @@ export const DoAppointment = (examination_schedule_id, service_category_id) => {
 }
 
 // Liệt kê Phương thức thanh toán
-export const DoListPayment = () => {
-    return axios.get('/api/v1/payment-methods');
-}
+// export const DoListPayment = () => {
+//     return axios.get('/api/v1/payment-methods');
+// }
 
 // Show Thông tin của 1 Phiếu khám khám
 export const DoViewExaminationAppointment = () => {
@@ -168,6 +172,21 @@ export const DoViewInfoDentistByAdmin = (id) => {
     return axios.get(`/api/v1/dentists/${id}`);
 }
 
+// Lấy danh sách chuyên môn Nha sĩ
 export const DoViewSpecialityByAdmin = () => {
     return axios.get('/api/v1/specialties')
+}
+
+// API Tạo Tài khoản Nha sĩ
+export const DoAddNewDentistByAdmin = (email, full_name, phone_number, date_of_birth, gender, specialty_id, password) => {
+    return axios.post(`/api/v1/dentists`, {
+        email: email,
+        full_name: full_name,
+        phone_number: phone_number,
+        date_of_birth: date_of_birth,
+        gender: gender,
+        specialty_id: specialty_id,
+        password: password,
+
+    })
 }

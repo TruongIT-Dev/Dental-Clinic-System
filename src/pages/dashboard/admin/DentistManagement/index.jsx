@@ -184,7 +184,7 @@ const DentistManagement = () => {
                     icon={<PlusOutlined />}
                     size={'large'}
                     type="primary"
-                    style={{ width: 'fit-content', margin: '20px', backgroundColor: '#4096FF' }}
+                    style={{ width: 'fit-content', margin: '20px', backgroundColor: '#1677FF' }}
                 >
                     <Link to='/admin/tao-nha-si' style={{ textDecoration: 'none' }}>Tạo tài khoản</Link>
                 </Button>

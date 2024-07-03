@@ -120,7 +120,7 @@ const NavBar = () => {
                                             <Button className='btn btn-danger' type='button'>
                                                 <Space style={BookingBtn}>
                                                     <CarryOutOutlined />
-                                                    Đặt lịch hẹn
+                                                    Đặt khám
                                                 </Space>
                                             </Button>
                                         </Nav.Link>

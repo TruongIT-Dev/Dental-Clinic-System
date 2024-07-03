@@ -121,9 +121,9 @@ const PatientExamination = () => {
     const fetchDetailExamination = async (card_id) => {
         try {
             const ApiDetailExamination = await DoViewDetailExamination(card_id);
-            console.log('ApiDetailExamination: ', ApiDetailExamination);
+            // console.log('ApiDetailExamination: ', ApiDetailExamination);
             const GetDataDetailExamination = ApiDetailExamination?.data || {};
-            console.log('Data Detail Examination: ', GetDataDetailExamination);
+            // console.log('Data Detail Examination: ', GetDataDetailExamination);
             setDataDetailExamination(GetDataDetailExamination);
         } catch (error) {
             console.log("Lỗi Detail Examination: ", error);

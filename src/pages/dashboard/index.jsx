@@ -21,7 +21,7 @@ const AdminDashboard = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    console.log("account", account)
+    // console.log("account", account)
 
     // Function xử lý thoát đăng nhập
     const handleLogOut = () => {
@@ -92,23 +92,23 @@ const AdminDashboard = () => {
                     </Menu.Item>
 
                     {/* Quản Lý Các Lịch Khám và Lịch Điều Trị */}
-                    <Menu.SubMenu key="sub1" title="Schedule Management" icon={<ProfileOutlined />}>
+                    <Menu.SubMenu key="sub1" title="Quản lý lịch khám" icon={<ProfileOutlined />}>
                         <Menu.Item key="3">
-                            <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-lich-kham">Lịch khám</Link>
+                            <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-lich-kham">Lịch khám tổng quát</Link>
                         </Menu.Item>
                         <Menu.Item key="4">
                             <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-lich-dieu-tri">Lịch điều trị</Link>
                         </Menu.Item>
-                        <Menu.Item key="5">
+                        {/* <Menu.Item key="5">
                             <Link style={{ textDecoration: 'none' }} to="/admin/tao-lich-kham">Tạo lịch khám</Link>
                         </Menu.Item>
                         <Menu.Item key="6">
                             <Link style={{ textDecoration: 'none' }} to="/admin/tao-lich-dieu-tri">Tạo lịch điều trị</Link>
-                        </Menu.Item>
+                        </Menu.Item> */}
                     </Menu.SubMenu>
 
                     {/* Quản Lý Tài Khoản Nha Sĩ */}
-                    <Menu.Item key="7" icon={<TeamOutlined />}>
+                    <Menu.Item key="5" icon={<TeamOutlined />}>
                         <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-nha-si">Quản lý Nha sĩ</Link>
                     </Menu.Item>
 
@@ -116,19 +116,19 @@ const AdminDashboard = () => {
 
                     {/* Quản Lý Phòng Khám */}
                     <Menu.SubMenu key="sub2" title="Quản lý Phòng khám" icon={<TeamOutlined />}>
-                        <Menu.Item key="8">
+                        <Menu.Item key="6">
                             <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-phong-kham">Danh sách Phòng khám</Link>
                         </Menu.Item>
-                        <Menu.Item key="9">
+                        <Menu.Item key="7">
                             <Link style={{ textDecoration: 'none' }} to="/admin/tao-phong-kham">Tạo Phòng khám</Link>
                         </Menu.Item>
                     </Menu.SubMenu>
                 </Menu>
                 )
-                    
-                :
 
-                (
+                    :
+
+                    (
                         // Tài khoản Dentist
                         <Menu theme="dark" mode="inline"
                         // defaultOpenKeys={['sub1', 'sub2', 'sub3']}

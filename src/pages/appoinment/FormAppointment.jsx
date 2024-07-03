@@ -4,6 +4,7 @@ import { DoAppointment, DoListSchedule, DoViewCategory } from '../../apis/api';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 // Function Disabled những ngày sau ngày hôm nay
 const disabledDate = (current) => {
@@ -59,6 +60,11 @@ const SubmitButton = ({ form, children }) => {
 const FormAppoinment = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
+    // set biến 'account' chứa all
+    // const account = useSelector(state => state?.account);
+
+    // set biến 'userSelector' chứa thông tin đã đăng nhập
+    const userInfo = useSelector(state => state?.account?.user?.user?.user_info);
     // *********************** UseState ***********************
     const [getDate, setGetDate] = useState('');
 
@@ -73,13 +79,13 @@ const FormAppoinment = () => {
 
     // ******************** FETCH API *************************
     // API Hiện Lịch Khám của Dentist
-    const ListScheduleExamination = async (date) => {
+    const ListScheduleExamination = async (date, patient_id) => {
         if (!date) {
             return setDentistSchedule([]);
         }
         if (date) {
             try {
-                const fetchListSchedule = await DoListSchedule(date);
+                const fetchListSchedule = await DoListSchedule(date, patient_id);
                 const getDataDentistSchedule = fetchListSchedule?.data || {};
                 setDentistSchedule(getDataDentistSchedule);
                 // console.log("dentistSchedule", getDataDentistSchedule)
@@ -89,8 +95,8 @@ const FormAppoinment = () => {
         }
     }
     useEffect(() => {
-        ListScheduleExamination(getDate);
-    }, [getDate])
+        ListScheduleExamination(getDate, userInfo.id);
+    }, [getDate, userInfo.id])
 
 
     // API Hiện Options Danh sách các Dịch vụ
@@ -189,15 +195,18 @@ const FormAppoinment = () => {
 
 
     // Danh sách Options các Dịch Vụ
-    const categoryOptions = dataCategory.map((data) => (
-        {
+    const categoryOptions = [
+        ...dataCategory.map((data) => ({
             label: data.name,
             value: data.id,
+        })),
+        {
+            label: "Khác",
+            value: 0,
         }
-    ))
+    ];
 
     // Danh Sách các Schedule của Nha sĩ
-    console.log("dentistSchedule", dentistSchedule)
     const dentistScheduleOptions = dentistSchedule.map((data) => (
         {
             label:
@@ -295,12 +304,12 @@ const FormAppoinment = () => {
                 <Form.Item
                     name="service_category_id"
                     label="Loại hình dịch vụ quan tâm"
-                // rules={[
-                //     {
-                //         required: true,
-                //         message: 'Vui lòng chọn loại hình dịch vụ'
-                //     },
-                // ]}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Vui lòng chọn loại hình dịch vụ'
+                        },
+                    ]}
                 >
                     <Select
                         placeholder="Chọn dịch vụ"

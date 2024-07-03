@@ -78,7 +78,6 @@ const DetailService = () => {
     const fetchSearchService = async (name) => {
         try {
             const APISearchService = await DoSearchServiceByAdmin(slug, name);
-
             const GetDataSearchService = APISearchService?.data || [];
             setDataService(GetDataSearchService);
             // console.log("APISearchService", APISearchService)
@@ -102,9 +101,9 @@ const DetailService = () => {
             }
         }
     }
-    useEffect(() => {
-        fetchSearchService(slug);
-    }, [slug])
+    // useEffect(() => {
+    //     fetchSearchService(slug);
+    // }, [])
 
     // ***********************************************************
 
@@ -231,7 +230,7 @@ const DetailService = () => {
                 </Modal>
             </div>
             <br></br>
-            <Table columns={columns} dataSource={dataService} />;
+            <Table columns={columns} dataSource={dataService} />
         </>
     )
 }
