@@ -1,95 +1,215 @@
-import { Space, Table, Input, Button, Typography } from 'antd';
-const columns = [
-    {
-        title: 'Tên bệnh nhân',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => <a>{text}</a>,
-    },
-    {
-        title: 'Tuổi',
-        dataIndex: 'age',
-        key: 'age',
-    },
-    {
-        title: 'Giới tính',
-        dataIndex: 'sex',
-        key: 'sex',
-    },
-    {
-        title: 'Địa chỉ',
-        dataIndex: 'address',
-        key: 'address',
-    },
-    {
-        title: 'Trạng thái',
-        dataIndex: 'status',
-        key: 'status',
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (_, record) => (
-            <Space size="middle">
-                <Button type='primary' ghost>Cập nhật</Button>
-            </Space>
-        ),
-    },
-];
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        sex: 'nam',
-        address: 'New York No. 1 Lake Park',
-        status: 'Chưa khám',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        sex: 'nữ',
-        address: 'London No. 1 Lake Park',
-        status: 'Đã khám',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        sex: 'nữ',
-        address: 'Sydney No. 1 Lake Park',
-        status: 'Chưa khám',
-        tags: ['cool', 'teacher'],
-    },
-];
+import { Table, Input, Button, Typography } from 'antd';
+import { Link } from 'react-router-dom';
+import { PlusOutlined } from '@ant-design/icons';
+import { DoViewAllExaminationByAdmin } from '../../../../apis/api';
+import { useEffect, useState } from 'react';
+import 'moment-timezone'; 
+import moment from 'moment';
+
+
+
 const Examination = () => {
+
+
+    // *****************************************
+    // ------------- Variables -----------------
 
     const { Search } = Input;
     const { Title } = Typography;
 
+    // *****************************************
+
+    // *****************************************
+    // ------------- useState ------------------
+    const [allExamination, setAllExamination] = useState([]);
+    // console.log("allExamination", allExamination)
+    // *****************************************
+
+
+    // *****************************************
+    // ------------- API Function --------------
+    const fetchAllExaminationByAdmin = async () => {
+
+        try {
+            const APIAllExamination = await DoViewAllExaminationByAdmin();
+            // console.log("APIAllExamination", APIAllExamination)
+            if (!APIAllExamination) {
+                // console.log("API Examination: NO DATA");
+                return;
+            }
+
+            if (APIAllExamination.status === 200) {
+                const GetDataAllExamination = APIAllExamination?.data || [];
+                // console.log("GetDataAllExamination", GetDataAllExamination)
+                setAllExamination(GetDataAllExamination);
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // *****************************************
+
+
+    // *****************************************
+    // ------------- useEffect -----------------
+
+    useEffect(() => {
+        fetchAllExaminationByAdmin();
+    }, [])
+
+    // *****************************************
+
+
+
+    // *****************************************
+    // ------------- Other Funtion -------------
+
+
+    const formatDate = (timestamp) => {
+        const date = new Date(timestamp);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    // const toVietnamTime = (timeString) => {
+    //     const date = new Date(timeString);
+    //     const options = {
+    //         timeZone: 'Asia/Ho_Chi_Minh',
+    //         hour12: false,
+    //         year: 'numeric',
+    //         month: '2-digit',
+    //         day: '2-digit',
+    //         hour: '2-digit',
+    //         minute: '2-digit',
+    //         second: '2-digit',
+    //     };
+    //     return date.toLocaleString('en-US', options);
+    // };
+
+
+    // // Assuming toVietnamTime function exists and formats the datetime string
+    // const extractTime = (datetime) => {
+    //     // Extract the time from the datetime string
+    //     return datetime.split(', ')[1];
+    // };
+    
+    
+    const extractTime = (utcTime) => {
+        // Parse the UTC time with Moment.js and extract the time part
+        const timePart = moment.utc(utcTime).format('HH:mm:ss'); // Format only hours, minutes, and seconds
+
+        return timePart;
+    };
+
+    const columns = [
+        {
+            title: 'STT',
+            dataIndex: 'schedule_id',
+            key: 'schedule_id',
+        },
+        {
+            title: 'Tên nha sĩ',
+            dataIndex: 'dentist_name',
+            key: 'dentist_name',
+        },
+        {
+            title: 'Phòng',
+            dataIndex: 'room_name',
+            key: 'room_name',
+        },
+        {
+            title: 'Loại',
+            dataIndex: 'type',
+            key: 'type',
+        },
+        {
+            title: 'Thời gian',
+            children: [
+                {
+                    title: 'Ngày',
+                    dataIndex: 'start_time',
+                    key: 'start_time',
+                    width: 150,
+                    render: (text) => (
+                        formatDate(text)
+                    )
+                },
+                {
+                    title: 'Slot',
+                    children: [
+                        {
+                            title: 'Từ',
+                            dataIndex: 'start_time',
+                            key: 'start_time',
+                            width: 150,
+                            render: (text) => (
+                                // extractTime(convertToVietnamTime(text))
+                                extractTime(text)
+                            )
+                        },
+                        {
+                            title: 'Đến',
+                            dataIndex: 'end_time',
+                            key: 'end_time',
+                            width: 150,
+                            render: (text) => (
+                                // extractTime(convertToVietnamTime(text))
+                                extractTime(text)
+                            )
+                        },
+                    ]
+                },
+            ]
+        },
+        {
+            title: 'Số bệnh nhân đăng ký',
+            dataIndex: 'appointment_count',
+            key: 'appointment_count',
+        },
+        // {
+        //     title: 'Action',
+        //     key: 'action',
+        //     render: (_, record) => (
+        //         <Space size="middle">
+        //             <Button type='primary' ghost>Cập nhật</Button>
+        //         </Space>
+        //     ),
+        // },
+    ];
+
+    // *****************************************
     return (
         <>
             {/* Header */}
             <div>
-                <Title level={2}>Quản lý lịch khám</Title>
+                <Title level={2}>Danh sách lịch khám</Title>
             </div>
 
             {/* Top-Bar Btn*/}
-            <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Search
-                    placeholder="input search text"
+                    placeholder="Nhập lịch khám"
                     allowClear
-                    enterButton="Search"
+                    enterButton="Tìm kiếm"
                     size="large"
                     style={{ margin: '20px', width: '33%' }}
                 />
+                <Button
+                    icon={<PlusOutlined />}
+                    size={'large'}
+                    type="primary"
+                    style={{ width: 'fit-content', margin: '20px', backgroundColor: '#1677FF' }}
+                >
+                    <Link to='/admin/tao-lich-kham' style={{ textDecoration: 'none' }}>Tạo lịch khám</Link>
+                </Button>
             </div>
             <br></br>
 
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={allExamination} />
 
         </>
     )

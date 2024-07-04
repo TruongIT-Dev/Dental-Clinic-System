@@ -1,5 +1,5 @@
-import { Space, Table, Input, Button, Typography, Modal, Descriptions, notification } from 'antd';
-import { DoViewAllDentistByAdmin, DoViewInfoDentistByAdmin } from '../../../../apis/api';
+import { Space, Table, Input, Button, Typography, Modal, Descriptions, notification, message, Popconfirm } from 'antd';
+import { DoDeleteDentistByAdmin, DoViewAllDentistByAdmin, DoViewInfoDentistByAdmin } from '../../../../apis/api';
 import { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -62,12 +62,33 @@ const DentistManagement = () => {
         }
     }
 
+
+    // API Delete 1 Nha Sĩ
+    const fetchDeleteDentistByAdmin = async (dentist_id) => {
+        try {
+            const APIDeleteDentist = await DoDeleteDentistByAdmin(dentist_id);
+            if (APIDeleteDentist.status === 204) {
+                message.success('Xóa thành công');
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log("Error Delete Dentist:", error)
+            if (error.response.status) {
+                notification.error({
+                    message: 'Xóa thất bại',
+                    duration: 2,
+                });
+            }
+        }
+    }
+
+
     // -----------------------------------------
     // *****************************************
 
 
     // *****************************************
-    // ------------- useEffect ------------------
+    // ------------- useEffect -----------------
 
     useEffect(() => {
         fetchAllDentist(name);
@@ -81,6 +102,13 @@ const DentistManagement = () => {
 
     // *****************************************
     // ------------- Other Functions ------------
+
+    const confirmDeleteDentist = (id) => {
+        fetchDeleteDentistByAdmin(id)
+    };
+    const cancelDeleteDentist = (e) => {
+        console.log(e);
+    };
 
     const columns = [
         {
@@ -113,7 +141,7 @@ const DentistManagement = () => {
             title: 'Ngày sinh',
             dataIndex: 'date_of_birth',
             key: 'date_of_birth',
-            render: (text, record) => (
+            render: (text) => (
                 formatDate(text)
             )
         },
@@ -132,8 +160,15 @@ const DentistManagement = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button type='primary' ghost>Cập nhật</Button>
-                    <Button danger>Xoá</Button>
+                    <Popconfirm
+                        title="Bạn có chắc chắn muốn xóa?"
+                        onConfirm={() => confirmDeleteDentist(record.id)}
+                        onCancel={cancelDeleteDentist}
+                        okText="Có"
+                        cancelText="Hủy"
+                    >
+                        <Button danger>Delete</Button>
+                    </Popconfirm>
                 </Space>
             ),
         },

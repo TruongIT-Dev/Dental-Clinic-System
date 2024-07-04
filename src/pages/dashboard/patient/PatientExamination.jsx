@@ -2,6 +2,7 @@ import { Card, Row, Col, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { Modal, Pagination, Empty } from 'antd';
 import { DoViewDetailExamination, DoViewExaminationAppointment } from '../../../apis/api';
+import moment from 'moment';
 
 
 
@@ -57,25 +58,32 @@ const PatientExamination = () => {
     }
 
     // Hàm Time
-    const toVietnamTime = (timeString) => {
-        const date = new Date(timeString);
-        const options = {
-            timeZone: 'Asia/Ho_Chi_Minh',
-            hour12: false,
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-        };
-        return date.toLocaleString('en-US', options);
-    };
+    // const toVietnamTime = (timeString) => {
+    //     const date = new Date(timeString);
+    //     const options = {
+    //         timeZone: 'Asia/Ho_Chi_Minh',
+    //         hour12: false,
+    //         year: 'numeric',
+    //         month: '2-digit',
+    //         day: '2-digit',
+    //         hour: '2-digit',
+    //         minute: '2-digit',
+    //         second: '2-digit',
+    //     };
+    //     return date.toLocaleString('en-US', options);
+    // };
 
-    // Assuming toVietnamTime function exists and formats the datetime string
-    const extractTime = (datetime) => {
-        // Extract the time from the datetime string
-        return datetime.split(', ')[1];
+    // // Assuming toVietnamTime function exists and formats the datetime string
+    // const extractTime = (datetime) => {
+    //     // Extract the time from the datetime string
+    //     return datetime.split(', ')[1];
+    // };
+
+    const extractTime = (utcTime) => {
+        // Parse the UTC time with Moment.js and extract the time part
+        const timePart = moment.utc(utcTime).format('HH:mm:ss'); // Format only hours, minutes, and seconds
+
+        return timePart;
     };
 
     // Hàm Date
@@ -258,7 +266,7 @@ const PatientExamination = () => {
                                         <p style={ExaminationValues}>{dataDetailExamination.room_name}</p>
                                         <p style={ExaminationValues}>
                                             {/* Display start and end times in Vietnam local time */}
-                                            {extractTime(toVietnamTime(dataDetailExamination.start_time))}-{extractTime(toVietnamTime(dataDetailExamination.end_time))}
+                                            {extractTime(dataDetailExamination.start_time)}-{extractTime(dataDetailExamination.end_time)}
                                         </p>
                                         <p style={ExaminationValues}>{dataDetailExamination.dentist_name}</p>
                                         <p style={ExaminationValues}>{dataDetailExamination.dentist_specialty}</p>

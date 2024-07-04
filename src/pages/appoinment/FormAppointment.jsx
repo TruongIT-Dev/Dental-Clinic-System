@@ -172,25 +172,32 @@ const FormAppoinment = () => {
         }
     }
 
-    const toVietnamTime = (timeString) => {
-        const date = new Date(timeString);
-        const options = {
-            timeZone: 'Asia/Ho_Chi_Minh',
-            hour12: false,
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            // second: '2-digit',
-        };
-        return date.toLocaleString('en-US', options);
-    };
+    // const toVietnamTime = (timeString) => {
+    //     const date = new Date(timeString);
+    //     const options = {
+    //         timeZone: 'Asia/Ho_Chi_Minh',
+    //         hour12: false,
+    //         year: 'numeric',
+    //         month: '2-digit',
+    //         day: '2-digit',
+    //         hour: '2-digit',
+    //         minute: '2-digit',
+    //         // second: '2-digit',
+    //     };
+    //     return date.toLocaleString('en-US', options);
+    // };
 
-    // Assuming toVietnamTime function exists and formats the datetime string
-    const extractTime = (datetime) => {
-        // Extract the time from the datetime string
-        return datetime.split(', ')[1];
+    // // Assuming toVietnamTime function exists and formats the datetime string
+    // const extractTime = (datetime) => {
+    //     // Extract the time from the datetime string
+    //     return datetime.split(', ')[1];
+    // };
+
+    const extractTime = (utcTime) => {
+        // Parse the UTC time with Moment.js and extract the time part
+        const timePart = moment.utc(utcTime).format('HH:mm:ss'); // Format only hours, minutes, and seconds
+
+        return timePart;
     };
 
 
@@ -213,8 +220,10 @@ const FormAppoinment = () => {
                 [
                     `Nha sĩ ${data.dentist_name} | `,
                     `Phòng ${data.room_name} | `,
-                    `${extractTime(toVietnamTime(data.start_time))} - `,
-                    `${extractTime(toVietnamTime(data.end_time))}.`,
+                    // `${extractTime(toVietnamTime(data.start_time))} - `,
+                    // `${extractTime(toVietnamTime(data.end_time))}.`,
+                    `${extractTime(data.start_time)} - `,
+                    `${extractTime(data.end_time)}.`,
                 ].join(''),
             value: data.schedule_id,
         }

@@ -143,18 +143,18 @@ const AddNewDentist = () => {
     };
 
     // Validate Email
-    const validateEmail = (_, value) => {
-        if (!value) {
-            return Promise.reject(new Error('Email không được để trống!'));
-        }
+    // const validateEmail = (_, value) => {
+    //     if (!value) {
+    //         return Promise.reject(new Error('Email không được để trống!'));
+    //     }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!emailRegex.test(value)) {
-            return Promise.reject(new Error('Email không hợp lệ!'));
-        }
-        return Promise.resolve();
-    };
+    //     if (!emailRegex.test(value)) {
+    //         return Promise.reject(new Error('Email không hợp lệ!'));
+    //     }
+    //     return Promise.resolve();
+    // };
 
     // -----------------------------------------
     // *****************************************

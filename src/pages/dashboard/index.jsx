@@ -80,7 +80,7 @@ const AdminDashboard = () => {
 
                 {/* Tài khoản Admin */}
                 {account.role === "Admin" ? (<Menu theme="dark" mode="inline"
-                    defaultOpenKeys={['sub1', 'sub2', 'sub3']}>
+                    defaultOpenKeys={['sub1']}>
 
                     {/* Dashboard */}
                     <Menu.Item key="1" icon={<PieChartOutlined />}>
@@ -99,12 +99,6 @@ const AdminDashboard = () => {
                         <Menu.Item key="4">
                             <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-lich-dieu-tri">Lịch điều trị</Link>
                         </Menu.Item>
-                        {/* <Menu.Item key="5">
-                            <Link style={{ textDecoration: 'none' }} to="/admin/tao-lich-kham">Tạo lịch khám</Link>
-                        </Menu.Item>
-                        <Menu.Item key="6">
-                            <Link style={{ textDecoration: 'none' }} to="/admin/tao-lich-dieu-tri">Tạo lịch điều trị</Link>
-                        </Menu.Item> */}
                     </Menu.SubMenu>
 
                     {/* Quản Lý Tài Khoản Nha Sĩ */}
@@ -113,16 +107,10 @@ const AdminDashboard = () => {
                     </Menu.Item>
 
 
-
                     {/* Quản Lý Phòng Khám */}
-                    <Menu.SubMenu key="sub2" title="Quản lý Phòng khám" icon={<TeamOutlined />}>
-                        <Menu.Item key="6">
-                            <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-phong-kham">Danh sách Phòng khám</Link>
-                        </Menu.Item>
-                        <Menu.Item key="7">
-                            <Link style={{ textDecoration: 'none' }} to="/admin/tao-phong-kham">Tạo Phòng khám</Link>
-                        </Menu.Item>
-                    </Menu.SubMenu>
+                    <Menu.Item key="6" icon={<TeamOutlined />}>
+                        <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-phong-kham">Quản lý phòng khám</Link>
+                    </Menu.Item>
                 </Menu>
                 )
 

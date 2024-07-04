@@ -53,11 +53,6 @@ export const DoAppointment = (examination_schedule_id, service_category_id) => {
     )
 }
 
-// Liệt kê Phương thức thanh toán
-// export const DoListPayment = () => {
-//     return axios.get('/api/v1/payment-methods');
-// }
-
 // Show Thông tin của 1 Phiếu khám khám
 export const DoViewExaminationAppointment = () => {
     return axios.get('/api/v1/patients/appointments/examination')
@@ -71,21 +66,22 @@ export const DoViewDetailExamination = (card_id) => {
 //************************************************************************************** */
 //************************************API ADMIN***************************************** */
 
-// Quản Lý Dịch vụ
+// ****************************Quản Lý Loại Hình Dịch Vụ**********************************
 
-// Loại hình dịch vụ API
 
 // View - Lấy Tất Cả Thông Tin Loại Hình Dịch Vụ
 export const DoViewCategoryByAdmin = () => {
     return axios.get('/api/v1/service-categories');
 }
+
 // View - Lấy Thông Tin Chi tiết Của 1 Loại Hình Dịch Vụ
 export const DoViewDetailCategoryByAdmin = (slug) => {
     return axios.get(`/api/v1/service-categories/${slug}`)
 }
+
 // Update - Cập nhật thông tin của 1 Loại hình dịch vụ
 export const DoUpdateCategoryByAdmin = (id, name, icon_url, banner_url, description) => {
-    return axios.patch(`/api/v1/service-categories/${id}`,
+    return axios.put(`/api/v1/service-categories/${id}`,
         {
             name: name,
             icon_url: icon_url,
@@ -94,10 +90,12 @@ export const DoUpdateCategoryByAdmin = (id, name, icon_url, banner_url, descript
         }
     )
 }
+
 // Delete - Xóa 1 Loại hình dịch vụ
 export const DoDeleteCategoryByAdmin = (id_delete) => {
     return axios.delete(`/api/v1/service-categories/${id_delete}`)
 }
+
 // Add - Thêm mới 1 Loại hình dịch vụ
 export const DoAddCategoryByAdmin = (banner_url, description, icon_url, name) => {
     return axios.post(`/api/v1/service-categories`,
@@ -114,9 +112,9 @@ export const DoAddCategoryByAdmin = (banner_url, description, icon_url, name) =>
 export const DoSearchCategoryByAdmin = (name) => {
     return axios.get(`/api/v1/service-categories?q=${name}`)
 }
-// ************************************************************************************
 
-// Chi tiết Dịch vụ API
+
+// ************************Quản Lý Chi Tiết Dịch Vụ************************
 
 // View - Liệt kê tất cả Dịch vụ của 1 Category
 export const DoViewDataServiceByAdmin = (slug) => {
@@ -153,7 +151,7 @@ export const DoAddNewServiceByAdmin = (category_id, cost, name, unit, warranty_d
 
 // Update - Chỉnh sửa 1 Dịch vụ
 export const DoUpdateServiceByAdmin = (id, name, cost, unit, warranty_duration) => {
-    return axios.patch(`/api/v1/services/${id}`, {
+    return axios.put(`/api/v1/services/${id}`, {
         name: name,
         cost: cost,
         unit: unit,
@@ -161,6 +159,7 @@ export const DoUpdateServiceByAdmin = (id, name, cost, unit, warranty_duration) 
     })
 }
 
+// *******************************Quản Lý Nha Sĩ******************************
 
 //Search và View Quản Lý Nha Sĩ
 export const DoViewAllDentistByAdmin = (name) => {
@@ -188,5 +187,54 @@ export const DoAddNewDentistByAdmin = (email, full_name, phone_number, date_of_b
         specialty_id: specialty_id,
         password: password,
 
+    })
+}
+
+// Delete 1 Nha sĩ
+export const DoDeleteDentistByAdmin = (dentist_id) => {
+    return axios.delete(`/api/v1/dentists/${dentist_id}`);
+}
+
+
+// **************************Quản Lý Lịch Khám*******************************
+
+// API View toàn bộ Lịch Khám
+export const DoViewAllExaminationByAdmin = () => {
+    return axios.get('/api/v1/schedules/examination');
+}
+
+// API List Danh sách Nha sĩ
+export const DoListAllDentistByAdmin = () => {
+    return axios.get('/api/v1/dentists')
+}
+
+// API List Danh sách các số phòng khám
+export const DoListAllRoomByAdmin = () => {
+    return axios.get('/api/v1/rooms')
+}
+
+// APi Tạo Lịch khám bởi Admin
+export const DoAddNewExaminationByAdmin = (dentist_id, room_id, start_time, end_time) => {
+    return axios.post('/api/v1/schedules/examination', {
+        dentist_id: dentist_id,
+        room_id: room_id,
+        start_time: start_time,
+        end_time: end_time,
+    })
+}
+
+
+
+// **************************Quản Lý Phòng Khám*******************************
+
+// API View Danh sách các Phòng khám
+export const DoViewAllRoomsByAdmin = () => {
+    return axios.get('/api/v1/rooms')
+}
+
+// API Add thêm 1 Phòng khám mới
+export const DoAddNewRoomByAdmin = (name) => {
+    return axios.post('/api/v1/rooms', {
+        name: name,
     })
 }

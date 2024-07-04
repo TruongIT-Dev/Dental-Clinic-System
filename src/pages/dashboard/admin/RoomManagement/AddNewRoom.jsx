@@ -1,72 +1,108 @@
-import { useState } from 'react';
+import { Button, Form, Input, Typography } from 'antd';
+
 
 const AddNewRoom = () => {
-    const [roomNumber, setRoomNumber] = useState('');
-    const [roomName, setRoomName] = useState('');
-    const [doctorName, setDoctorName] = useState('');
-    const [category, setCategory] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle form submission here
-        console.log({
-            roomNumber,
-            roomName,
-            doctorName,
-            category
-        });
+
+    // *****************************************
+    // ------------- Variables ----- -----------
+
+    const { Title } = Typography;
+
+    // *****************************************
+
+
+
+    // *****************************************
+    // ------------- useState ------------------
+
+    // *****************************************
+
+
+
+    // *****************************************
+    // ------------- API Function --------------
+
+    // Submit Form Success
+    const onFinish = (values) => {
+        console.log('Success:', values);
     };
+
+    // Submit Form Failed
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
+
+    // *****************************************
+
+
+
+
+    // *****************************************
+    // ------------- useEffect -----------------
+
+    // *****************************************
+
+
+
+
+    // *****************************************
+    // ------------- Others function -----------
+
+    // *****************************************
 
     return (
         <div className="container mt-5">
-            <h2 className="mb-4">Thêm Phòng Mới</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="roomNumber" className="form-label">Số Phòng</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="roomNumber"
-                        placeholder="Nhập số phòng"
-                        value={roomNumber}
-                        onChange={(e) => setRoomNumber(e.target.value)}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="roomName" className="form-label">Tên Phòng</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="roomName"
-                        placeholder="Nhập tên phòng"
-                        value={roomName}
-                        onChange={(e) => setRoomName(e.target.value)}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="doctorName" className="form-label">Tên Bác Sĩ</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="doctorName"
-                        placeholder="Nhập tên bác sĩ"
-                        value={doctorName}
-                        onChange={(e) => setDoctorName(e.target.value)}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="category" className="form-label">Loại Hình Dịch Vụ</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="category"
-                        placeholder="Nhập loại hình"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                    />
-                </div>
-                <button type="submit" className="btn btn-primary">Gửi</button>
-            </form>
+
+            <div>
+                <Title level={2}>Tạo tài khoản Nha sĩ</Title>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+                <Form
+                    name="basic"
+                    labelCol={{
+                        span: 8,
+                    }}
+                    wrapperCol={{
+                        span: 16,
+                    }}
+                    style={{
+                        // maxWidth: 600,
+                    }}
+                    initialValues={{
+                        remember: true,
+                    }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off"
+                >
+                    <Form.Item
+                        label="Username"
+                        name="username"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your username!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+
+                    <Form.Item
+                        wrapperCol={{
+                            offset: 8,
+                            span: 16,
+                        }}
+                    >
+                        <Button type="primary" htmlType="submit">
+                            Đăng ký phòng khám
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </div>
         </div>
     );
 };

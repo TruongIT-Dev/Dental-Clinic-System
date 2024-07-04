@@ -83,7 +83,6 @@ const ServiceManagement = () => {
     };
     const cancel = (e) => {
         console.log(e);
-        message.error('Hủy');
     };
     //****************************************** */
 
@@ -190,7 +189,7 @@ const ServiceManagement = () => {
                     allowClear
                     enterButton="Tìm kiếm"
                     size="large"
-                    style={{ margin: '20px', width: '50%' }}
+                    style={{ margin: '20px', width: '33%' }}
                     onSearch={onSearch}
                 />
                 <Button
