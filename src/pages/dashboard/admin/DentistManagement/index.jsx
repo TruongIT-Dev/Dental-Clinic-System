@@ -156,7 +156,7 @@ const DentistManagement = () => {
             key: 'specialty',
         },
         {
-            title: 'Action',
+            title: 'Thao tác',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
@@ -167,7 +167,7 @@ const DentistManagement = () => {
                         okText="Có"
                         cancelText="Hủy"
                     >
-                        <Button danger>Delete</Button>
+                        <Button danger>Xóa</Button>
                     </Popconfirm>
                 </Space>
             ),

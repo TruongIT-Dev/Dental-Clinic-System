@@ -2,9 +2,11 @@ import {
     PieChartOutlined,
     TeamOutlined,
     ProfileOutlined,
+    ScheduleOutlined,
     UserOutlined,
     SettingOutlined,
-    CalendarOutlined
+    CalendarOutlined,
+    ContainerOutlined
 } from '@ant-design/icons';
 import { Avatar, Layout, Menu, theme, Breadcrumb, Button, Popconfirm } from 'antd';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
@@ -87,12 +89,12 @@ const AdminDashboard = () => {
                         <Link style={{ textDecoration: 'none' }} to="/admin">Dashboard</Link>
                     </Menu.Item>
 
-                    <Menu.Item key="2" icon={<TeamOutlined />}>
+                    <Menu.Item key="2" icon={<ProfileOutlined />}>
                         <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-dich-vu">Quản lý Dịch vụ</Link>
                     </Menu.Item>
 
                     {/* Quản Lý Các Lịch Khám và Lịch Điều Trị */}
-                    <Menu.SubMenu key="sub1" title="Quản lý lịch khám" icon={<ProfileOutlined />}>
+                    <Menu.SubMenu key="sub1" title="Quản lý lịch khám" icon={<ScheduleOutlined />}>
                         <Menu.Item key="3">
                             <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-lich-kham">Lịch khám tổng quát</Link>
                         </Menu.Item>
@@ -108,7 +110,7 @@ const AdminDashboard = () => {
 
 
                     {/* Quản Lý Phòng Khám */}
-                    <Menu.Item key="6" icon={<TeamOutlined />}>
+                    <Menu.Item key="6" icon={<ContainerOutlined />}>
                         <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-phong-kham">Quản lý phòng khám</Link>
                     </Menu.Item>
                 </Menu>
@@ -127,7 +129,7 @@ const AdminDashboard = () => {
                                 <Link style={{ textDecoration: 'none' }} to="/dentist">Dashboard</Link>
                             </Menu.Item>
 
-                            <Menu.Item key="2" icon={<CalendarOutlined />}>
+                            <Menu.Item key="2" icon={<ScheduleOutlined />}>
                                 <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-lich-kham">Quản lý lịch khám</Link>
                             </Menu.Item>
 
@@ -142,10 +144,8 @@ const AdminDashboard = () => {
                             <Menu.Item key="5" icon={<SettingOutlined />}>
                                 <Link style={{ textDecoration: 'none' }} to="#">Cài đặt</Link>
                             </Menu.Item>
-
                         </Menu>
                     )}
-
 
 
             </Sider>

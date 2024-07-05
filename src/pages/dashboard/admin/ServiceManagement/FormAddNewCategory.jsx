@@ -67,6 +67,7 @@ const FormAddNewCategory = () => {
                             rules={[
                                 {
                                     required: true,
+                                    message: 'Vui lòng nhập tên!'
                                 },
                             ]}
                         >
@@ -81,6 +82,7 @@ const FormAddNewCategory = () => {
                             rules={[
                                 {
                                     required: true,
+                                    message: 'Vui lòng nhập link ảnh!'
                                 },
                             ]}
                         >
@@ -95,6 +97,7 @@ const FormAddNewCategory = () => {
                             rules={[
                                 {
                                     required: true,
+                                    message: 'Vui lòng nhập link icon!'
                                 },
                             ]}
                         >
@@ -111,6 +114,7 @@ const FormAddNewCategory = () => {
                             rules={[
                                 {
                                     required: true,
+                                    message: 'Vui lòng nhập mô tả!'
                                 },
                             ]}
                         >

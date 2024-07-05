@@ -157,7 +157,7 @@ const RoomManagement = () => {
             {/* Top-Bar Btn*/}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Search
-                    placeholder="input search text"
+                    placeholder="Nhập tên phòng"
                     allowClear
                     enterButton="Tìm kiếm"
                     size="large"
