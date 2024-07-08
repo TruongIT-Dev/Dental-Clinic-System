@@ -23,6 +23,10 @@ const DentistManagement = () => {
     const [infoModal, setInfoModal] = useState(false);
     const [infoDentist, setInfoDentist] = useState({});
     // console.log("infoDentist", infoDentist)
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 5,
+    });
     // -----------------------------------------
     // *****************************************
 
@@ -112,6 +116,11 @@ const DentistManagement = () => {
 
     const columns = [
         {
+            title: 'STT',
+            key: 'index',
+            render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
+        },
+        {
             title: 'Họ và tên',
             dataIndex: 'full_name',
             key: 'full_name',
@@ -174,6 +183,12 @@ const DentistManagement = () => {
         },
     ];
 
+    // Counte STT pagination
+    const handleTableChange = (pagination) => {
+        setPagination(pagination);
+    };
+
+
     const showInfoModal = () => {
         setInfoModal(true);
     };
@@ -194,9 +209,6 @@ const DentistManagement = () => {
 
     // -----------------------------------------
     // *****************************************
-
-
-
 
     return (
         <>
@@ -226,7 +238,10 @@ const DentistManagement = () => {
             </div>
             <br></br>
 
-            <Table columns={columns} dataSource={listDentist} />;
+            <Table columns={columns} dataSource={listDentist}
+                pagination={listDentist.length >= 5 ? { pageSize: 5 } : false}
+                onChange={handleTableChange}
+            />
 
             {/* Register Modal */}
             <Modal width={700} open={infoModal} onOk={handleOk} onCancel={handleCancel} footer={[]}>

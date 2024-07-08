@@ -19,6 +19,11 @@ const ServiceManagement = () => {
 
     const [searchName, setSearchName] = useState([]);
 
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 5,
+    });
+
     // const [idUpdate, setIdUpdate] = useState(null);
 
     //****************************************** */
@@ -134,6 +139,11 @@ const ServiceManagement = () => {
     // Cột bảng Table Categories
     const columns = [
         {
+            title: 'STT',
+            key: 'index',
+            render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
+        },
+        {
             title: 'Icon',
             dataIndex: 'icon_url',
             key: 'icon_url',
@@ -175,6 +185,10 @@ const ServiceManagement = () => {
         },
     ];
 
+    const handleTableChange = (pagination) => {
+        setPagination(pagination);
+    };
+
     return (
         <>
             {/* Header */}
@@ -208,9 +222,12 @@ const ServiceManagement = () => {
             <br></br>
 
             {/* Bảng Loại hình dịch vụ */}
-            <Table columns={columns} dataSource={searchName} />
+            <Table columns={columns} dataSource={searchName}
+                pagination={searchName.length >= 5 ? { pageSize: 5 } : false}
+                onChange={handleTableChange}
+            />
 
         </>
     )
-};
+}
 export default ServiceManagement;

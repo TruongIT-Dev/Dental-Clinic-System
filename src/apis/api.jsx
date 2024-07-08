@@ -2,12 +2,14 @@ import axios from '../ultils/axios-custom';
 
 // ********************************* GUEST ********************************
 // Đăng ký
-export const GetSignUp = (email, full_name, phone_number, password) => {
+export const GetSignUp = (email, full_name, phone_number, date_of_birth, gender, password) => {
     return axios.post('/api/v1/patients',
         {
             email: email,
             full_name: full_name,
             phone_number: phone_number,
+            date_of_birth: date_of_birth,
+            gender: gender,
             password: password,
         })
 }

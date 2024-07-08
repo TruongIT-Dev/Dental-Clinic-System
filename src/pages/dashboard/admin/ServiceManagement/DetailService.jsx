@@ -18,6 +18,10 @@ const DetailService = () => {
     // const [searchService, setSearchService] = useState([]);
     const [addServiceModal, setAddServiceModal] = useState(false);
     const [detailCategory, setDetailCategory] = useState({});
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 5,
+    });
 
     // console.log("dataService", dataService)
     // console.log("categoryId", categoryId)
@@ -122,6 +126,11 @@ const DetailService = () => {
     };
     const columns = [
         {
+            title: 'STT',
+            key: 'index',
+            render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
+        },
+        {
             title: 'Tên dịch vụ',
             dataIndex: 'name',
             key: 'name',
@@ -168,6 +177,10 @@ const DetailService = () => {
             ),
         },
     ];
+
+    const handleTableChange = (pagination) => {
+        setPagination(pagination);
+    };
 
     // Lấy id từ url
     const location = useLocation();
@@ -226,11 +239,14 @@ const DetailService = () => {
                     Thêm Dịch Vụ
                 </Button>
                 <Modal title="Thêm Dịch Vụ" open={addServiceModal} onOk={handleAddServiceOk} onCancel={handleAddSerivceCancel} footer={[null]}>
-                    <FormAddNewService data={dataService} id={categoryId} />
+                    <FormAddNewService data={dataService} id={categoryId} category={detailCategory} />
                 </Modal>
             </div>
             <br></br>
-            <Table columns={columns} dataSource={dataService} />
+            <Table columns={columns} dataSource={dataService}
+                pagination={dataService.length >= 5 ? { pageSize: 5 } : false}
+                onChange={handleTableChange}
+            />
         </>
     )
 }

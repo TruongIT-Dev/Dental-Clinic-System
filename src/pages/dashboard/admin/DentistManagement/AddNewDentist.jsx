@@ -3,7 +3,6 @@ import '../../../../scss/AdminAddNewDentist.css'
 import { Button, Card, DatePicker, Form, Input, Radio, Select, Typography, notification } from 'antd';
 import { DoAddNewDentistByAdmin, DoViewSpecialityByAdmin } from '../../../../apis/api';
 import dayjs from 'dayjs';
-import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
 const AddNewDentist = () => {
@@ -65,6 +64,10 @@ const AddNewDentist = () => {
             }
         } catch (error) {
             console.log(error);
+            notification.error({
+                message: 'Email hoặc số điện thoại đã tồn tại!',
+                duration: 2,
+            });
         }
 
     };
@@ -257,11 +260,10 @@ const AddNewDentist = () => {
                                 },
                             ]}
                         >
-                            {/* <span>{JSON.stringify(dateForm)}</span> */}
                             <DatePicker
                                 onChange={onChangeDate}
-                                format={moment(dateForm).format('YYYY-MM-DD')}
-                            // value={dateForm}
+                                format="YYYY-MM-DD"
+                                placeholder='YYYY-MM-DD'
                             />
                         </Form.Item>
 

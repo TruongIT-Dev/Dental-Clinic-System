@@ -1,9 +1,9 @@
-import { Table, Input, Button, Typography } from 'antd';
+import { Table, Input, Button, Typography, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { DoViewAllExaminationByAdmin } from '../../../../apis/api';
 import { useEffect, useState } from 'react';
-import 'moment-timezone'; 
+import 'moment-timezone';
 import moment from 'moment';
 
 
@@ -23,6 +23,10 @@ const Examination = () => {
     // ------------- useState ------------------
     const [allExamination, setAllExamination] = useState([]);
     // console.log("allExamination", allExamination)
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 5,
+    });
     // *****************************************
 
 
@@ -40,8 +44,15 @@ const Examination = () => {
 
             if (APIAllExamination.status === 200) {
                 const GetDataAllExamination = APIAllExamination?.data || [];
+                const GetDataAndTimeRange = GetDataAllExamination.map((item) => ({
+                    ...item,
+                    time_range: {
+                        start_time: item.start_time,
+                        end_time: item.end_time,
+                    }
+                }))
                 // console.log("GetDataAllExamination", GetDataAllExamination)
-                setAllExamination(GetDataAllExamination);
+                setAllExamination(GetDataAndTimeRange);
             }
 
         } catch (error) {
@@ -75,41 +86,33 @@ const Examination = () => {
         return `${year}-${month}-${day}`;
     };
 
-    // const toVietnamTime = (timeString) => {
-    //     const date = new Date(timeString);
-    //     const options = {
-    //         timeZone: 'Asia/Ho_Chi_Minh',
-    //         hour12: false,
-    //         year: 'numeric',
-    //         month: '2-digit',
-    //         day: '2-digit',
-    //         hour: '2-digit',
-    //         minute: '2-digit',
-    //         second: '2-digit',
-    //     };
-    //     return date.toLocaleString('en-US', options);
-    // };
 
-
-    // // Assuming toVietnamTime function exists and formats the datetime string
-    // const extractTime = (datetime) => {
-    //     // Extract the time from the datetime string
-    //     return datetime.split(', ')[1];
-    // };
-    
-    
     const extractTime = (utcTime) => {
         // Parse the UTC time with Moment.js and extract the time part
-        const timePart = moment.utc(utcTime).format('HH:mm:ss'); // Format only hours, minutes, and seconds
+        const timePart = moment.utc(utcTime).format('HH:mm'); // Format only hours, minutes, and seconds
 
         return timePart;
     };
 
     const columns = [
+        // {
+        //     title: 'id',
+        //     dataIndex: 'schedule_id',
+        //     key: 'schedule_id',
+        //     render: () => null // hide the content
+        // },
+        // {
+        //     title: 'id',
+        //     dataIndex: 'schedule_id',
+        //     key: 'schedule_id',
+        //     render: () => (
+        //         <div style={{ display: 'none' }}></div>
+        //     )
+        // },
         {
             title: 'STT',
-            dataIndex: 'schedule_id',
-            key: 'schedule_id',
+            key: 'index',
+            render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
         },
         {
             title: 'Tên nha sĩ',
@@ -122,64 +125,45 @@ const Examination = () => {
             key: 'room_name',
         },
         {
-            title: 'Loại',
-            dataIndex: 'type',
-            key: 'type',
+            title: 'Ngày',
+            dataIndex: 'start_time',
+            key: 'start_time',
+            width: 150,
+            render: (text) => (
+                formatDate(text)
+            )
         },
         {
             title: 'Thời gian',
-            children: [
-                {
-                    title: 'Ngày',
-                    dataIndex: 'start_time',
-                    key: 'start_time',
-                    width: 150,
-                    render: (text) => (
-                        formatDate(text)
-                    )
-                },
-                {
-                    title: 'Slot',
-                    children: [
-                        {
-                            title: 'Từ',
-                            dataIndex: 'start_time',
-                            key: 'start_time',
-                            width: 150,
-                            render: (text) => (
-                                // extractTime(convertToVietnamTime(text))
-                                extractTime(text)
-                            )
-                        },
-                        {
-                            title: 'Đến',
-                            dataIndex: 'end_time',
-                            key: 'end_time',
-                            width: 150,
-                            render: (text) => (
-                                // extractTime(convertToVietnamTime(text))
-                                extractTime(text)
-                            )
-                        },
-                    ]
-                },
-            ]
+            dataIndex: 'time_range',
+            key: 'time_range',
+            width: 300,
+            render: (time_range) => (
+                <span>
+                    {extractTime(time_range.start_time)} - {extractTime(time_range.end_time)}
+                </span>
+            )
         },
         {
             title: 'Số bệnh nhân đăng ký',
             dataIndex: 'appointment_count',
             key: 'appointment_count',
         },
-        // {
-        //     title: 'Action',
-        //     key: 'action',
-        //     render: (_, record) => (
-        //         <Space size="middle">
-        //             <Button type='primary' ghost>Cập nhật</Button>
-        //         </Space>
-        //     ),
-        // },
+        {
+            title: 'Thao tác',
+            key: 'action',
+            render: () => (
+                <Space size="middle">
+                    <Button type='primary' ghost>View bệnh nhân</Button>
+                </Space>
+            ),
+        },
     ];
+
+    // Counte STT pagination
+    const handleTableChange = (pagination) => {
+        setPagination(pagination);
+    };
 
     // *****************************************
     return (
@@ -209,7 +193,10 @@ const Examination = () => {
             </div>
             <br></br>
 
-            <Table columns={columns} dataSource={allExamination} />
+            <Table columns={columns} dataSource={allExamination}
+                pagination={allExamination.length >= 5 ? { pageSize: 5 } : false}
+                onChange={handleTableChange}
+            />
 
         </>
     )
