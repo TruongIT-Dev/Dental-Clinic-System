@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Button, Form, Input, Row, Col, Space, notification, Typography } from 'antd';
+import { Button, Form, Input, Row, Col, Space, notification, Typography, DatePicker, Radio, List } from 'antd';
 
 import { useNavigate } from 'react-router-dom';
 import { GetSignUp } from '../../apis/api';
 
 import FormImage from '../../assets/img/Signin/Logo.png'
 
+import { CaretRightOutlined } from '@ant-design/icons';
+
 // CSS Animation
 import '../../scss/authText.css';
+import dayjs from 'dayjs';
 
 const FormLayout = {
     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
@@ -21,6 +24,11 @@ const SignupText = {
     padding: '24px'
 }
 
+const PasswordValidatorText = {
+    margin: '0',
+    color: '#BBBBBB',
+}
+
 const { Title, Paragraph } = Typography;
 
 const SignUp = () => {
@@ -28,18 +36,30 @@ const SignUp = () => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
+    const [date, setDate] = useState("");
+
+    // const [isEmailExisted, setIsEmailExisted] = useState(null);
+
+    const [fieldErrors, setFieldErrors] = useState({});
+    // Usestate check Password validator
+    // const [validationErrors, setValidationErrors] = useState({
+    //     hasUpperCase: false,
+    //     hasNumber: false,
+    //     hasSpecialChar: false,
+    // });
+
     const onFinishFailed = (errorInfo) => {
         console.log('Đăng ký Failed:', errorInfo);
     };
 
     const onFinish = async (values) => {
-        const { email, full_name, phone_number, password } = values;
-        // console.log('input values: ', 'email:', email, 'fullname:', full_name, 'password:', password, 'phone:', phone_number);
-
+        values.date_of_birth = dayjs(values.date_of_birth).format("YYYY-MM-DD");
+        const { email, full_name, phone_number, date_of_birth, gender, password } = values;
+        // console.log(values);
         try {
             // Lấy API
-            let res = await GetSignUp(email, full_name, phone_number, password);
-            console.log('Response Sign Up:', res);
+            let res = await GetSignUp(email, full_name, phone_number, date_of_birth, gender, password);
+            // console.log('Response Sign Up:', res);
             // Nếu có dữ liệu BE trả về!
 
             // Check if the API returned a response with status code 201 (Created)
@@ -60,33 +80,35 @@ const SignUp = () => {
 
             // Check the error response status code and show corresponding notifications
             if (error.response) {
+                const newFieldErrors = {};
                 switch (error.response.status) {
-                    case 400:
+                    case 403: {
+                        if (error.response.data.message.includes("Email")) {
+                            newFieldErrors.email = 'Email đã tồn tại!';
+                        }
+                        if (error.response.data.message.includes("phone number")) {
+                            newFieldErrors.phone_number = 'Số điện thoại đã tồn tại!';
+                        }
+
                         notification.error({
                             message: 'Đăng ký thất bại',
-                            description: '400 Bad Request: Please check your input and try again.',
-                            duration: 5,
+                            description: 'Email hoặc số điện thoại đã tồn tại!',
+                            duration: 2,
                         });
                         break;
-                    case 403:
-                        notification.error({
-                            message: 'Đăng ký thất bại',
-                            description: '403 Forbidden: You do not have permission to perform this action.',
-                            duration: 5,
-                        });
-                        break;
+
+                    }
                     case 500:
                         notification.error({
                             message: 'Đăng ký thất bại',
-                            description: '500 Internal Server Error: Something went wrong on our end. Please try again later.',
-                            duration: 5,
+                            description: 'Lỗi server',
+                            duration: 2,
                         });
                         break;
                     default:
                         notification.error({
                             message: 'Đăng ký thất bại',
-                            description: error.response.data.errors || 'An unknown error occurred',
-                            duration: 5,
+                            duration: 2,
                         });
                 }
             } else {
@@ -97,7 +119,11 @@ const SignUp = () => {
                     duration: 5,
                 });
             }
-        };
+        }
+    }
+
+    const onChangeDate = (date, dateString) => {
+        setDate(date)
     }
 
     // ************ Checked Mở Button Nếu Người Dùng Nhập Đủ Form thì Cho Đăng Ký ***************
@@ -128,8 +154,11 @@ const SignUp = () => {
         if (!value) {
             return Promise.reject(new Error(''));
         }
-        if (!/^[a-zA-Z]+$/.test(value)) {
-            return Promise.reject(new Error('Yêu cầu chỉ chữ thường và chữ cái in hoa!'));
+        if (!/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯàáâãèéêìíòóôõùúăđĩũơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ\s]+$/.test(value)) {
+            return Promise.reject(new Error('Yêu cầu chỉ chữ cái (bao gồm chữ tiếng Việt) và dấu cách!'));
+        }
+        if (value.length > 20) {
+            return Promise.reject(new Error('Tên đăng nhập không được vượt quá 30 ký tự!'));
         }
         return Promise.resolve();
     };
@@ -154,13 +183,54 @@ const SignUp = () => {
             return Promise.reject(new Error(''));
         }
 
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-
-        if (!passwordRegex.test(value)) {
-            return Promise.reject(new Error('Yêu cầu tối thiểu 8 ký tự chứa chữ in hoa, số và 1 ký tự đặc biệt!'));
+        if (!/[A-Z]/.test(value)) {
+            return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 chữ in hoa!'));
         }
+
+        if (!/[0-9]/.test(value)) {
+            return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 số!'));
+        }
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+            return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 ký tự đặc biệt!'));
+        }
+
         return Promise.resolve();
     };
+
+    // Email đã tồn tại
+    // const emailExisted = (_, value) => {
+
+    // }
+
+    // const validatePassword = (_, value) => {
+    //     if (!value) {
+    //         return Promise.reject(new Error(''));
+    //     }
+
+    //     const hasUpperCase = /[A-Z]/.test(value);
+    //     const hasNumber = /[0-9]/.test(value);
+    //     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+    //     setValidationErrors({
+    //         hasUpperCase: !hasUpperCase,
+    //         hasNumber: !hasNumber,
+    //         hasSpecialChar: !hasSpecialChar,
+    //     });
+
+    //     if (!hasUpperCase) {
+    //         return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 chữ in hoa!'));
+    //     }
+
+    //     if (!hasNumber) {
+    //         return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 số!'));
+    //     }
+
+    //     if (!hasSpecialChar) {
+    //         return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 ký tự đặc biệt!'));
+    //     }
+
+    //     return Promise.resolve();
+    // };
 
     // Validate Nhập lại mật khẩu
     const validateRePassword = (rule, value, callback) => {
@@ -175,7 +245,7 @@ const SignUp = () => {
 
     // *********** JSX **************
     return (
-         <>
+        <>
             <div className="sign-in" style={{ width: '80%', margin: '2rem auto' }}>
                 <div className="container space-1">
                     <div>
@@ -183,14 +253,14 @@ const SignUp = () => {
                             <Col span={12}>
                                 {/* Form Inout */}
                                 <div className='w-lg-60 mx-auto p-3' style={FormLayout}>
-                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height:'100%' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
                                         <div style={{ textAlign: 'center' }}>
                                             <img
                                                 src={FormImage}
                                                 style={{ width: '185px' }}
                                                 alt="logo"
                                             />
-                                            <Title level={2} style={{ marginTop: '16px', marginBottom: '40px', textTransform:'capitalize' }}>đăng ký</Title>
+                                            <Title level={2} style={{ marginTop: '16px', marginBottom: '40px', textTransform: 'capitalize' }}>đăng ký</Title>
                                         </div>
                                         <Form
                                             form={form}
@@ -204,10 +274,12 @@ const SignUp = () => {
                                             style={{
                                                 maxWidth: 600,
                                                 width: '100%',
-                                                display: 'inline-block'
+                                                display: 'inline-block',
+                                                textAlign: 'start'
                                             }}
                                             initialValues={{
                                                 remember: true,
+                                                date_of_birth: date,
                                             }}
                                             onFinish={onFinish}
                                             onFinishFailed={onFinishFailed}
@@ -220,13 +292,15 @@ const SignUp = () => {
                                                 rules={[
                                                     {
                                                         type: "email",
-                                                        message: "Dữ liệu nhập không chính xác"
+                                                        message: "Email không hợp lệ!"
                                                     },
                                                     {
                                                         required: true,
                                                         message: 'Yêu cầu nhập email!',
                                                     },
                                                 ]}
+                                                validateStatus={fieldErrors.email && 'error'}
+                                                help={fieldErrors.email}
                                                 hasFeedback
                                             >
                                                 <Input placeholder='nhập email' />
@@ -268,6 +342,39 @@ const SignUp = () => {
                                                 <Input placeholder='nhập số điện thoại' />
                                             </Form.Item>
 
+                                            <Form.Item
+                                                label="Ngày sinh"
+                                                name="date_of_birth"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: 'Vui lòng chọn ngày!',
+                                                    },
+                                                ]}
+                                            >
+                                                <DatePicker
+                                                    placeholder='YYYY-MM-DD'
+                                                    onChange={onChangeDate}
+                                                    format="YYYY-MM-DD"
+                                                />
+                                            </Form.Item>
+
+                                            <Form.Item
+                                                label="Giới tính"
+                                                name="gender"
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: 'Vui lòng chọn giới tính!',
+                                                    },
+                                                ]}
+                                            >
+                                                <Radio.Group name="radiogroup">
+                                                    <Radio value='Nam'>Nam</Radio>
+                                                    <Radio value='Nữ'>Nữ</Radio>
+                                                </Radio.Group>
+                                            </Form.Item>
+
                                             {/* Nhập Password */}
                                             <Form.Item
                                                 label="Mật khẩu"
@@ -283,7 +390,28 @@ const SignUp = () => {
                                                 ]}
                                                 hasFeedback
                                             >
-                                                <Input.Password placeholder='nhập mật khẩu' />
+                                                <div>
+                                                    <Input.Password placeholder='nhập mật khẩu' />
+                                                    <List>
+                                                        <List.Item>
+                                                            <Typography.Text>
+                                                                <p style={PasswordValidatorText}>Yêu cầu mật khẩu:</p>
+                                                                <p style={PasswordValidatorText}>
+                                                                    <CaretRightOutlined />
+                                                                    Chứa ít nhất 1 chữ in hoa
+                                                                </p>
+                                                                <p style={PasswordValidatorText}>
+                                                                    <CaretRightOutlined />
+                                                                    Chứa ít nhất 1 số
+                                                                </p>
+                                                                <p style={PasswordValidatorText}>
+                                                                    <CaretRightOutlined />
+                                                                    Chứa ít nhất 1 ký tự đặc biệt
+                                                                </p>
+                                                            </Typography.Text>
+                                                        </List.Item>
+                                                    </List>
+                                                </div>
                                             </Form.Item>
 
                                             {/* Nhập lại Password */}
@@ -321,11 +449,11 @@ const SignUp = () => {
                                 </div>
                             </Col>
 
-                            <Col span={12}>  
+                            <Col span={12}>
                                 <div className='form-text' style={SignupText}>
                                     <div style={{ color: 'white', padding: '24px', margin: 'auto' }}>
-                                        <Title level={3} style={{ color: 'white', textTransform:'capitalize' }}>phòng khám nha khoa sức khỏe</Title>
-                                        <Paragraph style={{ color: 'white', textAlign:'justify' }}>
+                                        <Title level={3} style={{ color: 'white', textTransform: 'capitalize' }}>phòng khám nha khoa sức khỏe</Title>
+                                        <Paragraph style={{ color: 'white', textAlign: 'justify' }}>
                                             Tại Phòng khám Nha khoa của chúng tôi, sức khỏe răng miệng của bạn là ưu tiên hàng đầu.
                                             Chúng tôi cam kết cung cấp dịch vụ chăm sóc nha khoa chất lượng cao với đội ngũ bác sĩ và nhân viên chuyên nghiệp, tận tâm.
                                             Từ việc kiểm tra định kỳ đến các dịch vụ điều trị phức tạp, chúng tôi luôn sẵn sàng đáp ứng nhu cầu của bạn.

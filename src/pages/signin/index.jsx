@@ -166,7 +166,7 @@ const SignIn = () => {
                                                     placeholder="Mật khẩu"
                                                 />
                                             </Form.Item>
-                                            <Form.Item>
+                                            {/* <Form.Item>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                                     <Form.Item name="remember" valuePropName="checked" noStyle>
                                                         <Checkbox>Remember me</Checkbox>
@@ -176,7 +176,7 @@ const SignIn = () => {
                                                         Quên mật khẩu
                                                     </a>
                                                 </div>
-                                            </Form.Item>
+                                            </Form.Item> */}
                                             <div>
                                                 <Form.Item>
 

@@ -1,6 +1,11 @@
 import { Space, Table, Input, Button, Typography } from 'antd';
 const columns = [
     {
+        title: 'STT',
+        key: 'index',
+        render: (text, record, index) => index + 1,
+    },
+    {
         title: 'Tên bệnh nhân',
         dataIndex: 'name',
         key: 'name',

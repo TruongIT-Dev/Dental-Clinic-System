@@ -1,9 +1,8 @@
-import { Col, Row, Image, Card } from 'antd';
+import { Col, Row, Image } from 'antd';
 
 // Import Image Banner
-import bocRangSuBanner from '../../assets/img/services/Banner-boc-rang-su.jpg';
 import ServiceDetailTable from '../../components/services/ServiceDetailTable';
-import ServiceDetailSlider from '../../components/services/ServiceDetailSlider';
+// import ServiceDetailSlider from '../../components/services/ServiceDetailSlider';
 
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -12,13 +11,6 @@ import { DoViewDetailCategory, DoViewTableDetailService } from '../../apis/api';
 
 // Style CSS
 const ServiceHeaderStyle = {
-    // color: '#f6921e',
-    // fontWeight: '400',
-    // fontSize: '2.2rem',
-    // lineHeight: '1.5',
-    // marginBottom: '.5rem',
-    // textAlign: 'left',
-    // textTransform: 'capitalize',
     color: '#ff9900',
     fontSize: '24px',
     lineHeight: '1.5',
@@ -43,11 +35,11 @@ const ServiceScriptStyle = {
     color: '404a64',
 }
 
-const OpenServiceScriptStyle = {
-    color: '#0155b1',
-    fontWeight: '600',
-    paddingRight: '3px',
-}
+// const OpenServiceScriptStyle = {
+//     color: '#0155b1',
+//     fontWeight: '600',
+//     paddingRight: '3px',
+// }
 
 
 const ServiceDetail = () => {
@@ -91,6 +83,7 @@ const ServiceDetail = () => {
                     <div className='banner'>
                         <Image
                             width={1500}
+                            height={500}
                             src={dataDetailService.banner_url}
                         />
                     </div>
@@ -100,7 +93,7 @@ const ServiceDetail = () => {
                                 <Col span={16}>
                                     {/* Tên dịch vụ */}
                                     <div className='header text-align-left'>
-                                        <h1 style={ServiceHeaderStyle}>mô tả dịch vụ</h1>
+                                        <h1 style={ServiceHeaderStyle}>mô tả {dataDetailService.name}</h1>
                                     </div>
 
                                     {/* Mô tả dịch vụ */}
@@ -108,16 +101,14 @@ const ServiceDetail = () => {
                                         {/* Nội dung mô tả chi tiết dịch vụ */}
                                         <div>
                                             <p style={ServiceScriptStyle}>
-                                                <b style={OpenServiceScriptStyle}>Dịch vụ {dataDetailService.name}</b>
                                                 {dataDetailService.description}
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida tincidunt scelerisque. Ut ultrices nulla metus, sed ultricies quam suscipit et. Phasellus accumsan ac est ac porta. Donec quis ligula ac orci pellentesque vehicula ac id est. Curabitur fermentum nibh sed odio tempus ultricies. Pellentesque at urna ac risus dapibus luctus. Vivamus vitae orci dolor. Nam et ultricies mi. Donec eget tempor quam.
                                             </p>
                                         </div>
                                     </div>
 
                                     <div className='sub-header text-start mb-3'>
                                         <h1 style={ServiceSubHeaderStyle}>
-                                            bảng giá {dataDetailService.name}
+                                            bảng giá
                                         </h1>
                                     </div>
 
@@ -128,7 +119,7 @@ const ServiceDetail = () => {
                                 </Col>
 
                                 {/* Slider - Aside */}
-                                <Col span={8} style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative' }}>
+                                {/* <Col span={8} style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative' }}>
                                     <Card
                                         title="ĐẶT DỊCH VỤ"
                                         style={{
@@ -141,7 +132,7 @@ const ServiceDetail = () => {
                                     >
                                         <ServiceDetailSlider />
                                     </Card>
-                                </Col>
+                                </Col> */}
                             </Row>
                         </div>
                     </div>

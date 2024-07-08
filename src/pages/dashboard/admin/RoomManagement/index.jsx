@@ -24,7 +24,10 @@ const RoomManagement = () => {
 
     const [rooms, setRooms] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 5,
+    });
     // *****************************************
 
 
@@ -122,10 +125,15 @@ const RoomManagement = () => {
 
     // Columns
     const columns = [
+        // {
+        //     title: 'STT',
+        //     dataIndex: 'id',
+        //     key: 'id',
+        // },
         {
             title: 'STT',
-            dataIndex: 'id',
-            key: 'id',
+            key: 'index',
+            render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
         },
         {
             title: 'Tên phòng',
@@ -137,13 +145,17 @@ const RoomManagement = () => {
             key: 'action',
             render: () => (
                 <Space size="middle">
-                    {/* <Button type='primary'>Cập nhật</Button> */}
+                    <Button type='primary'>Chỉnh sửa</Button>
                     <Button danger>Xóa</Button>
                 </Space>
             ),
         },
     ];
 
+    // Counte STT pagination
+    const handleTableChange = (pagination) => {
+        setPagination(pagination);
+    };
     // *****************************************
 
 
@@ -223,7 +235,10 @@ const RoomManagement = () => {
             </div>
             <br />
 
-            <Table columns={columns} dataSource={rooms} /> {/* Remove the unnecessary semicolon */}
+            <Table columns={columns} dataSource={rooms}
+                pagination={rooms.length >= 5 ? { pageSize: 5 } : false}
+                onChange={handleTableChange}
+            /> {/* Remove the unnecessary semicolon */}
         </>
     );
 };
