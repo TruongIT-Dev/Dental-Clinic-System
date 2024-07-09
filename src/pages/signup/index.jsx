@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button, Form, Input, Row, Col, Space, notification, Typography, DatePicker, Radio, List } from 'antd';
 
 import { useNavigate } from 'react-router-dom';
@@ -6,11 +6,10 @@ import { GetSignUp } from '../../apis/api';
 
 import FormImage from '../../assets/img/Signin/Logo.png'
 
-import { CaretRightOutlined } from '@ant-design/icons';
-
 // CSS Animation
 import '../../scss/authText.css';
 import dayjs from 'dayjs';
+import debounce from 'lodash.debounce';
 
 const FormLayout = {
     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
@@ -24,11 +23,6 @@ const SignupText = {
     padding: '24px'
 }
 
-const PasswordValidatorText = {
-    margin: '0',
-    color: '#BBBBBB',
-}
-
 const { Title, Paragraph } = Typography;
 
 const SignUp = () => {
@@ -37,16 +31,7 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const [date, setDate] = useState("");
-
-    // const [isEmailExisted, setIsEmailExisted] = useState(null);
-
     const [fieldErrors, setFieldErrors] = useState({});
-    // Usestate check Password validator
-    // const [validationErrors, setValidationErrors] = useState({
-    //     hasUpperCase: false,
-    //     hasNumber: false,
-    //     hasSpecialChar: false,
-    // });
 
     const onFinishFailed = (errorInfo) => {
         console.log('Đăng ký Failed:', errorInfo);
@@ -83,10 +68,10 @@ const SignUp = () => {
                 const newFieldErrors = {};
                 switch (error.response.status) {
                     case 403: {
-                        if (error.response.data.message.includes("Email")) {
+                        if (error.response.data.message.includes("email_error")) {
                             newFieldErrors.email = 'Email đã tồn tại!';
                         }
-                        if (error.response.data.message.includes("phone number")) {
+                        if (error.response.data.message.includes("phone_number_error")) {
                             newFieldErrors.phone_number = 'Số điện thoại đã tồn tại!';
                         }
 
@@ -122,7 +107,7 @@ const SignUp = () => {
         }
     }
 
-    const onChangeDate = (date, dateString) => {
+    const onChangeDate = (date) => {
         setDate(date)
     }
 
@@ -177,60 +162,36 @@ const SignUp = () => {
         return Promise.resolve();
     };
 
-    // Validate Mật Khẩu
+    // Validator Password
     const validatePassword = (_, value) => {
         if (!value) {
             return Promise.reject(new Error(''));
         }
+        const hasLength = (value.length) >= 8;
+        const hasUpperCase = /[A-Z]/.test(value);
+        const hasNumber = /[0-9]/.test(value);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
 
-        if (!/[A-Z]/.test(value)) {
+
+        if (!hasLength) {
+            return Promise.reject(new Error('Yêu cầu độ dài tối thiểu 8 ký tự!'));
+        }
+
+        if (!hasUpperCase) {
             return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 chữ in hoa!'));
         }
 
-        if (!/[0-9]/.test(value)) {
+        if (!hasNumber) {
             return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 số!'));
         }
-        if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+
+        if (!hasSpecialChar) {
             return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 ký tự đặc biệt!'));
         }
 
         return Promise.resolve();
-    };
+    }
 
-    // Email đã tồn tại
-    // const emailExisted = (_, value) => {
-
-    // }
-
-    // const validatePassword = (_, value) => {
-    //     if (!value) {
-    //         return Promise.reject(new Error(''));
-    //     }
-
-    //     const hasUpperCase = /[A-Z]/.test(value);
-    //     const hasNumber = /[0-9]/.test(value);
-    //     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
-
-    //     setValidationErrors({
-    //         hasUpperCase: !hasUpperCase,
-    //         hasNumber: !hasNumber,
-    //         hasSpecialChar: !hasSpecialChar,
-    //     });
-
-    //     if (!hasUpperCase) {
-    //         return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 chữ in hoa!'));
-    //     }
-
-    //     if (!hasNumber) {
-    //         return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 số!'));
-    //     }
-
-    //     if (!hasSpecialChar) {
-    //         return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 ký tự đặc biệt!'));
-    //     }
-
-    //     return Promise.resolve();
-    // };
 
     // Validate Nhập lại mật khẩu
     const validateRePassword = (rule, value, callback) => {
@@ -296,14 +257,14 @@ const SignUp = () => {
                                                     },
                                                     {
                                                         required: true,
-                                                        message: 'Yêu cầu nhập email!',
+                                                        message: 'Vui lòng nhập email!',
                                                     },
                                                 ]}
                                                 validateStatus={fieldErrors.email && 'error'}
                                                 help={fieldErrors.email}
                                                 hasFeedback
                                             >
-                                                <Input placeholder='nhập email' />
+                                                <Input />
                                             </Form.Item>
 
                                             {/* Nhập Username */}
@@ -313,7 +274,7 @@ const SignUp = () => {
                                                 rules={[
                                                     {
                                                         required: true,
-                                                        message: 'Yêu cầu nhập họ tên!',
+                                                        message: 'Vui lòng nhập họ tên!',
                                                     },
                                                     {
                                                         validator: validateUsername,
@@ -321,7 +282,7 @@ const SignUp = () => {
                                                 ]}
                                                 hasFeedback
                                             >
-                                                <Input placeholder='nhập tên đăng nhập' />
+                                                <Input />
                                             </Form.Item>
 
                                             {/* Nhập Số Điện Thoại */}
@@ -331,15 +292,17 @@ const SignUp = () => {
                                                 rules={[
                                                     {
                                                         required: true,
-                                                        message: 'Yêu cầu nhập số điện thoại!',
+                                                        message: 'Vui lòng nhập số điện thoại!',
                                                     },
                                                     {
                                                         validator: validatePhoneNumber,
                                                     },
                                                 ]}
-                                                hasFeedback
+                                                validateStatus={fieldErrors.phone_number && 'error'}
+                                                help={fieldErrors.phone_number}
+                                                hasFeedback 
                                             >
-                                                <Input placeholder='nhập số điện thoại' />
+                                                <Input />
                                             </Form.Item>
 
                                             <Form.Item
@@ -382,7 +345,7 @@ const SignUp = () => {
                                                 rules={[
                                                     {
                                                         required: true,
-                                                        message: 'Yêu cầu nhập mật khẩu!',
+                                                        message: 'Vui lòng nhập mật khẩu!',
                                                     },
                                                     {
                                                         validator: validatePassword,
@@ -390,28 +353,7 @@ const SignUp = () => {
                                                 ]}
                                                 hasFeedback
                                             >
-                                                <div>
-                                                    <Input.Password placeholder='nhập mật khẩu' />
-                                                    <List>
-                                                        <List.Item>
-                                                            <Typography.Text>
-                                                                <p style={PasswordValidatorText}>Yêu cầu mật khẩu:</p>
-                                                                <p style={PasswordValidatorText}>
-                                                                    <CaretRightOutlined />
-                                                                    Chứa ít nhất 1 chữ in hoa
-                                                                </p>
-                                                                <p style={PasswordValidatorText}>
-                                                                    <CaretRightOutlined />
-                                                                    Chứa ít nhất 1 số
-                                                                </p>
-                                                                <p style={PasswordValidatorText}>
-                                                                    <CaretRightOutlined />
-                                                                    Chứa ít nhất 1 ký tự đặc biệt
-                                                                </p>
-                                                            </Typography.Text>
-                                                        </List.Item>
-                                                    </List>
-                                                </div>
+                                                <Input.Password />
                                             </Form.Item>
 
                                             {/* Nhập lại Password */}
@@ -421,7 +363,7 @@ const SignUp = () => {
                                                 rules={[
                                                     {
                                                         required: true,
-                                                        message: 'Yêu cầu nhập mật khẩu!',
+                                                        message: 'Vui lòng nhập mật khẩu!',
                                                     },
                                                     {
                                                         validator: validateRePassword,
@@ -429,19 +371,18 @@ const SignUp = () => {
                                                 ]}
                                                 hasFeedback
                                             >
-                                                <Input.Password placeholder='nhập mật khẩu' />
+                                                <Input.Password />
                                             </Form.Item>
 
 
                                             <Form.Item
                                                 wrapperCol={{
-                                                    offset: 8,
+                                                    offset: 6,
                                                     span: 16,
                                                 }}
-                                                style={{ display: 'flex', justifyContent: 'center' }}
                                             >
                                                 <Space>
-                                                    <SubmitButton form={form}>Đăng ký</SubmitButton>
+                                                    <SubmitButton form={form}>Đăng ký tài khoản</SubmitButton>
                                                 </Space>
                                             </Form.Item>
                                         </Form>

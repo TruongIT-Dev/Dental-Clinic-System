@@ -63,6 +63,10 @@ function App() {
           <Route path='/dang-nhap' element={<SignIn />} />
           <Route path='/dang-ky' element={<SignUp />} />
 
+          {/* Error Page */}
+          <Route path='/error' element={<Error />} />
+          <Route path='*' element={<Navigate to="/error" />} />
+
           {/* Patient View */}
           {isAuthenticated.loggedIn && isAuthenticated.role === 'patient' ? (
             <>
@@ -120,9 +124,6 @@ function App() {
           </Route>
         )}
 
-        {/* Error Page */}
-        <Route path='/error' element={<Error />} />
-        <Route path='*' element={<Navigate to="/error" />} />
       </Routes>
 
     </>
