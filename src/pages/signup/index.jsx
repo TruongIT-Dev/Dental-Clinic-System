@@ -1,15 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Button, Form, Input, Row, Col, Space, notification, Typography, DatePicker, Radio, List } from 'antd';
-
+import { useState, useEffect } from 'react';
+import { Button, Form, Input, Row, Col, Space, notification, Typography, DatePicker, Radio } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { GetSignUp } from '../../apis/api';
-
 import FormImage from '../../assets/img/Signin/Logo.png'
-
-// CSS Animation
 import '../../scss/authText.css';
 import dayjs from 'dayjs';
-import debounce from 'lodash.debounce';
+
+
+
+
+// ********************************************************************
+//                              CSS
 
 const FormLayout = {
     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
@@ -23,20 +24,39 @@ const SignupText = {
     padding: '24px'
 }
 
-const { Title, Paragraph } = Typography;
+// ********************************************************************
 
 const SignUp = () => {
-    // const dispatch = useDispatch();
+    // ********************************************************************
+    //                              Variables
+
+    const { Title, Paragraph } = Typography;
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
+    // ********************************************************************
+
+
+    // ********************************************************************
+    //                              useState
+
     const [date, setDate] = useState("");
-    const [fieldErrors, setFieldErrors] = useState({});
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Đăng ký Failed:', errorInfo);
-    };
 
+    // ********************************************************************
+
+
+    // ********************************************************************
+    //                              useEffect
+
+    // ********************************************************************
+
+
+
+    // ********************************************************************
+    //                              API Functions
+
+    // Submit Form
     const onFinish = async (values) => {
         values.date_of_birth = dayjs(values.date_of_birth).format("YYYY-MM-DD");
         const { email, full_name, phone_number, date_of_birth, gender, password } = values;
@@ -46,12 +66,10 @@ const SignUp = () => {
             let res = await GetSignUp(email, full_name, phone_number, date_of_birth, gender, password);
             // console.log('Response Sign Up:', res);
             // Nếu có dữ liệu BE trả về!
-
             // Check if the API returned a response with status code 201 (Created)
             if (res.status === 201) {
                 // Navigate to the login page
                 navigate('/dang-nhap');
-
                 // Show a success message
                 notification.success({
                     type: 'success',
@@ -62,26 +80,38 @@ const SignUp = () => {
         } catch (error) {
             // Log the error for debugging
             console.log(error);
-
+            const isEmailExisted = error.response.data.email_error;
+            const isPhoneNumberExisted = error.response.data.phone_number_error;
             // Check the error response status code and show corresponding notifications
             if (error.response) {
-                const newFieldErrors = {};
                 switch (error.response.status) {
                     case 403: {
-                        if (error.response.data.message.includes("email_error")) {
-                            newFieldErrors.email = 'Email đã tồn tại!';
-                        }
-                        if (error.response.data.message.includes("phone_number_error")) {
-                            newFieldErrors.phone_number = 'Số điện thoại đã tồn tại!';
+                        if (isEmailExisted) {
+                            form.setFields([
+                                {
+                                    name: 'email',
+                                    errors: ['Email đã tồn tại!'],
+                                }
+                            ])
                         }
 
+                        if (isPhoneNumberExisted) {
+                            form.setFields([
+                                {
+                                    name: 'phone_number',
+                                    errors: ['Số điện thoại đã tồn tại!'],
+                                }
+                            ])
+                        }
+                        break;
+                    }
+                    case 400: {
                         notification.error({
                             message: 'Đăng ký thất bại',
-                            description: 'Email hoặc số điện thoại đã tồn tại!',
+                            description: 'Thông tin nhập không hợp lệ!',
                             duration: 2,
                         });
                         break;
-
                     }
                     case 500:
                         notification.error({
@@ -90,23 +120,18 @@ const SignUp = () => {
                             duration: 2,
                         });
                         break;
-                    default:
-                        notification.error({
-                            message: 'Đăng ký thất bại',
-                            duration: 2,
-                        });
                 }
-            } else {
-                // Handle network errors or other issues that don't have a response
-                notification.error({
-                    message: 'Đăng ký thất bại',
-                    description: 'An error occurred. Please check your network connection and try again.',
-                    duration: 5,
-                });
             }
         }
     }
 
+    // ********************************************************************
+
+
+    // ********************************************************************
+    //                              Functions
+
+    // Datepicker pick box
     const onChangeDate = (date) => {
         setDate(date)
     }
@@ -133,7 +158,9 @@ const SignUp = () => {
     };
 
 
+
     // *********** Validate Dữ Liệu Người Dùng Nhập *****************
+
     // Validate Tên Đăng Nhập
     const validateUsername = (_, value) => {
         if (!value) {
@@ -167,30 +194,35 @@ const SignUp = () => {
         if (!value) {
             return Promise.reject(new Error(''));
         }
+
+        const errors = [];
         const hasLength = (value.length) >= 8;
         const hasUpperCase = /[A-Z]/.test(value);
         const hasNumber = /[0-9]/.test(value);
         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
 
-
         if (!hasLength) {
-            return Promise.reject(new Error('Yêu cầu độ dài tối thiểu 8 ký tự!'));
+            errors.push('Bao gồm tối thiểu 8 ký tự, ');
         }
 
         if (!hasUpperCase) {
-            return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 chữ in hoa!'));
+            errors.push('ít nhất 1 chữ in hoa, ');
         }
 
         if (!hasNumber) {
-            return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 số!'));
+            errors.push('1 chữ số, ');
         }
 
         if (!hasSpecialChar) {
-            return Promise.reject(new Error('Yêu cầu chứa ít nhất 1 ký tự đặc biệt!'));
+            errors.push('và 1 ký tự đặc biệt!');
+        }
+
+        if (errors.length > 0) {
+            return Promise.reject(new Error(errors.join(' ')));
         }
 
         return Promise.resolve();
-    }
+    };
 
 
     // Validate Nhập lại mật khẩu
@@ -243,13 +275,13 @@ const SignUp = () => {
                                                 date_of_birth: date,
                                             }}
                                             onFinish={onFinish}
-                                            onFinishFailed={onFinishFailed}
                                             autoComplete="off"
                                         >
                                             {/* Nhập Email */}
                                             <Form.Item
                                                 label="Email"
                                                 name="email"
+                                                validateDebounce={1000}
                                                 rules={[
                                                     {
                                                         type: "email",
@@ -260,8 +292,6 @@ const SignUp = () => {
                                                         message: 'Vui lòng nhập email!',
                                                     },
                                                 ]}
-                                                validateStatus={fieldErrors.email && 'error'}
-                                                help={fieldErrors.email}
                                                 hasFeedback
                                             >
                                                 <Input />
@@ -271,6 +301,7 @@ const SignUp = () => {
                                             <Form.Item
                                                 label="Họ và Tên"
                                                 name="full_name"
+                                                validateDebounce={1000}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -289,6 +320,7 @@ const SignUp = () => {
                                             <Form.Item
                                                 label="Số điện thoại"
                                                 name="phone_number"
+                                                validateDebounce={1000}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -298,9 +330,7 @@ const SignUp = () => {
                                                         validator: validatePhoneNumber,
                                                     },
                                                 ]}
-                                                validateStatus={fieldErrors.phone_number && 'error'}
-                                                help={fieldErrors.phone_number}
-                                                hasFeedback 
+                                                hasFeedback
                                             >
                                                 <Input />
                                             </Form.Item>
@@ -342,6 +372,7 @@ const SignUp = () => {
                                             <Form.Item
                                                 label="Mật khẩu"
                                                 name="password"
+                                                validateDebounce={1000}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -360,6 +391,7 @@ const SignUp = () => {
                                             <Form.Item
                                                 label="Nhập lại mật khẩu"
                                                 name="re-password"
+                                                validateDebounce={1000}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -373,7 +405,6 @@ const SignUp = () => {
                                             >
                                                 <Input.Password />
                                             </Form.Item>
-
 
                                             <Form.Item
                                                 wrapperCol={{
