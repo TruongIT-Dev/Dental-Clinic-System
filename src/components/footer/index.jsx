@@ -34,23 +34,15 @@ const FooterComponent = () => {
 
 
                             <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                                <h6 className="text-uppercase fw-bold">DỊCH VỤ</h6>
+                                <h6 className="text-uppercase fw-bold">CƠ SỞ</h6>
                                 <hr
                                     className="mb-4 mt-0 d-inline-block mx-auto"
                                     style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }}
                                 />
-                                <p>
-                                    <a href="#!" className="text-dark">Làm răng sứ</a>
-                                </p>
-                                <p>
-                                    <a href="#!" className="text-dark">Niềng răng</a>
-                                </p>
-                                <p>
-                                    <a href="#!" className="text-dark">Nhổ răng</a>
-                                </p>
-                                <p>
-                                    <a href="#!" className="text-dark">Vệ sinh răng</a>
-                                </p>
+                                <p><i className="fas fa-home mr-3"></i>46A Võ Vân Ngân, P.Trường Thọ, TP.Thủ Đức</p>
+                                <p><i className="fas fa-envelope mr-3"></i>60 Lê Văn Việt, Hiệp Phú, TP.Thủ Đức</p>
+                                <p><i className="fas fa-phone mr-3"></i>240 Xô Viết Nghệ Tĩnh, P.21, Q.Bình Thạnh</p>
+                                <p><i className="fas fa-print mr-3"></i>270 Quang Trung, P.10, Q.Gò Vấp</p>
                             </div>
 
                             <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
@@ -81,8 +73,8 @@ const FooterComponent = () => {
                                     className="mb-4 mt-0 d-inline-block mx-auto"
                                     style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }}
                                 />
-                                <p><i className="fas fa-home mr-3"></i>200 LÊ VĂN VIỆT, Thành phố Thủ Đức, HCM</p>
-                                <p><i className="fas fa-envelope mr-3"></i> + nhakhoasuckhoe@gmail.com</p>
+                                <p><i className="fas fa-home mr-3"></i> + Cơ sở chính: 200 LÊ VĂN VIỆT, THÀNH PHỐ THỦ ĐỨC, HCM</p>
+                                <p><i className="fas fa-envelope mr-3"></i> + Email: nhakhoasuckhoe@gmail.com</p>
                                 <p><i className="fas fa-phone mr-3"></i> + 0933 986 097</p>
                                 <p><i className="fas fa-print mr-3"></i> + 0154 576 888</p>
                             </div>
