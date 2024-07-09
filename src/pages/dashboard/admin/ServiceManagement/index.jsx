@@ -1,7 +1,7 @@
 import { Button, Space, Table, Image, Typography, Input, Modal, message, Popconfirm, notification, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { DoDeleteCategoryByAdmin, DoSearchCategoryByAdmin, DoViewCategoryByAdmin } from '../../../../apis/api';
+import { DoDeleteCategoryByAdmin, DoSearchCategoryByAdmin } from '../../../../apis/api';
 import { Link } from 'react-router-dom';
 import FormAddNewCategory from './FormAddNewCategory';
 
@@ -13,7 +13,7 @@ const ServiceManagement = () => {
     const { Title } = Typography;
 
     // useState Chứa API Tất Cả Categories
-    const [categories, setCategories] = useState([]);
+    // const [categories, setCategories] = useState([]);
 
     const [addNewCategoryModal, setAddNewCategory] = useState(false);
 
@@ -28,21 +28,21 @@ const ServiceManagement = () => {
 
     //****************************************** */
     // API Gọi Tất Cả Loại Hình Dịch Vụ
-    const fetchAllCategoryByAdmin = async () => {
-        try {
-            const APIAllCategoryByAdmin = await DoViewCategoryByAdmin();
-            // console.log("APIAllCategoryByAdmin", APIAllCategoryByAdmin)
-            const GetDataAllCategoryByAdmin = APIAllCategoryByAdmin?.data || {};
-            // console.log("GetDataAllCategoryByAdmin", GetDataAllCategoryByAdmin)
-            setCategories(GetDataAllCategoryByAdmin);
-        } catch (error) {
-            console.log("Failed fetch all categories: ", error);
-        }
+    // const fetchAllCategoryByAdmin = async () => {
+    //     try {
+    //         const APIAllCategoryByAdmin = await DoViewCategoryByAdmin();
+    //         // console.log("APIAllCategoryByAdmin", APIAllCategoryByAdmin)
+    //         const GetDataAllCategoryByAdmin = APIAllCategoryByAdmin?.data || {};
+    //         // console.log("GetDataAllCategoryByAdmin", GetDataAllCategoryByAdmin)
+    //         setCategories(GetDataAllCategoryByAdmin);
+    //     } catch (error) {
+    //         console.log("Failed fetch all categories: ", error);
+    //     }
 
-    }
-    useEffect(() => {
-        fetchAllCategoryByAdmin();
-    }, [])
+    // }
+    // useEffect(() => {
+    //     fetchAllCategoryByAdmin();
+    // }, [])
     //****************************************** */
 
 
@@ -56,7 +56,7 @@ const ServiceManagement = () => {
             // console.log("APIDeleteACategory: ", APIDeleteACategory)
             if (APIDeleteACategory.status === 204) {
                 message.success('Xóa thành công');
-                fetchAllCategoryByAdmin();
+                // fetchAllCategoryByAdmin();
                 window.location.reload();
             }
         } catch (error) {
@@ -188,7 +188,7 @@ const ServiceManagement = () => {
         <>
             {/* Header */}
             <div>
-                <Title level={2}>Các Loại Hình Dịch Vụ</Title>
+                <Title level={2}>Danh sách loại hình dịch vụ</Title>
             </div>
 
             {/* Top-Bar Btn*/}

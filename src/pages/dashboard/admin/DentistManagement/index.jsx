@@ -69,7 +69,10 @@ const DentistManagement = () => {
         try {
             const APIDeleteDentist = await DoDeleteDentistByAdmin(dentist_id);
             if (APIDeleteDentist.status === 204) {
-                message.success('Xóa thành công');
+                notification.success({
+                    message: 'Xóa thành công',
+                    duration: 2,
+                });
                 window.location.reload();
             }
         } catch (error) {
