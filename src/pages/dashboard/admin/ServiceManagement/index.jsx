@@ -1,4 +1,4 @@
-import { Button, Space, Table, Image, Typography, Input, Modal, message, Popconfirm, notification } from 'antd';
+import { Button, Space, Table, Image, Typography, Input, Modal, message, Popconfirm, notification, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { DoDeleteCategoryByAdmin, DoSearchCategoryByAdmin, DoViewCategoryByAdmin } from '../../../../apis/api';
@@ -45,9 +45,7 @@ const ServiceManagement = () => {
     }, [])
     //****************************************** */
 
-    //****************************************** */
 
-    //****************************************** */
 
     //****************************************** */
     // API Delete Thông tin 1 Loại Hình Dịch Vụ
@@ -107,10 +105,7 @@ const ServiceManagement = () => {
             if (error.response.status) {
                 switch (error.response.status) {
                     case 404:
-                        notification.error({
-                            message: 'Không tìm thấy tên',
-                            duration: 2,
-                        });
+                        setSearchName(null)
                         break;
                 }
             }
@@ -222,10 +217,17 @@ const ServiceManagement = () => {
             <br></br>
 
             {/* Bảng Loại hình dịch vụ */}
-            <Table columns={columns} dataSource={searchName}
-                pagination={searchName.length >= 5 ? { pageSize: 5 } : false}
-                onChange={handleTableChange}
-            />
+            {searchName ? (
+                <Table columns={columns} dataSource={searchName}
+                    pagination={searchName.length >= 5 ? { pageSize: 5 } : false}
+                    onChange={handleTableChange}
+                />
+            ) : (
+                <div style={{ marginTop: '5rem' }}>
+                    <Empty description='Không có dữ liệu' />
+                </div>
+            )}
+
 
         </>
     )

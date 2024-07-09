@@ -1,4 +1,4 @@
-import { Space, Table, Input, Button, Typography, Modal, Descriptions, notification, message, Popconfirm } from 'antd';
+import { Space, Table, Input, Button, Typography, Modal, Descriptions, notification, message, Popconfirm, Empty } from 'antd';
 import { DoDeleteDentistByAdmin, DoViewAllDentistByAdmin, DoViewInfoDentistByAdmin } from '../../../../apis/api';
 import { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
@@ -45,10 +45,7 @@ const DentistManagement = () => {
             if (error.response.status) {
                 switch (error.response.status) {
                     case 404:
-                        notification.error({
-                            message: 'Không tìm thấy tên',
-                            duration: 2,
-                        });
+                        setListDentst(null)
                         break;
                 }
             }
@@ -85,8 +82,6 @@ const DentistManagement = () => {
             }
         }
     }
-
-
     // -----------------------------------------
     // *****************************************
 
@@ -238,10 +233,17 @@ const DentistManagement = () => {
             </div>
             <br></br>
 
-            <Table columns={columns} dataSource={listDentist}
-                pagination={listDentist.length >= 5 ? { pageSize: 5 } : false}
-                onChange={handleTableChange}
-            />
+            {listDentist ? (
+                <Table columns={columns} dataSource={listDentist}
+                    pagination={listDentist.length >= 5 ? { pageSize: 5 } : false}
+                    onChange={handleTableChange}
+                />
+            ) : (
+                <div style={{ marginTop: '5rem' }}>
+                    <Empty description='Không có dữ liệu' />
+                </div>
+            )}
+
 
             {/* Register Modal */}
             <Modal width={700} open={infoModal} onOk={handleOk} onCancel={handleCancel} footer={[]}>
