@@ -1,8 +1,7 @@
-import { Button, Form, Input, Row, Col, Checkbox, notification, Typography } from 'antd';
+import { Button, Form, Input, Row, Col, notification, Typography } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 import { GetLogin } from '../../apis/api';
 import { doLoginAction } from '../../redux/account/accountSlice';
 
@@ -12,31 +11,60 @@ import FormImage from '../../assets/img/Signin/Logo.png'
 // CSS Animation
 import '../../scss/authText.css';
 
+
+// ********************************************************************
+//                              Others
+
 const { Title, Paragraph } = Typography;
 
+// CSS Form
 const FormLayout = {
     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
 }
 
+// CSS Text of Login Form
 const LoginText = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    // background: 'linear-gradient(to right, #0d6efd, #00bfff)',
     height: '100%',
     padding: '24px'
 }
 
+// ********************************************************************
+
 const SignIn = () => {
+
+    // ********************************************************************
+    //                              Variables
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    let accessToken = '';
+    // ********************************************************************
+
+
+    // ********************************************************************
+    //                              useState
+
+    // ********************************************************************
+
+
+    // ********************************************************************
+    //                              useEffect
+
+    // ********************************************************************
+
+
+    // ********************************************************************
+    //                              Functions
+
+    // Login
     const onFinish = async (values) => {
         const { email, password } = (values);
         // console.log('email: ', email, 'mật khẩu: ', password);
         try {
+            let accessToken = '';
             // lấy API
             let res = await GetLogin(email, password);
             // console.log('Response Login: ', res);
@@ -79,15 +107,15 @@ const SignIn = () => {
                     case 500:
                         notification.error({
                             message: 'Đăng nhập thất bại',
-                            description: 'Hệ thống không phản hồi',
-                            duration: 5,
+                            description: 'Lỗi server! Vui lòng thử lại sau.',
+                            duration: 2,
                         });
                         break;
                     case 400:
                         notification.error({
                             message: 'Đăng nhập thất bại',
                             description: 'Thông tin đăng nhập không hợp lệ.',
-                            duration: 5,
+                            duration: 2,
                         });
                         break;
                 }
@@ -95,11 +123,12 @@ const SignIn = () => {
             notification.error({
                 message: 'Đăng nhập thất bại',
                 description: 'Email hoặc mật khẩu không chính xác.',
-                duration: 5,
+                duration: 2,
             });
         }
         return;
     };
+    // ********************************************************************
 
 
     // *********** JSX **************
@@ -138,10 +167,6 @@ const SignIn = () => {
                                             <Form.Item
                                                 name="email"
                                                 rules={[
-                                                    {
-                                                        type: "email",
-                                                        message: "Email không đúng dịnh dạng!"
-                                                    },
                                                     {
                                                         required: true,
                                                         message: 'Vui lòng nhập email!',
@@ -183,7 +208,7 @@ const SignIn = () => {
                                                     <Button style={{ width: '100%' }} type="primary" htmlType="submit" className="login-form-button">
                                                         Đăng nhập
                                                     </Button>
-                                                    Hoặc <a href="/dang-ky">Đăng ký!</a>
+                                                    {/* Hoặc <a href="/dang-ky">Đăng ký!</a> */}
                                                 </Form.Item>
                                             </div>
                                         </Form>

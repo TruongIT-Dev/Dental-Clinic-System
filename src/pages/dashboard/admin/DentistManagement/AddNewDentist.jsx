@@ -46,28 +46,46 @@ const AddNewDentist = () => {
         try {
             const APIAddNewDentistByAdmin = await DoAddNewDentistByAdmin(email, full_name, phone_number, date_of_birth, gender, specialty_id, password);
             console.log("APIAddNewDentistByAdmin", APIAddNewDentistByAdmin)
-            switch (APIAddNewDentistByAdmin.status) {
-                case 201:
-                    notification.success({
-                        message: 'Thêm Nha sĩ thành công',
-                        duration: 2,
-                    });
-                    navigate('/admin/quan-ly-nha-si');
-                    break;
-
-                default:
-                    notification.error({
-                        message: 'Thêm Nha sĩ thất bại',
-                        duration: 2,
-                    });
-                    break;
+            if (APIAddNewDentistByAdmin.status === 201) {
+                notification.success({
+                    message: 'Thêm Nha sĩ thành công',
+                    duration: 2,
+                });
+                navigate('/admin/quan-ly-nha-si');
             }
         } catch (error) {
             console.log(error);
-            notification.error({
-                message: 'Email hoặc số điện thoại đã tồn tại!',
-                duration: 2,
-            });
+            const isEmailExisted = error.response.data.email_error;
+            const isPhoneNumberExisted = error.response.data.phone_number_error;
+            switch (error.response.status) {
+                case 500:
+                    notification.error({
+                        message: 'Lỗi server!',
+                        duration: 2,
+                    });
+                    break;
+
+                case 403: {
+                    if (isEmailExisted) {
+                        form.setFields([
+                            {
+                                name: 'email',
+                                errors: ['Email đã tồn tại!'],
+                            }
+                        ])
+                    }
+
+                    if (isPhoneNumberExisted) {
+                        form.setFields([
+                            {
+                                name: 'phone_number',
+                                errors: ['Số điện thoại đã tồn tại!'],
+                            }
+                        ])
+                    }
+                    break;
+                }
+            }
         }
 
     };
@@ -145,39 +163,12 @@ const AddNewDentist = () => {
         return Promise.resolve();
     };
 
-    // Validate Email
-    // const validateEmail = (_, value) => {
-    //     if (!value) {
-    //         return Promise.reject(new Error('Email không được để trống!'));
-    //     }
-
-    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    //     if (!emailRegex.test(value)) {
-    //         return Promise.reject(new Error('Email không hợp lệ!'));
-    //     }
-    //     return Promise.resolve();
-    // };
-
     // -----------------------------------------
     // *****************************************
 
     return (
         <>
             {/* Header */}
-            {/* <Breadcrumb
-                style={{
-                    margin: '16px 0',
-                }}
-            >
-                <Breadcrumb.Item>
-                    <Link to='/admin/quan-ly-nha-si' style={{ textDecoration: 'none' }}>Loại hình dịch vụ</Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                    <Link to={`#`} style={{ textDecoration: 'none' }}>text</Link>
-                </Breadcrumb.Item>
-            </Breadcrumb> */}
-
             <div>
                 <Title level={2}>Tạo tài khoản Nha sĩ</Title>
             </div>
@@ -219,6 +210,8 @@ const AddNewDentist = () => {
                                     message: 'Yêu cầu nhập email!',
                                 },
                             ]}
+                            hasFeedback
+                            validateDebounce={1000}
                         >
                             <Input />
                         </Form.Item>
@@ -232,6 +225,8 @@ const AddNewDentist = () => {
                                     message: 'Vui lòng nhập họ tên!',
                                 },
                             ]}
+                            hasFeedback
+                            validateDebounce={1000}
                         >
                             <Input />
                         </Form.Item>
@@ -243,9 +238,13 @@ const AddNewDentist = () => {
                                 {
                                     required: true,
                                     message: 'Vui lòng nhập số điện thoại!',
-                                    validator: validatePhoneNumber,
                                 },
+                                {
+                                    validator: validatePhoneNumber,
+                                }
                             ]}
+                            hasFeedback
+                            validateDebounce={1000}
                         >
                             <Input />
                         </Form.Item>
