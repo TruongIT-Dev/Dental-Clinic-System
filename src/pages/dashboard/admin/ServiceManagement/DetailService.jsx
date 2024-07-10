@@ -1,4 +1,4 @@
-import { Space, Table, Button, Input, Popconfirm, message, Modal, Breadcrumb, notification } from 'antd';
+import { Space, Table, Button, Input, Popconfirm, message, Modal, Breadcrumb, notification, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { DoDeleteDataServiceByAdmin, DoSearchServiceByAdmin, DoViewDataServiceByAdmin, DoViewDetailCategoryByAdmin } from '../../../../apis/api';
 import { useParams, useLocation, Link } from 'react-router-dom';
@@ -96,19 +96,12 @@ const DetailService = () => {
                         });
                         break;
                     case 404:
-                        notification.error({
-                            message: 'Không tìm thấy tên',
-                            duration: 1,
-                        });
+                        setDataService(null);
                         break;
                 }
             }
         }
     }
-    // useEffect(() => {
-    //     fetchSearchService(slug);
-    // }, [])
-
     // ***********************************************************
 
 
@@ -243,10 +236,18 @@ const DetailService = () => {
                 </Modal>
             </div>
             <br></br>
-            <Table columns={columns} dataSource={dataService}
-                pagination={dataService.length >= 5 ? { pageSize: 5 } : false}
-                onChange={handleTableChange}
-            />
+
+            {dataService ? (
+                <Table columns={columns} dataSource={dataService}
+                    pagination={dataService.length >= 5 ? { pageSize: 5 } : false}
+                    onChange={handleTableChange}
+                />
+            ) : (
+                <div style={{ marginTop: '5rem' }}>
+                    <Empty description='Không có dữ liệu' />
+                </div>
+            )}
+
         </>
     )
 }
