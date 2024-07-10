@@ -18,6 +18,8 @@ import in3 from '../../assets/img/home/in3.webp';
 import in4 from '../../assets/img/home/in4.webp';
 import in5 from '../../assets/img/home/in5.webp';
 import in6 from '../../assets/img/home/in6.webp';
+import new1 from '../../assets/img/home/in1.jpg';
+import new2 from '../../assets/img/home/in2.jpg';
 import { Input } from 'antd';
 
 
@@ -99,6 +101,7 @@ const Home = () => {
                              
                                 
                                     <h2 className="mb-3 mt-5 display-5 font-weight-bold">Dịch Vụ Đưa Đón Khách Hàng</h2>
+                                    
                                     <p className="lead">Nha Khoa Sức Khỏe - Với hệ thống các xe buýt được trang bị tân tiến, hàng loạt xe đưa đón khách hàng từ nhiều địa điểm khác nhau, các tài xế giàu kinh nghiệm sẽ đưa đón bạn tận nơi chỉ với một cuộc hẹn và đặt lịch, khách hàng có thể đến các cơ sở tùy thích của mình, hứa hẹn sẽ mang đến một trải nghiệm tuyệt vời tại Nha Khoa Sức Khỏe.</p>
                                     
                                
@@ -117,15 +120,19 @@ const Home = () => {
                 <section className="pt-7">
                         <div className="container">
                             <div className="row align-items-center justify-content-between">
+                            <h2 className="mb-3 mt-5 display-5 font-weight-bold">Một Số Mẹo Về Răng Miệng</h2>
                             <div className="col-12 col-md-6 mt-4 mt-md-0 bg-blue-default p-3 rounded">
+                            
                                     <div className="bg-img-hero text-center space-3" >
-                                        <img className="img-fluid" width='555' height='425' src={in2}></img>
+                                        <img className="img-fluid" width='555' height='425' src={new1}></img>
                                     </div>
                                 </div>
                                 <div className="col-12 col-md-6">
-                                <img className="img-fluid" width='555' height='425' src={in1}></img>
+                                <img className="img-fluid" width='555' height='425' src={new2}></img>
                                     
                                 </div>
+                                <br></br>
+                                <p className="lead">Nha Khoa Sức Khỏe - Một số cách để giữ vệ sinh răng miệng tốt nhất đó chính là đánh răng vào buổi sáng và trước khi bạn đi ngủ, lưu ý về số lần đánh răng không được vượt quá 3 lần trong ngày nếu không sẽ ảnh hưởng đến men răng của bạn.</p>
                                 
                             </div>
                         </div>
