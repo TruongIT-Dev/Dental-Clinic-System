@@ -1,10 +1,11 @@
-import { Table, Input, Button, Typography, Space } from 'antd';
+import { Table, Input, Button, Typography, Space, Modal, Tabs, Descriptions } from 'antd';
 import { Link } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
-import { DoViewAllExaminationByAdmin } from '../../../../apis/api';
+import { DoViewAllExaminationByAdmin, DoViewPatientOfAExaminationScheduleByAdmin } from '../../../../apis/api';
 import { useEffect, useState } from 'react';
 import 'moment-timezone';
 import moment from 'moment';
+import ModalViewPatients from './ModalViewPatients';
 
 
 
@@ -27,11 +28,16 @@ const Examination = () => {
         current: 1,
         pageSize: 5,
     });
+    const [modalViewPatients, setModalViewPatients] = useState(false);
+    const [loadingModalViewPatients, setLoadingModalViewPatients] = useState(true)
+    const [patientsInfo, setPatientsInfo] = useState([])
     // *****************************************
 
 
     // *****************************************
     // ------------- API Function --------------
+
+    // Liệt kê Tất cả Lịch khám
     const fetchAllExaminationByAdmin = async () => {
 
         try {
@@ -60,6 +66,21 @@ const Examination = () => {
         }
     }
 
+    // View Chi tiết Các Bệnh Nhân của 1 Lịch khám
+    const fetchViewPatientsOfASchedule = async (id) => {
+        try {
+            const APIViewPatientsOfASchedule = await DoViewPatientOfAExaminationScheduleByAdmin(id);
+            console.log("APIViewPatientsOfASchedule", APIViewPatientsOfASchedule)
+            // Lấy thành công
+            const GetDataPatientsInfo = APIViewPatientsOfASchedule?.data || [];
+            console.log("GetDataPatientsInfo", GetDataPatientsInfo)
+            setPatientsInfo(GetDataPatientsInfo);
+            console.log("patientsInfo: ", patientsInfo);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     // *****************************************
 
 
@@ -76,6 +97,16 @@ const Examination = () => {
 
     // *****************************************
     // ------------- Other Funtion -------------
+
+    const showPatientsModal = () => {
+        setModalViewPatients(true)
+        setLoadingModalViewPatients(true);
+
+        // Simple loading mock. You should add cleanup logic in real world.
+        setTimeout(() => {
+            setLoadingModalViewPatients(false);
+        }, 2000);
+    };
 
 
     const formatDate = (timestamp) => {
@@ -152,13 +183,43 @@ const Examination = () => {
         {
             title: 'Thao tác',
             key: 'action',
-            render: () => (
+            render: (_, record) => (
                 <Space size="middle">
-                    <Button type='primary' ghost>View bệnh nhân</Button>
+                    <Button
+                        type='primary'
+                        ghost
+                        disabled={record.appointment_count < 1}
+                        onClick={() => {
+                            if (record.appointment_count >= 1) {
+                                showPatientsModal();
+                                fetchViewPatientsOfASchedule(record.schedule_id);
+                            }
+                        }}
+                    >
+                        View bệnh nhân
+                    </Button>
                 </Space>
             ),
         },
     ];
+
+    // Tabs Modal
+    const renderPatientsInfo = patientsInfo.map((data, index) => ({
+        key: data.id,
+        label: data.full_name,
+        children: (
+            <Descriptions layout="vertical" key={index}>
+                <Descriptions.Item label="Email">{data.email}</Descriptions.Item>
+                <Descriptions.Item label="Họ và Tên">{data.full_name}</Descriptions.Item>
+                <Descriptions.Item label="Số điện thoại">{data.phone_number}</Descriptions.Item>
+                <Descriptions.Item label="Giới tính">{data.gender}</Descriptions.Item>
+                <Descriptions.Item label="Loại hình dịch vụ">{data.service_category}</Descriptions.Item>
+                <Descriptions.Item label="Ngày sinh">{formatDate(data.date_of_birth)}</Descriptions.Item>
+            </Descriptions>
+        ),
+    }));
+
+
 
     // Counte STT pagination
     const handleTableChange = (pagination) => {
@@ -198,6 +259,17 @@ const Examination = () => {
                 onChange={handleTableChange}
             />
 
+            {/* Modal View Patients của 1 Lịch Khám */}
+            <Modal
+                title={<p>Thông tin bệnh nhân</p>}
+                loading={loadingModalViewPatients}
+                open={modalViewPatients}
+                onCancel={() => setModalViewPatients(false)}
+                width={800}
+                footer={[]}
+            >
+                <Tabs defaultActiveKey="1" items={renderPatientsInfo} />
+            </Modal>
         </>
     )
 }
