@@ -225,6 +225,10 @@ export const DoAddNewExaminationByAdmin = (dentist_id, room_id, start_time, end_
     })
 }
 
+// API View Chi tiết Các Bệnh Nhân của 1 Lịch khám
+export const DoViewPatientOfAExaminationScheduleByAdmin = (id) => {
+    return axios.get(`/api/v1/schedules/examination/${id}/patients`)
+}
 
 
 // **************************Quản Lý Phòng Khám*******************************
