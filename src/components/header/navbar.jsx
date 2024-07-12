@@ -90,7 +90,7 @@ const NavBar = () => {
                                     <CategoryDropdown />
                                 </Nav.Link>
                                 <Nav.Link href='#lich-lam-viec' style={TextHeader} eventKey="link-4">Lịch làm việc</Nav.Link>
-                                <Nav.Link href='#lien-he' style={TextHeader} eventKey="link-6">Liên hệ</Nav.Link>
+                                <Nav.Link href='/lien-he' style={TextHeader} eventKey="link-6">Liên hệ</Nav.Link>
                             </Nav>
                         </div>
 
