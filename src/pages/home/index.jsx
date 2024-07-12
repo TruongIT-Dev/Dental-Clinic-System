@@ -40,7 +40,7 @@ const Home = () => {
                             <div className="row align-items-center justify-content-between">
                                 <div className="col-12 col-md-6">
                                     <h2 className="mb-3 mt-5 display-5 font-weight-bold">Về Nha Khoa Sức Khỏe</h2>
-                                    <p className="lead">Nha Khoa Sức Khỏe - Hệ thống nha khoa uy tín Việt Nam với hơn 30 phòng khám trải dài khắp 6 tỉnh thành trên toàn quốc.</p>
+                                    <p className="lead">Nha Khoa Sức Khỏe - Hệ thống nha khoa uy tín Việt Nam với hơn 5 phòng khám trải dài khắp Thành Phố Hồ Chí Minh.</p>
                                     <div className="name">
                                         <p>
                                             <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="/" title="tiêu chuẩn chất lượng">Chứng nhận chất lượng ISO 9001:2015 Vương Quốc Anh.</a><br></br>
@@ -96,7 +96,7 @@ const Home = () => {
                             <div className="row align-items-center justify-content-between">
                             
                                     <div className="bg-img-hero text-center space-3" >
-                                        <img className="img-fluid" width='555' height='425' src={ban3}></img>
+                                        <img className="img-fluid" width='1000' height='800' src={ban3}></img>
                                     </div>
                              
                                 
