@@ -1,8 +1,36 @@
 import ban3 from '../../assets/img/home/anh3.webp';
+import ban1 from '../../assets/img/home/contact1.png';
 
 const Contact = () => {
     return (
         <>
+            
+            <div className="mt-1 position-relative show-desktop hide-mobile" id="customer-comment">
+                    <section className="pt-7">
+                        <div className="container">
+                            <div className="row align-items-center justify-content-between">
+                            <div className="col-12 col-md-6 mt-4 mt-md-0 bg-blue-default p-3 rounded">
+                                    <div className="bg-img-hero text-center space-3" >
+                                        <img className="img-fluid" width='555' height='425' src={ban1}></img>
+                                    </div>
+                                </div>
+                                <div className="col-12 col-md-6">
+                                    <h2 className="mb-3 mt-5 display-5 font-weight-bold">Các Cơ Sở Nha Khoa Sức Khỏe</h2>
+                                    <p className="lead">Nha Khoa Sức Khỏe - Với hệ thống các nha sĩ có kinh nghiệm hàng đầu trong lĩnh vực răng miệng, Nha Khoa Sức Khỏe chúng tôi cam kết đem lại một trải nghiệm cực kỳ tuyệt vời và an toàn cho khách hàng.</p>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </section>
+                    <br></br>
+                    <br></br>
+                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
+               <br></br>
+               <br></br>
+                </div>
+
+
             <div className="mt-1 position-relative show-desktop hide-mobile" id="customer-comment">
                     <section className="pt-7">
                         <div className="container">
