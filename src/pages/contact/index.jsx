@@ -1,5 +1,6 @@
 import ban3 from '../../assets/img/home/anh3.webp';
 import ban1 from '../../assets/img/home/contact1.png';
+import ban2 from '../../assets/img/home/onl.jpg';
 
 const Contact = () => {
     return (
@@ -34,6 +35,28 @@ const Contact = () => {
                <br></br>
                 </div>
 
+                <div className="mt-1 position-relative show-desktop hide-mobile" id="customer-comment">
+                    <section className="pt-7">
+                        <div className="container">
+                            <div className="row align-items-center justify-content-between">
+                            
+                                    <h2 className="mb-3 mt-5 display-5 font-weight-bold">Đặt Lịch Khám Online Và Trực Tiếp</h2>
+                                    
+                                    <p className="lead">Nha Khoa Sức Khỏe - Với hệ thống đặt lịch khám online, bạn có thể đặt lịch khám bất cứ lúc nào mà không cần phải đến trực tiếp các cở sở của Nha Khoa Sức Khỏe, rất tiện lợi và dễ sử dụng.</p>
+                                    
+                                    <div className="bg-img-hero text-center space-3" >
+                                        <img className="img-fluid" width='555' height='425' src={ban2}></img>
+                                    </div>
+                            </div>
+                        </div>
+                    </section>
+                    <br></br>
+                    <br></br>
+                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="/">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
+               <br></br>
+               <br></br>
+                </div>
+
 
             <div className="mt-1 position-relative show-desktop hide-mobile" id="customer-comment">
                     <section className="pt-7">
@@ -41,7 +64,7 @@ const Contact = () => {
                             <div className="row align-items-center justify-content-between">
                             
                                     <div className="bg-img-hero text-center space-3" >
-                                        <img className="img-fluid" width='555' height='425' src={ban3}></img>
+                                        <img className="img-fluid" width='1000' height='800' src={ban3}></img>
                                     </div>
                              
                                 
