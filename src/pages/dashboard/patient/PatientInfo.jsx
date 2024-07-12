@@ -10,25 +10,25 @@ const PatientInfo = () => (
                 <div className="col-md-12">
                     <div className="form-group">
                         <label for="account-fn">First Name</label>
-                        <input className="form-control" type="text" id="account-fn" value="Daniel" required=""/>
+                        <input className="form-control" type="text" id="account-fn" value="Firstname..." required=""/>
                     </div>
                 </div>
                 <div className="col-md-12">
                     <div className="form-group">
                         <label for="account-ln">Last Name</label>
-                        <input className="form-control" type="text" id="account-ln" value="Adams" required=""/>
+                        <input className="form-control" type="text" id="account-ln" value="Lastname..." required=""/>
                     </div>
                 </div>
                 <div className="col-md-12">
                     <div className="form-group">
                         <label for="account-email">E-mail Address</label>
-                        <input className="form-control" type="email" id="account-email" value="daniel.adams@example.com" disabled=""/>
+                        <input className="form-control" type="email" id="account-email" value="Email..." disabled=""/>
                     </div>
                 </div>
                 <div className="col-md-12">
                     <div className="form-group">
                         <label for="account-phone">Phone Number</label>
-                        <input className="form-control" type="text" id="account-phone" value="+7 (805) 348 95 72" required=""/>
+                        <input className="form-control" type="text" id="account-phone" value="Phone..." required=""/>
                     </div>
                 </div>
 
