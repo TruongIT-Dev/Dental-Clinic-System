@@ -43,10 +43,10 @@ const Home = () => {
                                     <p className="lead">Nha Khoa Sức Khỏe - Hệ thống nha khoa uy tín Việt Nam với hơn 30 phòng khám trải dài khắp 6 tỉnh thành trên toàn quốc.</p>
                                     <div className="name">
                                         <p>
-                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="https://nhakhoakim.com/tieu-chuan-chat-luong" title="tiêu chuẩn chất lượng">Chứng nhận chất lượng ISO 9001:2015 Vương Quốc Anh.</a><br></br>
-                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="https://nhakhoakim.com/nha-khoa-kim-thang-hang-top-50-nha-khoa-tot-nhat-the-gioi-tren-bang-xep-hang-gcr.html" title="Đạt chứng nhận GCR Hoa Kỳ">Đạt chứng nhận GCR Hoa Kỳ.</a><br></br>
-                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="https://nhakhoakim.com/healthcare-ecosystem/nha-khoa-kim-cung-uc-singapore-an-do-china-duoc-bao-cao-dien-hinh-tac-dong-chau-a-2021" title="Quỹ Đầu Tư Chính Phủ Singapore">Được chính phủ Singapore đầu tư tài chính.</a><br></br>
-                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="https://nhakhoakim.com/nha-khoa-kim-tu-hao-la-doi-tac-toan-cau-cua-dai-hoc-harvard.html" title="Đối tác toàn cầu của Đại học Harvard">Đối tác toàn cầu của đại học Harvard.</a>
+                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="/" title="tiêu chuẩn chất lượng">Chứng nhận chất lượng ISO 9001:2015 Vương Quốc Anh.</a><br></br>
+                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="/" title="Đạt chứng nhận GCR Hoa Kỳ">Đạt chứng nhận GCR Hoa Kỳ.</a><br></br>
+                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="/" title="Quỹ Đầu Tư Chính Phủ Singapore">Được chính phủ Singapore đầu tư tài chính.</a><br></br>
+                                            <strong><span className="view-more-address"><i className="far fa-hand-point-right"></i></span></strong> <a className='text-decoration-none' href="/" title="Đối tác toàn cầu của Đại học Harvard">Đối tác toàn cầu của đại học Harvard.</a>
                                         </p>
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@ const Home = () => {
                     </section>
                     <br></br>
                     <br></br>
-                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
+                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="/">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
                     <br></br>
                     <br></br>
                 </div>
@@ -85,7 +85,7 @@ const Home = () => {
                     </section>
                     <br></br>
                     <br></br>
-                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
+                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="/">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
                <br></br>
                <br></br>
                 </div>
@@ -111,7 +111,7 @@ const Home = () => {
                     </section>
                     <br></br>
                     <br></br>
-                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
+                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="/">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
                <br></br>
                <br></br>
                 </div>
@@ -139,7 +139,7 @@ const Home = () => {
                     </section>
                     <br></br>
                     <br></br>
-                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
+                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="/">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
                <br></br>
                <br></br>
                 </div>

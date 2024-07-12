@@ -16,7 +16,11 @@ const Contact = () => {
                                 </div>
                                 <div className="col-12 col-md-6">
                                     <h2 className="mb-3 mt-5 display-5 font-weight-bold">Các Cơ Sở Nha Khoa Sức Khỏe</h2>
-                                    <p className="lead">Nha Khoa Sức Khỏe - Với hệ thống các nha sĩ có kinh nghiệm hàng đầu trong lĩnh vực răng miệng, Nha Khoa Sức Khỏe chúng tôi cam kết đem lại một trải nghiệm cực kỳ tuyệt vời và an toàn cho khách hàng.</p>
+                                    <p className="lead">+ Cơ sở chính: 200 Lê Văn Việt, Thành Phố Thủ Đức, HCM</p>
+                                    <p className="lead">+ 46A Võ Vân Ngân, P.Trường Thọ, TP.Thủ Đức</p>
+                                    <p className="lead">+ 60 Lê Văn Việt, Hiệp Phú, TP.Thủ Đức</p>
+                                    <p className="lead">+ 240 Xô Viết Nghệ Tĩnh, P.21, Q.Bình Thạnh</p>
+                                    <p className="lead">+ 270 Quang Trung, P.10, Q.Gò Vấp</p>
                                     
                                 </div>
                                 
@@ -25,7 +29,7 @@ const Contact = () => {
                     </section>
                     <br></br>
                     <br></br>
-                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
+                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="/">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
                <br></br>
                <br></br>
                 </div>
@@ -52,7 +56,7 @@ const Contact = () => {
                     </section>
                     <br></br>
                     <br></br>
-                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="https://nhakhoakim.com/tin-tuc">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
+                    <div className="d-flex"><a className="mx-auto btn btn-sm btn-primary btn-wide transition-3d-hover btn-blue-default border-0" href="/">Tìm hiểu thêm<span className="fas fa-angle-right ml-2"></span></a></div>
                <br></br>
                <br></br>
                 </div>
