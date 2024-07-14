@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+import dayjs from 'dayjs';
 
 // Function Disabled những ngày sau ngày hôm nay
 const disabledDate = (current) => {
@@ -115,9 +116,6 @@ const FormAppoinment = () => {
     }, [])
 
     // ******************** FORM ******************************
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
 
 
     // Submit Form - API Submit Form
@@ -154,6 +152,32 @@ const FormAppoinment = () => {
                             duration: 5,
                         });
                         break;
+                    case 403: {
+                        const isError = error.response.data.error;
+                        switch (true) {
+                            case isError === "schedule is booked by the patient before":
+                                notification.error({
+                                    message: 'Đăng ký lịch khám thất bại',
+                                    description: 'Bạn đã đặt lịch khám này.',
+                                    duration: 5,
+                                });
+                                break;
+                            case isError === "schedule is full slot":
+                                notification.error({
+                                    message: 'Đăng ký lịch khám thất bại',
+                                    description: 'Lịch khám đã đủ bệnh nhân. Vui lòng chọn lịch khám khác!',
+                                    duration: 5,
+                                });
+                                break;
+                            default:
+                                notification.error({
+                                    message: 'Error',
+                                    description: 'An unknown error occurred.',
+                                    duration: 5,
+                                });
+                        }
+                        break;
+                    }
                     default:
                         notification.error({
                             message: 'Đăng ký thất bại',
@@ -172,32 +196,9 @@ const FormAppoinment = () => {
         }
     }
 
-    // const toVietnamTime = (timeString) => {
-    //     const date = new Date(timeString);
-    //     const options = {
-    //         timeZone: 'Asia/Ho_Chi_Minh',
-    //         hour12: false,
-    //         year: 'numeric',
-    //         month: '2-digit',
-    //         day: '2-digit',
-    //         hour: '2-digit',
-    //         minute: '2-digit',
-    //         // second: '2-digit',
-    //     };
-    //     return date.toLocaleString('en-US', options);
-    // };
-
-    // // Assuming toVietnamTime function exists and formats the datetime string
-    // const extractTime = (datetime) => {
-    //     // Extract the time from the datetime string
-    //     return datetime.split(', ')[1];
-    // };
-
     const extractTime = (utcTime) => {
-        // Parse the UTC time with Moment.js and extract the time part
-        const timePart = moment.utc(utcTime).format('HH:mm:ss'); // Format only hours, minutes, and seconds
-
-        return timePart;
+        const vietnamTime = dayjs(utcTime).tz('Asia/Ho_Chi_Minh');
+        return vietnamTime.local().format('HH:mm');
     };
 
 
@@ -220,24 +221,23 @@ const FormAppoinment = () => {
                 [
                     `Nha sĩ ${data.dentist_name} | `,
                     `Phòng ${data.room_name} | `,
-                    // `${extractTime(toVietnamTime(data.start_time))} - `,
-                    // `${extractTime(toVietnamTime(data.end_time))}.`,
                     `${extractTime(data.start_time)} - `,
-                    `${extractTime(data.end_time)}.`,
+                    `${extractTime(data.end_time)}`,
                 ].join(''),
             value: data.schedule_id,
         }
     ))
 
     const handleDateChange = (date, dateString) => {
-        console.log('Selected Date:', dateString);
-        setGetDate(dateString);
+        const formattedDate = dayjs(dateString).format("YYYY-MM-DD");
+        // console.log('Selected Date:', formattedDate);
+        setGetDate(formattedDate);
         form.resetFields(['examination_schedule_id']);
         form.setFieldsValue({
-            // service_category_id: undefined,
             examination_schedule_id: undefined,
-        })
+        });
     };
+
 
     const handleDentistScheduleChange = (value) => {
         console.log(`selected dentist schedule ${value}`);
@@ -258,7 +258,6 @@ const FormAppoinment = () => {
                     minWidth: '600px'
                 }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 initialValues={{
                     service_category_id: undefined,
@@ -279,7 +278,6 @@ const FormAppoinment = () => {
                     <div className='d-flex flex-start' style={{ width: '100%' }}>
                         <DatePicker
                             placeholder='YYYY-MM-DD'
-                            format="YYYY-MM-DD"
                             onChange={handleDateChange}
                             disabledDate={disabledDate}
                         />
@@ -321,7 +319,7 @@ const FormAppoinment = () => {
                     ]}
                 >
                     <Select
-                        placeholder="Chọn dịch vụ"
+                        placeholder="Chọn loại hình dịch vụ"
                         allowClear
                         style={{ width: '100%' }}
                         options={categoryOptions}

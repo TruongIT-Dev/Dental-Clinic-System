@@ -151,7 +151,7 @@ const FormUpdateService = () => {
                             label="Giá"
                             name="cost"
                         >
-                            <InputNumber value={detailService.cost} />
+                            <InputNumber type="number" value={detailService.cost} />
                         </Form.Item>
 
                         <Form.Item

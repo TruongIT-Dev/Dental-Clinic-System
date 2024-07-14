@@ -2,7 +2,7 @@ import { Card, Row, Col, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { Modal, Pagination, Empty } from 'antd';
 import { DoViewDetailExamination, DoViewExaminationAppointment } from '../../../apis/api';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 
 
@@ -57,47 +57,23 @@ const PatientExamination = () => {
         return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " VND";
     }
 
-    // Hàm Time
-    // const toVietnamTime = (timeString) => {
-    //     const date = new Date(timeString);
-    //     const options = {
-    //         timeZone: 'Asia/Ho_Chi_Minh',
-    //         hour12: false,
-    //         year: 'numeric',
-    //         month: '2-digit',
-    //         day: '2-digit',
-    //         hour: '2-digit',
-    //         minute: '2-digit',
-    //         second: '2-digit',
-    //     };
-    //     return date.toLocaleString('en-US', options);
-    // };
-
-    // // Assuming toVietnamTime function exists and formats the datetime string
-    // const extractTime = (datetime) => {
-    //     // Extract the time from the datetime string
-    //     return datetime.split(', ')[1];
-    // };
-
     const extractTime = (utcTime) => {
-        // Parse the UTC time with Moment.js and extract the time part
-        const timePart = moment.utc(utcTime).format('HH:mm:ss'); // Format only hours, minutes, and seconds
-
-        return timePart;
+        const vietnamTime = dayjs(utcTime).tz('Asia/Ho_Chi_Minh');
+        return vietnamTime.local().format('HH:mm');
     };
 
     // Hàm Date
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const day = date.getDate();
-        const month = date.getMonth() + 1; // Months are zero-indexed
+        const month = date.getMonth() + 1;
         const year = date.getFullYear();
 
         // Ensure leading zeros if day or month is single digit
         const formattedDay = day < 10 ? `0${day}` : day;
         const formattedMonth = month < 10 ? `0${month}` : month;
 
-        return `${formattedDay}-${formattedMonth}-${year}`;
+        return `${formattedDay}/${formattedMonth}/${year}`;
     };
 
     // Hiện Modal Chi tiết Lịch Khám

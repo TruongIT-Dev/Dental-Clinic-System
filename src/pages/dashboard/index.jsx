@@ -53,7 +53,7 @@ const AdminDashboard = () => {
             }}
         >
 
-            <Sider width={270} >
+            <Sider width={240} >
                 <div className="demo-logo-vertical" style={{ height: 40, }} />
 
                 <div style={{ textAlign: 'center', color: "#fff", marginBottom: "2rem" }}>
@@ -111,7 +111,7 @@ const AdminDashboard = () => {
 
                     {/* Quản Lý Phòng Khám */}
                     <Menu.Item key="6" icon={<ContainerOutlined />}>
-                        <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-phong-kham">Quản lý phòng khám</Link>
+                        <Link style={{ textDecoration: 'none' }} to="/admin/quan-ly-phong-kham">Quản lý phòng</Link>
                     </Menu.Item>
                 </Menu>
                 )
@@ -126,7 +126,7 @@ const AdminDashboard = () => {
 
                             {/* Dashboard */}
                             <Menu.Item key="1" icon={<PieChartOutlined />}>
-                                <Link style={{ textDecoration: 'none' }} to="/dentist">Dashboard</Link>
+                                <Link style={{ textDecoration: 'none' }} to="/dentist">Thông tin cá nhân</Link>
                             </Menu.Item>
 
                             <Menu.Item key="2" icon={<ScheduleOutlined />}>
@@ -139,10 +139,6 @@ const AdminDashboard = () => {
 
                             <Menu.Item key="4" icon={<TeamOutlined />}>
                                 <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-benh-nhan">Quản lý bệnh nhân</Link>
-                            </Menu.Item>
-
-                            <Menu.Item key="5" icon={<SettingOutlined />}>
-                                <Link style={{ textDecoration: 'none' }} to="#">Cài đặt</Link>
                             </Menu.Item>
                         </Menu>
                     )}

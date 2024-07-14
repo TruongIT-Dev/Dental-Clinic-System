@@ -94,7 +94,7 @@ const Treatment = () => {
             </div>
             <br></br>
 
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={data} />
 
         </>
     )

@@ -83,12 +83,6 @@ const SignIn = () => {
             if (res.status === 200 && (role === "admin" || role === "dentist")) {
                 // Navigate to the home page
                 navigate(`/${role}`);
-                // Show a success message
-                notification.success({
-                    type: 'success',
-                    message: 'Chào mừng Admin',
-                    duration: 2,
-                })
             } else {
                 // Navigate to the home page
                 navigate('/');

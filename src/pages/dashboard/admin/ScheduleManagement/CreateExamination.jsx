@@ -160,7 +160,7 @@ const CreateExamination = () => {
             <div>
                 {/* Header */}
                 <div>
-                    <Title level={2}>Tạo lịch khám</Title>
+                    <Title level={2}>Tạo lịch khám tổng quát</Title>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '4rem' }}>

@@ -35,6 +35,8 @@ const PageLayout = () => {
                 style={{
                     textAlign: 'center',
                     backgroundImage: `url(${bg})`,
+                    height: '100%',
+                    width: '100%'
                 }}
             >
                 <div>
