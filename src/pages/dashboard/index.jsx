@@ -4,7 +4,6 @@ import {
     ProfileOutlined,
     ScheduleOutlined,
     UserOutlined,
-    SettingOutlined,
     CalendarOutlined,
     ContainerOutlined
 } from '@ant-design/icons';
@@ -126,7 +125,7 @@ const AdminDashboard = () => {
 
                             {/* Dashboard */}
                             <Menu.Item key="1" icon={<PieChartOutlined />}>
-                                <Link style={{ textDecoration: 'none' }} to="/dentist">Thông tin cá nhân</Link>
+                                <Link style={{ textDecoration: 'none' }} to="/dentist">Thông tin tài khoản</Link>
                             </Menu.Item>
 
                             <Menu.Item key="2" icon={<ScheduleOutlined />}>
