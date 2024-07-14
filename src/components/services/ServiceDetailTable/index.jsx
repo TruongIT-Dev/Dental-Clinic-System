@@ -82,7 +82,7 @@ const ServiceDetailTable = ({ data }) => {
 
     return (
         <>
-            <Table pagination={false} columns={columns} dataSource={data} />;
+            <Table pagination={false} columns={columns} dataSource={data} />
         </>
     )
 }

@@ -167,10 +167,10 @@ const SignUp = () => {
             return Promise.reject(new Error(''));
         }
         if (!/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯàáâãèéêìíòóôõùúăđĩũơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ\s]+$/.test(value)) {
-            return Promise.reject(new Error('Yêu cầu chỉ chữ cái (bao gồm chữ tiếng Việt) và dấu cách!'));
+            return Promise.reject(new Error('Vui lòng chỉ nhập chữ thường và chữ in hoa'));
         }
         if (value.length > 20) {
-            return Promise.reject(new Error('Tên đăng nhập không được vượt quá 30 ký tự!'));
+            return Promise.reject(new Error('Vui lòng nhập tên không được vượt quá 30 ký tự!'));
         }
         return Promise.resolve();
     };
@@ -201,21 +201,21 @@ const SignUp = () => {
         const hasNumber = /[0-9]/.test(value);
         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
 
-        if (!hasLength) {
-            errors.push('Bao gồm tối thiểu 8 ký tự, ');
+        if (!hasLength || !hasUpperCase || !hasNumber || !hasSpecialChar) {
+            errors.push('Tối thiểu 8 ký tự, 1 chữ hoa, 1 chữ số, và 1 ký tự đặc biệt!');
         }
 
-        if (!hasUpperCase) {
-            errors.push('ít nhất 1 chữ in hoa, ');
-        }
+        // if (!hasUpperCase) {
+        //     errors.push('ít nhất 1 chữ in hoa, ');
+        // }
 
-        if (!hasNumber) {
-            errors.push('1 chữ số, ');
-        }
+        // if (!hasNumber) {
+        //     errors.push('1 chữ số, ');
+        // }
 
-        if (!hasSpecialChar) {
-            errors.push('và 1 ký tự đặc biệt!');
-        }
+        // if (!hasSpecialChar) {
+        //     errors.push('và 1 ký tự đặc biệt!');
+        // }
 
         if (errors.length > 0) {
             return Promise.reject(new Error(errors.join(' ')));

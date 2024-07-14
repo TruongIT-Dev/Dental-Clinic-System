@@ -70,13 +70,38 @@ const ServiceManagement = () => {
                             duration: 5,
                         });
                         break;
-                    case 403:
-                        notification.error({
-                            message: 'Xóa thất bại',
-                            description: 'Internal Server Error',
-                            duration: 5,
-                        });
+                    case 403: {
+                        // notification.error({
+                        //     message: 'Xóa thất bại',
+                        //     description: 'Internal Server Error',
+                        //     duration: 5,
+                        // });
+                        const errorDelete = error.response.data.error;
+                        console.log("errorDelete", errorDelete)
+                        // const abc = errorDelete.include("services");
+                        // console.log(abc);
+
+                        if (errorDelete.includes("services")) {
+                            notification.error({
+                                message: 'Xóa thất bại',
+                                description: 'Không thể xóa vì có các dịch vụ liên quan đến loại hình này!',
+                                duration: 5,
+                            });
+                        } else if (errorDelete.includes("examination_appointment_detail")) {
+                            notification.error({
+                                message: 'Xóa thất bại',
+                                description: 'Không thể xóa vì có các lịch khám liên quan đến loại hình này!',
+                                duration: 5,
+                            });
+                        } else {
+                            notification.error({
+                                message: 'Xóa thất bại',
+                                description: 'Lỗi sever',
+                                duration: 5,
+                            });
+                        }
                         break;
+                    }
                 }
             }
         }

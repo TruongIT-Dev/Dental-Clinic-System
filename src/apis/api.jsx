@@ -244,3 +244,8 @@ export const DoAddNewRoomByAdmin = (name) => {
         name: name,
     })
 }
+
+// API Delete 1 Phòng Khám
+export const DoDeleteRoomByAdmin = (id) => {
+    return axios.delete(`/api/v1/rooms/${id}`)
+}

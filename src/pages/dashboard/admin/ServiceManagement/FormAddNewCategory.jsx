@@ -133,10 +133,6 @@ const FormAddNewCategory = () => {
                     <Button type="primary" htmlType="submit">
                         Thêm
                     </Button>
-
-                    <Button style={{ marginLeft: '12px' }} htmlType="button" onClick={onReset}>
-                        Reset
-                    </Button>
                 </Form.Item>
             </Form>
         </>

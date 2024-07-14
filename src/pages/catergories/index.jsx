@@ -56,7 +56,7 @@ const Catergory = () => {
                 <div id="service-content" className='w-100 p-3'>
                     <div className="w-100 p-3">
                         <div className="container space-2">
-                            <h2 className="text-primary font-weight-normal text-center text-uppercase">dịch vụ</h2>
+                            <h2 className="text-primary font-weight-normal text-center text-uppercase">loại hình dịch vụ</h2>
                             <div className="row">
                                 {dataCategory.map((data, index) => (
                                     <article key={data.id} // Add key prop here

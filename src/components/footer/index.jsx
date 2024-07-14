@@ -6,7 +6,7 @@ const FooterComponent = () => {
         <>
             <div
                 className="text-center text-lg-start text-dark"
-                style={{ backgroundColor: '#ECEFF1' }}
+                style={{ backgroundColor: '#ECEFF1', bottom: '0', position: 'relative', width: '100%' }}
             >
                 <section className="">
                     <div className="container text-center text-md-start mt-5">
