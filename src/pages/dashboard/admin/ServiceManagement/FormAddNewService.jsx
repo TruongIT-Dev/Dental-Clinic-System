@@ -4,7 +4,7 @@ import { DoAddNewServiceByAdmin } from '../../../../apis/api';
 // import CSS
 import '../../../../scss/FormAddNewService.css';
 
-const FormAddNewService = ({ data, id, category }) => {
+const FormAddNewService = ({ id }) => {
 
     // console.log("prop data: ", data);
     // console.log("prop id: ", id);
@@ -14,10 +14,6 @@ const FormAddNewService = ({ data, id, category }) => {
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
-    };
-
-    const onReset = () => {
-        form.resetFields();
     };
 
     const onFinish = async (values) => {
@@ -85,6 +81,7 @@ const FormAddNewService = ({ data, id, category }) => {
                     rules={[
                         {
                             required: true,
+                            message: 'Vui lòng nhập tên dịch vụ',
                         },
                     ]}
                 >
@@ -92,15 +89,20 @@ const FormAddNewService = ({ data, id, category }) => {
                 </Form.Item>
 
                 <Form.Item
-                    label="Giá"
+                    label="Giá (VNĐ)"
                     name="cost"
                     rules={[
                         {
+                            type: 'number',
+                            message: 'Dữ liệu nhập không chính xác'
+                        },
+                        {
                             required: true,
+                            message: 'Vui lòng nhập giá dịch vụ'
                         },
                     ]}
                 >
-                    <InputNumber className='input-number' />
+                    <InputNumber type='number' className='input-number' />
                 </Form.Item>
 
                 <Form.Item
@@ -109,6 +111,7 @@ const FormAddNewService = ({ data, id, category }) => {
                     rules={[
                         {
                             required: true,
+                            message: 'Vui lòng nhập đơn vị'
                         },
                     ]}
                 >
@@ -118,11 +121,11 @@ const FormAddNewService = ({ data, id, category }) => {
                 <Form.Item
                     label="Bảo hành"
                     name="warranty_duration"
-                    rules={[
-                        {
-                            required: true,
-                        },
-                    ]}
+                // rules={[
+                //     {
+                //         required: true,
+                //     },
+                // ]}
                 >
                     <Input />
                 </Form.Item>
@@ -135,10 +138,6 @@ const FormAddNewService = ({ data, id, category }) => {
                 >
                     <Button type="primary" htmlType="submit">
                         Thêm mới dịch vụ
-                    </Button>
-
-                    <Button style={{ marginLeft: '12px' }} htmlType="button" onClick={onReset}>
-                        Reset
                     </Button>
                 </Form.Item>
             </Form>

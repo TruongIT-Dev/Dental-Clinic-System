@@ -70,13 +70,38 @@ const ServiceManagement = () => {
                             duration: 5,
                         });
                         break;
-                    case 403:
-                        notification.error({
-                            message: 'Xóa thất bại',
-                            description: 'Internal Server Error',
-                            duration: 5,
-                        });
+                    case 403: {
+                        // notification.error({
+                        //     message: 'Xóa thất bại',
+                        //     description: 'Internal Server Error',
+                        //     duration: 5,
+                        // });
+                        const errorDelete = error.response.data.error;
+                        console.log("errorDelete", errorDelete)
+                        // const abc = errorDelete.include("services");
+                        // console.log(abc);
+
+                        if (errorDelete.includes("services")) {
+                            notification.error({
+                                message: 'Xóa thất bại',
+                                description: 'Không thể xóa vì có các dịch vụ liên quan đến loại hình này!',
+                                duration: 5,
+                            });
+                        } else if (errorDelete.includes("examination_appointment_detail")) {
+                            notification.error({
+                                message: 'Xóa thất bại',
+                                description: 'Không thể xóa vì có các lịch khám liên quan đến loại hình này!',
+                                duration: 5,
+                            });
+                        } else {
+                            notification.error({
+                                message: 'Xóa thất bại',
+                                description: 'Lỗi sever',
+                                duration: 5,
+                            });
+                        }
                         break;
+                    }
                 }
             }
         }
@@ -134,7 +159,7 @@ const ServiceManagement = () => {
     // Cột bảng Table Categories
     const columns = [
         {
-            title: 'STT',
+            title: 'No.',
             key: 'index',
             render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
         },
@@ -194,7 +219,7 @@ const ServiceManagement = () => {
             {/* Top-Bar Btn*/}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Search
-                    placeholder="Nhập tên"
+                    placeholder="Nhập tên loại hình dịch vụ"
                     allowClear
                     enterButton="Tìm kiếm"
                     size="large"
@@ -223,9 +248,11 @@ const ServiceManagement = () => {
                     onChange={handleTableChange}
                 />
             ) : (
-                <div style={{ marginTop: '5rem' }}>
-                    <Empty description='Không có dữ liệu' />
-                </div>
+                    <div>
+                        <Table columns={columns} dataSource={searchName}
+                            locale={{ emptyText: <Empty description='Không có dữ liệu' /> }}
+                        />
+                    </div>
             )}
 
 

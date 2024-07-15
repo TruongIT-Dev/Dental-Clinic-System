@@ -34,10 +34,13 @@ import AddNewRoom from './pages/dashboard/admin/RoomManagement/AddNewRoom';
 import DetailService from './pages/dashboard/admin/ServiceManagement/DetailService';
 import FormUpdateCategory from './pages/dashboard/admin/ServiceManagement/FormUpdateCategory';
 import FormUpdateService from './pages/dashboard/admin/ServiceManagement/FormUpdateService';
-import DentistDashboard from './pages/dashboard/dentist/home';
+import DentistProfile from './pages/dashboard/dentist/home';
 import DentistExaminationManagement from './pages/dashboard/dentist/SheduleManagement/Examination';
 import DentistTreatmentManagement from './pages/dashboard/dentist/SheduleManagement/Treatment';
 import DentistPatientManagement from './pages/dashboard/dentist/PatientManagement';
+import AddNewTreatmentScheule from './pages/dashboard/dentist/SheduleManagement/Treatment/AddNewTreatmentShedule';
+import PatientMedicalRecord from './pages/dashboard/dentist/PatientManagement/PatientMedicalRecord';
+import DentistChangePassword from './pages/dashboard/dentist/ChangePassword';
 
 function App() {
   const account = useSelector(state => state?.account);
@@ -112,15 +115,19 @@ function App() {
         {/* Dentist View */}
         {isAuthenticated.loggedIn && isAuthenticated.role === 'dentist' && (
           <Route path='/dentist' element={<AdminDashboard />}>
-            <Route index element={<DentistDashboard />} />
+            <Route index element={<DentistProfile />} />
+
+            {/* Đổi mật khẩu */}
+            <Route path='doi-mat-khau' element={<DentistChangePassword />} />
 
             {/* Quản lý lịch khám điều trị */}
             <Route path='quan-ly-lich-kham' element={<DentistExaminationManagement />} />
             <Route path='quan-ly-lich-dieu-tri' element={<DentistTreatmentManagement />} />
+            <Route path='tao-lich-dieu-tri' element={<AddNewTreatmentScheule />} />
 
             {/* Quản lý Bệnh nhân */}
             <Route path='quan-ly-benh-nhan' element={<DentistPatientManagement />} />
-
+            <Route path='ho-so-benh-nhan' element={<PatientMedicalRecord />} />
           </Route>
         )}
 

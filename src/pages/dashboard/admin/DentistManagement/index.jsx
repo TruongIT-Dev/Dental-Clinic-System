@@ -1,4 +1,4 @@
-import { Space, Table, Input, Button, Typography, Modal, Descriptions, notification, message, Popconfirm, Empty } from 'antd';
+import { Space, Table, Input, Button, Typography, Modal, Descriptions, notification, Popconfirm, Empty, Tag } from 'antd';
 import { DoDeleteDentistByAdmin, DoViewAllDentistByAdmin, DoViewInfoDentistByAdmin } from '../../../../apis/api';
 import { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
@@ -70,7 +70,7 @@ const DentistManagement = () => {
             const APIDeleteDentist = await DoDeleteDentistByAdmin(dentist_id);
             if (APIDeleteDentist.status === 204) {
                 notification.success({
-                    message: 'Xóa thành công',
+                    message: 'Khóa tài khoản thành công',
                     duration: 2,
                 });
                 window.location.reload();
@@ -79,7 +79,7 @@ const DentistManagement = () => {
             console.log("Error Delete Dentist:", error)
             if (error.response.status) {
                 notification.error({
-                    message: 'Xóa thất bại',
+                    message: 'Khóa tài khoản thất bại',
                     duration: 2,
                 });
             }
@@ -114,7 +114,7 @@ const DentistManagement = () => {
 
     const columns = [
         {
-            title: 'STT',
+            title: 'No.',
             key: 'index',
             render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
         },
@@ -163,18 +163,28 @@ const DentistManagement = () => {
             key: 'specialty',
         },
         {
+            title: 'Trạng thái',
+            dataIndex: 'deleted_at',
+            key: 'deleted_at',
+            render: (deleted_at) => (
+                <Tag color={deleted_at.Valid ? 'red' : 'green'}>
+                    {deleted_at.Valid ? 'Deactive' : 'Active'}
+                </Tag>
+            ),
+        },
+        {
             title: 'Thao tác',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
                     <Popconfirm
-                        title="Bạn có chắc chắn muốn xóa?"
+                        title="Xác nhận khóa tài khoản?"
                         onConfirm={() => confirmDeleteDentist(record.id)}
                         onCancel={cancelDeleteDentist}
                         okText="Có"
                         cancelText="Hủy"
                     >
-                        <Button danger>Xóa</Button>
+                        <Button danger>Khóa tài khoản</Button>
                     </Popconfirm>
                 </Space>
             ),
@@ -185,7 +195,6 @@ const DentistManagement = () => {
     const handleTableChange = (pagination) => {
         setPagination(pagination);
     };
-
 
     const showInfoModal = () => {
         setInfoModal(true);
@@ -202,7 +211,7 @@ const DentistManagement = () => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
         const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
+        return `${day}/${month}/${year}`;
     };
 
     // -----------------------------------------

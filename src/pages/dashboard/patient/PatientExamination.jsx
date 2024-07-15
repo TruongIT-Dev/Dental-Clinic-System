@@ -1,8 +1,8 @@
-import { Card, Row, Col, Button } from 'antd';
+import { Card, Row, Col, Button, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import { Modal, Pagination, Empty } from 'antd';
-import { DoViewDetailExamination, DoViewExaminationAppointment } from '../../../apis/api';
-import moment from 'moment';
+import { DoCancelSchedule, DoViewDetailExamination, DoViewExaminationAppointment } from '../../../apis/api';
+import dayjs from 'dayjs';
 
 
 
@@ -27,6 +27,7 @@ const ExaminationValues = {
     color: '#000',
 }
 
+
 const PatientExamination = () => {
     // Modal - Detail Patient Info
     const [open, setOpen] = useState(false);
@@ -35,6 +36,9 @@ const PatientExamination = () => {
     const [dataExamination, setDataExamination] = useState([]);
     const [dataDetailExamination, setDataDetailExamination] = useState([]);
     // console.log('dataDetailExamination', dataDetailExamination)
+    // console.log('dataExamination', dataExamination)
+
+    const [cancelSchedule, setCancelSchedule] = useState(false);
 
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
@@ -57,47 +61,23 @@ const PatientExamination = () => {
         return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " VND";
     }
 
-    // Hàm Time
-    // const toVietnamTime = (timeString) => {
-    //     const date = new Date(timeString);
-    //     const options = {
-    //         timeZone: 'Asia/Ho_Chi_Minh',
-    //         hour12: false,
-    //         year: 'numeric',
-    //         month: '2-digit',
-    //         day: '2-digit',
-    //         hour: '2-digit',
-    //         minute: '2-digit',
-    //         second: '2-digit',
-    //     };
-    //     return date.toLocaleString('en-US', options);
-    // };
-
-    // // Assuming toVietnamTime function exists and formats the datetime string
-    // const extractTime = (datetime) => {
-    //     // Extract the time from the datetime string
-    //     return datetime.split(', ')[1];
-    // };
-
     const extractTime = (utcTime) => {
-        // Parse the UTC time with Moment.js and extract the time part
-        const timePart = moment.utc(utcTime).format('HH:mm:ss'); // Format only hours, minutes, and seconds
-
-        return timePart;
+        const vietnamTime = dayjs(utcTime).tz('Asia/Ho_Chi_Minh');
+        return vietnamTime.local().format('HH:mm');
     };
 
     // Hàm Date
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const day = date.getDate();
-        const month = date.getMonth() + 1; // Months are zero-indexed
+        const month = date.getMonth() + 1;
         const year = date.getFullYear();
 
         // Ensure leading zeros if day or month is single digit
         const formattedDay = day < 10 ? `0${day}` : day;
         const formattedMonth = month < 10 ? `0${month}` : month;
 
-        return `${formattedDay}-${formattedMonth}-${year}`;
+        return `${formattedDay}/${formattedMonth}/${year}`;
     };
 
     // Hiện Modal Chi tiết Lịch Khám
@@ -137,12 +117,30 @@ const PatientExamination = () => {
             console.log("Lỗi Detail Examination: ", error);
         }
     }
+
+    // Hủy 1 Lịch Khám
+    const handleCancelSchedule = async (id) => {
+        try {
+            const APICancelSchedule = await DoCancelSchedule(id);
+            if (APICancelSchedule.status === 204) {
+                // console.log("Đã hủy lịch khám")
+                notification.success({
+                    message: 'Hủy lịch khám thành công',
+                    duration: 2,
+                })
+                setCancelSchedule(true);
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log("Error Cancel Schedule:", error);
+        }
+    }
     // ***********************************************
 
     // Nút Xem Chi tiết Phiếu khám
     const handleClickCard = (card_id) => {
         fetchDetailExamination(card_id);
-        console.log('dataDetailExamination', dataDetailExamination)
+        // console.log('dataDetailExamination', dataDetailExamination)
     }
 
     return (
@@ -157,6 +155,8 @@ const PatientExamination = () => {
                                         <Card
                                             extra={
                                                 <Button
+                                                    type='primary'
+                                                    ghost
                                                     onClick={() => {
                                                         setOpen(true);
                                                         handleClickCard(data.id);
@@ -185,23 +185,45 @@ const PatientExamination = () => {
                                                             <div style={{ textAlign: 'end' }}>
                                                                 <p style={ExaminationID}>{data.id}</p>
                                                                 <p style={ExaminationValues}>{formatCurrency(data.total_cost)}</p>
-                                                                <p style={ExaminationValues}>{data.status}</p>
+                                                                <p style={{ ...ExaminationValues, color: data.status === "Đã hủy" ? "red" : "green" }}>
+                                                                    {data.status}
+                                                                </p>    
                                                             </div>
                                                         </Col>
                                                     </Row>
                                                 </div>
                                             </div>
+
+                                            {data.status === "Đang chờ" && (
+                                                <>
+                                                    {/* Cancel Lịch khám */}
+                                                    <div style={{ display: 'grid', marginTop: '1rem' }}>
+                                                        <Button
+                                                            danger
+                                                            onClick={() => {
+                                                                handleCancelSchedule(data.id)
+                                                            }}
+                                                            style={{ marginLeft: '1rem' }}
+                                                        >
+                                                            Hủy lịch khám
+                                                        </Button>
+                                                    </div>
+                                                </>
+                                            )}
+
                                         </Card>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <Pagination
-                            defaultCurrent={1}
-                            total={dataExamination.length}
-                            pageSize={pageSize}
-                            onChange={onPageChange}
-                        />
+                        {dataExamination.length >= 3 && (
+                            <Pagination
+                                defaultPageSize={1}
+                                total={dataExamination.length}
+                                pageSize={pageSize}
+                                onChange={onPageChange}
+                            />
+                        )}
                     </div>
                 </>
             ) : (
@@ -255,6 +277,7 @@ const PatientExamination = () => {
                                         <p style={ExaminationDetailText}>Giờ khám</p>
                                         <p style={ExaminationDetailText}>Nha sĩ</p>
                                         <p style={ExaminationDetailText}>Chuyên khoa</p>
+                                        <p style={ExaminationDetailText}>Loại hình dịch vụ quan tâm</p>
                                         <p style={ExaminationDetailText}>Phí khám bệnh</p>
                                     </div>
                                 </Col>
@@ -270,6 +293,7 @@ const PatientExamination = () => {
                                         </p>
                                         <p style={ExaminationValues}>{dataDetailExamination.dentist_name}</p>
                                         <p style={ExaminationValues}>{dataDetailExamination.dentist_specialty}</p>
+                                        <p style={ExaminationValues}>{dataDetailExamination.service_category === null ? 'Không có' : dataDetailExamination.service_category}</p>
                                         <p style={ExaminationValues}>{formatCurrency(dataDetailExamination.total_cost)}</p>
                                     </div>
                                 </Col>

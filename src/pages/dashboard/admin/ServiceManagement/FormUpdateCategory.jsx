@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { DoUpdateCategoryByAdmin, DoViewDetailCategoryByAdmin } from "../../../../apis/api";
 import { useEffect, useState } from "react";
-import { Form, Input, Button, Typography, Image, Space, notification, Breadcrumb } from 'antd';
+import { Form, Input, Button, Typography, notification, Breadcrumb } from 'antd';
 
 
 const FormUpdateCategory = () => {
@@ -21,10 +21,6 @@ const FormUpdateCategory = () => {
 
     // Liệt kê Chi tiết Loại hình dịch vụ
     const [detailCategory, setDetailCategory] = useState({});
-    console.log("detailCategory", detailCategory)
-    const [iconVisible, setIconVisible] = useState(false);
-    const [bannerVisible, setBannerVisible] = useState(false);
-
 
     //-----------------------------------------------------------------
     //*****************************************************************

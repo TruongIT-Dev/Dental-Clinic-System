@@ -283,7 +283,7 @@ const AddNewDentist = () => {
                         </Form.Item>
 
                         <Form.Item
-                            label="Chuyên khoa"
+                            label="Chọn chuyên khoa"
                             name="specialty_id"
                             rules={[
                                 {

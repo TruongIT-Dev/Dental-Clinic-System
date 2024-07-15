@@ -49,7 +49,7 @@ const Examination = () => {
         <>
             {currentData.map((data, index) => (
                 <>
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '0 auto 1rem' }}>
+                    <div key={index} style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '0 auto 1rem' }}>
                         <div style={{ width: '50%' }}>
                             <Card
                                 pageSize
@@ -95,11 +95,13 @@ const Examination = () => {
                     </div>
                 </>
             ))}
-            <Pagination
-                defaultCurrent={1}
-                total={dataExamination.length}
-                pageSize={pageSize}
-                onChange={onPageChange} />
+            {dataExamination.length >= 3 && (
+                <Pagination
+                    total={dataExamination.length}
+                    pageSize={pageSize}
+                    onChange={onPageChange}
+                />
+            )}
 
 
             {/* Chi Tiết Thông tin Lịch Khám */}

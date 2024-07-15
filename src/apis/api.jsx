@@ -22,6 +22,14 @@ export const GetLogin = (email, password) => {
         })
 }
 
+// Đổi Mật Khẩu
+export const DoChangePassword = (old_password, new_password) => {
+    return axios.patch('/api/v1/users/password', {
+        old_password: old_password,
+        new_password: new_password
+    })
+}
+
 // View Trang Category
 export const DoViewCategory = () => {
     return axios.get('/api/v1/service-categories');
@@ -63,6 +71,11 @@ export const DoViewExaminationAppointment = () => {
 // Show Thông tin chi tiết của 1 Phiếu khám
 export const DoViewDetailExamination = (card_id) => {
     return axios.get(`/api/v1/patients/appointments/examination/${card_id}`);
+}
+
+// API Hủy 1 Lịch Khám
+export const DoCancelSchedule = (id) => {
+    return axios.patch(`/api/v1/appointments/examination/${id}/cancel`);
 }
 
 //************************************************************************************** */
@@ -225,6 +238,15 @@ export const DoAddNewExaminationByAdmin = (dentist_id, room_id, start_time, end_
     })
 }
 
+// API View Chi tiết Các Bệnh Nhân của 1 Lịch khám
+export const DoViewPatientOfAExaminationScheduleByAdmin = (id) => {
+    return axios.get(`/api/v1/schedules/examination/${id}/patients`)
+}
+
+// API View List Các Lịch Điều Trị
+export const DoViewAllTreatmentByAdmin = (name) => {
+    return axios.get(`/api/v1/schedules/treatment?q=${name}`)
+}
 
 
 // **************************Quản Lý Phòng Khám*******************************
@@ -239,4 +261,69 @@ export const DoAddNewRoomByAdmin = (name) => {
     return axios.post('/api/v1/rooms', {
         name: name,
     })
+}
+
+// API Delete 1 Phòng Khám
+export const DoDeleteRoomByAdmin = (id) => {
+    return axios.delete(`/api/v1/rooms/${id}`)
+}
+
+
+
+//************************************************************************************** */
+//************************************API DENTIST***************************************** */
+
+// List Thông tin cá nhân Dentist
+export const DoViewDentistInfoByDentist = (id) => {
+    return axios.get(`/api/v1/dentists/${id}`);
+}
+
+// Đổi mật khẩu
+export const DoChangePasswordByDentist = (old_password, new_password, token) => {
+    return axios.patch('/api/v1/users/password', {
+        old_password: old_password,
+        new_password: new_password
+    }, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+};
+// Tạo 1 Lịch Điều Trị
+export const DoCreateTreatmentScheduleByDentist = (dentist_id, end_time, patient_id, payment_id, room_id, service_id, service_quantity, start_time) => {
+    return axios.post('/api/v1/appointments/treatment', {
+        dentist_id: dentist_id,
+        end_time: end_time,
+        start_time: start_time,
+        patient_id: patient_id,
+        payment_id: payment_id,
+        room_id: room_id,
+        service_id: service_id,
+        service_quantity: service_quantity,
+    })
+}
+
+// List Danh sách Bệnh Nhân
+export const DoListPatientsByDentist = () => {
+    return axios.get(`/api/v1/patients`)
+}
+
+// List Danh sách Phòng
+export const DoListRoomsByDentist = () => {
+    return axios.get('/api/v1/rooms')
+}
+
+// List Danh sách Loại hình Dịch vụ
+export const DoListCategoriesByDentist = () => {
+    return axios.get('/api/v1/service-categories')
+}
+
+// List Danh sách Dịch vụ
+export const DoListServicesByDentist = (slug) => {
+    return axios.get(`/api/v1/services?category=${slug}`)
+}
+
+// List Thanh toán
+export const DoListPaymentsByDentist = () => {
+    return axios.get('/api/v1/payment-methods')
 }

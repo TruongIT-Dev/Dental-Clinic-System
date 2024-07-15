@@ -1,4 +1,4 @@
-import { Space, Table, Button, Input, Popconfirm, message, Modal, Breadcrumb, notification, Empty } from 'antd';
+import { Space, Table, Button, Input, Popconfirm, Modal, Breadcrumb, notification, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { DoDeleteDataServiceByAdmin, DoSearchServiceByAdmin, DoViewDataServiceByAdmin, DoViewDetailCategoryByAdmin } from '../../../../apis/api';
 import { useParams, useLocation, Link } from 'react-router-dom';
@@ -50,6 +50,10 @@ const DetailService = () => {
             const APIDeleteACategory = await DoDeleteDataServiceByAdmin(id_delete);
             // console.log("APIDeleteACategory: ", APIDeleteACategory)
             if (APIDeleteACategory.status === 204) {
+                notification.success({
+                    message: 'Xóa thành công dịch vụ',
+                    duration: 2
+                })
                 window.location.reload();
             }
         } catch (error) {
@@ -58,11 +62,6 @@ const DetailService = () => {
     }
     const confirm = (id) => {
         fectchDeleteAServiceByAdmin(id);
-        message.success('Xóa thành công');
-    };
-    const cancel = (e) => {
-        console.log(e);
-        message.error('Hủy');
     };
 
     // API Lấy tên Của Dịch vụ
@@ -119,7 +118,7 @@ const DetailService = () => {
     };
     const columns = [
         {
-            title: 'STT',
+            title: 'No.',
             key: 'index',
             render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
         },
@@ -159,8 +158,6 @@ const DetailService = () => {
                     <Popconfirm
                         title="Bạn có chắc chắn muốn xóa?"
                         onConfirm={() => confirm(record.id)}
-                        // onConfirm={() => { console.log("Record:", record) }}
-                        onCancel={cancel}
                         okText="Yes"
                         cancelText="No"
                     >
@@ -243,8 +240,10 @@ const DetailService = () => {
                     onChange={handleTableChange}
                 />
             ) : (
-                <div style={{ marginTop: '5rem' }}>
-                    <Empty description='Không có dữ liệu' />
+                <div>
+                    <Table columns={columns} dataSource={dataService}
+                        locale={{ emptyText: <Empty description='Không có dữ liệu' /> }}
+                    />
                 </div>
             )}
 

@@ -11,9 +11,9 @@ const FormAddNewCategory = () => {
         console.log('Failed:', errorInfo);
     };
 
-    const onReset = () => {
-        form.resetFields();
-    };
+    // const onReset = () => {
+    //     form.resetFields();
+    // };
 
     const onFinish = async (values) => {
         const { banner_url, description, icon_url, name } = values;
@@ -28,10 +28,10 @@ const FormAddNewCategory = () => {
                     window.location.reload();
                     break;
                 case 400:
-                    message.error('Bad Request');
+                    message.error('Thêm loại hình dịch vụ thất bại');
                     break;
                 default:
-                    message.error('Thêm thất bại');
+                    message.error('Thêm loại hình dịch vụ thất bại');
                     break;
             }
         } catch (error) {
@@ -124,18 +124,9 @@ const FormAddNewCategory = () => {
                 </Row>
 
 
-                <Form.Item
-                    wrapperCol={{
-                        offset: 8,
-                        span: 16,
-                    }}
-                >
-                    <Button type="primary" htmlType="submit">
-                        Thêm
-                    </Button>
-
-                    <Button style={{ marginLeft: '12px' }} htmlType="button" onClick={onReset}>
-                        Reset
+                <Form.Item style={{ display: 'grid', placeItems: 'center' }}>
+                    <Button style={{}} type="primary" htmlType="submit">
+                        Thêm mới loại hình dịch vụ
                     </Button>
                 </Form.Item>
             </Form>

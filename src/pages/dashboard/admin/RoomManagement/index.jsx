@@ -1,6 +1,6 @@
-import { Button, Space, Table, Input, Typography, notification, Modal, Form } from 'antd';
+import { Button, Space, Table, Input, Typography, notification, Modal, Form, Popconfirm } from 'antd';
 import { useEffect, useState } from 'react';
-import { DoAddNewRoomByAdmin, DoViewAllRoomsByAdmin } from '../../../../apis/api';
+import { DoAddNewRoomByAdmin, DoDeleteRoomByAdmin, DoViewAllRoomsByAdmin } from '../../../../apis/api';
 import { PlusOutlined } from '@ant-design/icons';
 
 
@@ -36,6 +36,7 @@ const RoomManagement = () => {
     // *****************************************
     // ------------- API Function --------------
 
+    // API Lấy danh sách các Phòng
     const fetchAllRoomsByAdmin = async () => {
 
         try {
@@ -57,7 +58,7 @@ const RoomManagement = () => {
         }
     }
 
-    // Submit Form Success
+    // API Tạo 1 Phòng mới
     const onFinish = async (values) => {
 
         console.log('Success:', values);
@@ -88,11 +89,15 @@ const RoomManagement = () => {
         }
     };
 
-    // Submit Form Failed
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
+    // API Delete 1 Phòng
+    const fetchDeleteRoomByAdmin = async (id) => {
+        const APIDeleteRoom = await DoDeleteRoomByAdmin(id);
+    }
 
+    const handleDeleteConfirm = (e) => {
+        fetchDeleteRoomByAdmin();
+
+    };
     // *****************************************
 
 
@@ -131,7 +136,7 @@ const RoomManagement = () => {
         //     key: 'id',
         // },
         {
-            title: 'STT',
+            title: 'No.',
             key: 'index',
             render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
         },
@@ -143,10 +148,18 @@ const RoomManagement = () => {
         {
             title: 'Thao tác',
             key: 'action',
-            render: () => (
+            render: (_, record) => (
                 <Space size="middle">
                     <Button type='primary'>Chỉnh sửa</Button>
-                    <Button danger>Xóa</Button>
+                    <Popconfirm
+                        title="Delete the task"
+                        description="Are you sure to delete this task?"
+                        onConfirm={handleDeleteConfirm}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Button danger>Delete</Button>
+                    </Popconfirm>
                 </Space>
             ),
         },
@@ -163,7 +176,7 @@ const RoomManagement = () => {
         <>
             {/* Header */}
             <div>
-                <Title level={2}>Danh sách phòng khám</Title>
+                <Title level={2}>Danh sách phòng</Title>
             </div>
 
             {/* Top-Bar Btn*/}
@@ -203,7 +216,6 @@ const RoomManagement = () => {
                             remember: true,
                         }}
                         onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
                         autoComplete="off"
                     >
                         <Form.Item
