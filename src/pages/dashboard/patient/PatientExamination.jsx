@@ -1,7 +1,7 @@
-import { Card, Row, Col, Button } from 'antd';
+import { Card, Row, Col, Button, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import { Modal, Pagination, Empty } from 'antd';
-import { DoViewDetailExamination, DoViewExaminationAppointment } from '../../../apis/api';
+import { DoCancelSchedule, DoViewDetailExamination, DoViewExaminationAppointment } from '../../../apis/api';
 import dayjs from 'dayjs';
 
 
@@ -27,6 +27,7 @@ const ExaminationValues = {
     color: '#000',
 }
 
+
 const PatientExamination = () => {
     // Modal - Detail Patient Info
     const [open, setOpen] = useState(false);
@@ -35,6 +36,9 @@ const PatientExamination = () => {
     const [dataExamination, setDataExamination] = useState([]);
     const [dataDetailExamination, setDataDetailExamination] = useState([]);
     // console.log('dataDetailExamination', dataDetailExamination)
+    // console.log('dataExamination', dataExamination)
+
+    const [cancelSchedule, setCancelSchedule] = useState(false);
 
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
@@ -113,12 +117,30 @@ const PatientExamination = () => {
             console.log("Lỗi Detail Examination: ", error);
         }
     }
+
+    // Hủy 1 Lịch Khám
+    const handleCancelSchedule = async (id) => {
+        try {
+            const APICancelSchedule = await DoCancelSchedule(id);
+            if (APICancelSchedule.status === 204) {
+                // console.log("Đã hủy lịch khám")
+                notification.success({
+                    message: 'Hủy lịch khám thành công',
+                    duration: 2,
+                })
+                setCancelSchedule(true);
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log("Error Cancel Schedule:", error);
+        }
+    }
     // ***********************************************
 
     // Nút Xem Chi tiết Phiếu khám
     const handleClickCard = (card_id) => {
         fetchDetailExamination(card_id);
-        console.log('dataDetailExamination', dataDetailExamination)
+        // console.log('dataDetailExamination', dataDetailExamination)
     }
 
     return (
@@ -133,6 +155,8 @@ const PatientExamination = () => {
                                         <Card
                                             extra={
                                                 <Button
+                                                    type='primary'
+                                                    ghost
                                                     onClick={() => {
                                                         setOpen(true);
                                                         handleClickCard(data.id);
@@ -161,23 +185,45 @@ const PatientExamination = () => {
                                                             <div style={{ textAlign: 'end' }}>
                                                                 <p style={ExaminationID}>{data.id}</p>
                                                                 <p style={ExaminationValues}>{formatCurrency(data.total_cost)}</p>
-                                                                <p style={ExaminationValues}>{data.status}</p>
+                                                                <p style={{ ...ExaminationValues, color: data.status === "Đã hủy" ? "red" : "green" }}>
+                                                                    {data.status}
+                                                                </p>    
                                                             </div>
                                                         </Col>
                                                     </Row>
                                                 </div>
                                             </div>
+
+                                            {data.status === "Đang chờ" && (
+                                                <>
+                                                    {/* Cancel Lịch khám */}
+                                                    <div style={{ display: 'grid', marginTop: '1rem' }}>
+                                                        <Button
+                                                            danger
+                                                            onClick={() => {
+                                                                handleCancelSchedule(data.id)
+                                                            }}
+                                                            style={{ marginLeft: '1rem' }}
+                                                        >
+                                                            Hủy lịch khám
+                                                        </Button>
+                                                    </div>
+                                                </>
+                                            )}
+
                                         </Card>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <Pagination
-                            defaultCurrent={1}
-                            total={dataExamination.length}
-                            pageSize={pageSize}
-                            onChange={onPageChange}
-                        />
+                        {dataExamination.length >= 3 && (
+                            <Pagination
+                                defaultPageSize={1}
+                                total={dataExamination.length}
+                                pageSize={pageSize}
+                                onChange={onPageChange}
+                            />
+                        )}
                     </div>
                 </>
             ) : (

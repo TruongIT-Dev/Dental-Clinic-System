@@ -1,46 +1,67 @@
-import { Button, Form, Input, Typography } from 'antd';
+import { Card, Col, Descriptions, Row, Typography } from 'antd';
 
-const { Title } = Typography;
+import { useSelector } from 'react-redux';
 
-const PatientInfo = () => (
-    <>
-            <Title level={3}>THÔNG TIN CÁ NHÂN</Title>
-            <div className="col-lg-12 pb-5">
-            <form className="row">
-                <div className="col-md-12">
-                    <div className="form-group">
-                        <label for="account-fn">First Name</label>
-                        <input className="form-control" type="text" id="account-fn" value="Daniel" required=""/>
-                    </div>
-                </div>
-                <div className="col-md-12">
-                    <div className="form-group">
-                        <label for="account-ln">Last Name</label>
-                        <input className="form-control" type="text" id="account-ln" value="Adams" required=""/>
-                    </div>
-                </div>
-                <div className="col-md-12">
-                    <div className="form-group">
-                        <label for="account-email">E-mail Address</label>
-                        <input className="form-control" type="email" id="account-email" value="daniel.adams@example.com" disabled=""/>
-                    </div>
-                </div>
-                <div className="col-md-12">
-                    <div className="form-group">
-                        <label for="account-phone">Phone Number</label>
-                        <input className="form-control" type="text" id="account-phone" value="+7 (805) 348 95 72" required=""/>
-                    </div>
-                </div>
 
-                <div className="col-12">
-                    <hr className="mt-2 mb-3"/>
-                    <div className="d-flex flex-wrap justify-content-between align-items-center">
-                        <button className="btn btn-style-1 btn-primary" type="button" data-toast="" data-toast-position="topRight" data-toast-type="success" data-toast-icon="fe-icon-check-circle" data-toast-title="Success!" data-toast-message="Your profile updated successfuly.">Update Profile</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    
-    </>
-);
+const PatientInfo = () => {
+
+    // ***********************************************************************
+    //                                Variables
+    const { Title } = Typography;
+    // set biến 'userSelector' chứa thông tin đã đăng nhập
+    const user_info = useSelector(state => state?.account?.user?.user?.user_info);
+    console.log(user_info)
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                useState
+
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                useEffect
+
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                API Function
+
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                other Function
+
+    //************************************************************************
+    return (
+
+
+        <>
+            <div className="container mx-auto px-4 mt-4">
+                <Title level={3}
+                    style={{ marginBottom: '2rem' }}> Thông tin tài khoản </Title>
+                <Row style={{ width: '100%', display: 'grid', placeItems: 'center' }}>
+                    <Col span={22}>
+                        <Card>
+                            <Descriptions layout='vertical' style={{ display: 'grid', placeContent: 'center' }}>
+                                <Descriptions.Item label="Họ và tên">{user_info.full_name}</Descriptions.Item>
+                                <Descriptions.Item label="Email"> {user_info.email}</Descriptions.Item>
+                                <Descriptions.Item label="Số điện thoại">{user_info.phone_number}</Descriptions.Item>
+                                <Descriptions.Item label="Giới tính">{user_info.gender}</Descriptions.Item>
+                                <Descriptions.Item label="Ngày sinh">{user_info.date_of_birth}</Descriptions.Item>
+                                {/* <Descriptions.Item label="Mật khẩu">
+                                    **************
+                                </Descriptions.Item> */}
+                            </Descriptions>
+                        </Card>
+                    </Col>
+                </Row>
+            </div>
+
+        </>
+    )
+}
 export default PatientInfo;

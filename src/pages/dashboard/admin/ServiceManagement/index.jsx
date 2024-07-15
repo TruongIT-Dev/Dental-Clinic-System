@@ -219,7 +219,7 @@ const ServiceManagement = () => {
             {/* Top-Bar Btn*/}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Search
-                    placeholder="Nhập tên"
+                    placeholder="Nhập tên loại hình dịch vụ"
                     allowClear
                     enterButton="Tìm kiếm"
                     size="large"
@@ -248,9 +248,11 @@ const ServiceManagement = () => {
                     onChange={handleTableChange}
                 />
             ) : (
-                <div style={{ marginTop: '5rem' }}>
-                    <Empty description='Không có dữ liệu' />
-                </div>
+                    <div>
+                        <Table columns={columns} dataSource={searchName}
+                            locale={{ emptyText: <Empty description='Không có dữ liệu' /> }}
+                        />
+                    </div>
             )}
 
 

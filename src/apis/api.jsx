@@ -22,6 +22,14 @@ export const GetLogin = (email, password) => {
         })
 }
 
+// Đổi Mật Khẩu
+export const DoChangePassword = (old_password, new_password) => {
+    return axios.patch('/api/v1/users/password', {
+        old_password: old_password,
+        new_password: new_password
+    })
+}
+
 // View Trang Category
 export const DoViewCategory = () => {
     return axios.get('/api/v1/service-categories');
@@ -63,6 +71,11 @@ export const DoViewExaminationAppointment = () => {
 // Show Thông tin chi tiết của 1 Phiếu khám
 export const DoViewDetailExamination = (card_id) => {
     return axios.get(`/api/v1/patients/appointments/examination/${card_id}`);
+}
+
+// API Hủy 1 Lịch Khám
+export const DoCancelSchedule = (id) => {
+    return axios.patch(`/api/v1/appointments/examination/${id}/cancel`);
 }
 
 //************************************************************************************** */
@@ -230,6 +243,11 @@ export const DoViewPatientOfAExaminationScheduleByAdmin = (id) => {
     return axios.get(`/api/v1/schedules/examination/${id}/patients`)
 }
 
+// API View List Các Lịch Điều Trị
+export const DoViewAllTreatmentByAdmin = (name) => {
+    return axios.get(`/api/v1/schedules/treatment?q=${name}`)
+}
+
 
 // **************************Quản Lý Phòng Khám*******************************
 
@@ -248,4 +266,14 @@ export const DoAddNewRoomByAdmin = (name) => {
 // API Delete 1 Phòng Khám
 export const DoDeleteRoomByAdmin = (id) => {
     return axios.delete(`/api/v1/rooms/${id}`)
+}
+
+
+
+//************************************************************************************** */
+//************************************API DENTIST***************************************** */
+
+// List Danh Sách Các Nha sĩ
+export const DoListAllDentistByDentist = (name) => {
+    return axios.get(`/api/v1/dentists?q=${id}`)
 }

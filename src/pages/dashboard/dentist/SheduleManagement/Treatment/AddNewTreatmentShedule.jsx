@@ -9,10 +9,61 @@ import {
     DatePicker,
     TimePicker,
 } from "antd";
+import { useEffect, useState } from "react";
+import { DoListAllDentistByDentist } from "../../../../../apis/api";
+import { useSelector } from "react-redux";
 
 const AddNewTreatmentScheule = () => {
 
+    // ***********************************************************************
+    //                                Variables
+
     const { Title } = Typography;
+    // set biến 'userSelector' chứa thông tin đã đăng nhập
+    const [form] = Form.useForm();
+
+    const userInfo = useSelector(state => state?.account?.user?.user?.user_info);
+    console.log("userInfo:", userInfo)
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                useState
+
+    // const [listDentists, setListDentists] = useState([]);
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                useEffect
+
+    // useEffect(() => {
+    //     fetchListAllDentistsByDentist(name)
+    // }, [name])
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                API Function
+
+    // const fetchListAllDentistsByDentist = async (name) => {
+    //     try {
+    //         const APIListDentists = await DoListAllDentistByDentist(name);
+    //         if (APIListDentists.status === 200) {
+    //             const GetDataListDentists = APIListDentists?.data || [];
+    //             setListDentists(GetDataListDentists);
+    //         }
+    //     } catch (error) {
+    //         console.log("Lỗi Get Danh sách Dentist: ", error)
+    //     }
+    // }
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                other Function
+
+    //************************************************************************
 
     return (
 
@@ -22,28 +73,63 @@ const AddNewTreatmentScheule = () => {
                 <Title level={2}>Tạo lịch điều trị</Title>
             </div>
             <div className="container mx-auto px-4 mt-4">
+
+
+                {/* Chọn Bệnh nhân */}
                 <Form
+                    form={form}
                     layout="vertical"
                     autoComplete="true"
+
                     style={{
                         display: 'grid',
                         placeItems: 'center'
                     }}
                 >
                     <Card style={{ width: 600 }}>
-                        <Form.Item label="Họ và tên" name="full_name" rules={[{ required: true, message: 'Please input the patient\'s full name!' }]}>
+
+                        {/* Chọn Nha sĩ */}
+                        <Form.Item
+                            label="Nha sĩ"
+                            name="full_name"
+                            rules={[{ required: true, message: 'Vui lòng chọn nha sĩ' }]}
+                        >
                             <Input />
                         </Form.Item>
 
-                        <Form.Item label="Email" name="email" rules={[{ required: true, type: 'email', message: 'Please input a valid email!' }]}>
-                            <Input />
+                        <Form.Item
+                            label="Bệnh nhân"
+                            name="full_name"
+                            rules={[{ required: true, message: 'Vui lòng chọn bệnh nhân' }]}
+                        >
+                            <Select
+                                showSearch
+                                filterOption={(input, option) =>
+                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                }
+                                options={[
+                                    {
+                                        value: '1',
+                                        label: 'Jack',
+                                    },
+                                    {
+                                        value: '2',
+                                        label: 'Lucy',
+                                    },
+                                    {
+                                        value: '3',
+                                        label: 'Tom',
+                                    },
+                                ]}
+                            />
                         </Form.Item>
 
-                        <Form.Item label="Số điện thoại" name="phone_number" rules={[{ required: true, message: 'Please input the phone number!' }]}>
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item label="Ngày sinh" name="date_of_birth" rules={[{ required: true, message: 'Please select the date of birth!' }]}>
+                        {/* Chọn thời gian bắt đầu */}
+                        <Form.Item
+                            label="Ngày bắt đầu"
+                            name="start_time"
+                            rules={[{ required: true, message: 'Vui lòng chọn thời gian' }]}
+                        >
                             <DatePicker
                                 style={{ width: 200 }}
                                 format="YYYY-MM-DD"
@@ -51,15 +137,25 @@ const AddNewTreatmentScheule = () => {
                             />
                         </Form.Item>
 
-                        <Form.Item label="Giới tính" name="gender" rules={[{ required: true, message: 'Please select the gender!' }]}>
-                            <Radio.Group name="radiogroup">
-                                <Radio value='Nam'>Nam</Radio>
-                                <Radio value='Nữ'>Nữ</Radio>
-                                <Radio value='Khác'>Khác</Radio>
-                            </Radio.Group>
+                        {/* Chọn thời gian kết thúc */}
+                        <Form.Item
+                            label="Ngày kết thúc"
+                            name="end_time"
+                            rules={[{ required: true, message: 'Vui lòng chọn thời gian' }]}
+                        >
+                            <DatePicker
+                                style={{ width: 200 }}
+                                format="YYYY-MM-DD"
+                                placeholder='YYYY-MM-DD'
+                            />
                         </Form.Item>
 
-                        <Form.Item label="Loại hình dịch vụ" name="specialty_id" rules={[{ required: true, message: 'Please select the specialty!' }]}>
+                        {/* Chọn loại hình dịch vụ */}
+                        <Form.Item
+                            label="Loại hình dịch vụ"
+                            name="specialty_id"
+                            rules={[{ required: true, message: 'Vui lòng chọn loại hình dịch vụ' }]}
+                        >
                             <Select
                                 style={{ width: 400 }}
                                 options={[
@@ -91,32 +187,77 @@ const AddNewTreatmentScheule = () => {
                             />
                         </Form.Item>
 
-                        <Form.Item label="Ngày hẹn" name="appointment_date" rules={[{ required: true, message: 'Please select the appointment date!' }]}>
-                            <DatePicker
-                                style={{ width: 200 }}
-                                format="YYYY-MM-DD"
-                                placeholder='YYYY-MM-DD'
+                        {/* Chọn số lần sử dụng dịch vụ*/}
+                        <Form.Item
+                            label="Số lần sử dụng dịch vụ"
+                            name="payment_id"
+                            rules={[{ required: true, message: 'Vui lòng chọn số lần sử dụng dịch vụ' }]}
+                        >
+                            <Select
+                                style={{ width: 400 }}
+                                options={[
+                                    {
+                                        value: 'cleaning',
+                                        label: 'Tiền mặt',
+                                    },
+                                    {
+                                        value: 'whitening',
+                                        label: 'Ngân hàng',
+                                    },
+                                ]}
                             />
                         </Form.Item>
 
-                        <Form.Item label="Giờ hẹn" name="appointment_time" rules={[{ required: true, message: 'Please select the appointment time!' }]}>
-                            <TimePicker
-                                style={{ width: 200 }}
-                                format="HH:mm"
-                                placeholder='HH:mm'
+                        {/* Chọn phòng*/}
+                        <Form.Item
+                            label="Phòng"
+                            name="room_id"
+                            rules={[{ required: true, message: 'Vui lòng chọn phòng' }]}
+                        >
+                            <Select
+                                style={{ width: 400 }}
+                                options={[
+                                    {
+                                        value: 'cleaning',
+                                        label: 'Tiền mặt',
+                                    },
+                                    {
+                                        value: 'whitening',
+                                        label: 'Ngân hàng',
+                                    },
+                                ]}
+                            />
+                        </Form.Item>
+
+                        {/* Chọn thanh toán*/}
+                        <Form.Item
+                            label="Hình thức thanh toán"
+                            name="payment_id"
+                            rules={[{ required: true, message: 'Vui lòng chọn hình thức thanh toán' }]}
+                        >
+                            <Select
+                                style={{ width: 400 }}
+                                options={[
+                                    {
+                                        value: 'cleaning',
+                                        label: 'Tiền mặt',
+                                    },
+                                    {
+                                        value: 'whitening',
+                                        label: 'Ngân hàng',
+                                    },
+                                ]}
                             />
                         </Form.Item>
 
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
-                                Lưu lịch hẹn
+                                Đặt lịch hẹn
                             </Button>
                         </Form.Item>
                     </Card>
                 </Form>
-
             </div>
-
         </>
     );
 };

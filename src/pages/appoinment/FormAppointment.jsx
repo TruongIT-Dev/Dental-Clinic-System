@@ -7,11 +7,18 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 
-// Function Disabled những ngày sau ngày hôm nay
 const disabledDate = (current) => {
     const today = moment().startOf('day'); // Start of today (00:00:00)
-    const endOfMonth = moment().endOf('month'); // End of the current month (23:59:59)
-    return current && (current < today || current > endOfMonth);
+    const twoWeeksLater = today.clone().add(2, 'weeks').endOf('day'); // End of the day two weeks from now
+
+    return (
+        current &&
+        (
+            current < today || // Disable dates before today
+            current >= twoWeeksLater || // Disable dates after two weeks from now
+            current.day() === 0 // Disable Sundays (0 is Sunday in Moment.js)
+        )
+    );
 };
 
 // *********************** FUNCTION ****************************
