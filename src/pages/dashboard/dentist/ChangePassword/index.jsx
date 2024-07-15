@@ -158,7 +158,7 @@ const DentistChangePassword = () => {
                         </Form.Item>
 
                         <Form.Item>
-                            <SubmitButton form={form}>Đặt Lịch Hẹn</SubmitButton>
+                            <SubmitButton form={form}>Đổi Mật Khẩu</SubmitButton>
                         </Form.Item>
                     </Card>
 
