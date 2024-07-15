@@ -86,18 +86,21 @@ const AddNewTreatmentScheule = () => {
                 navigate('/dentist/quan-ly-lich-dieu-tri');
             }
         } catch (error) {
+            const isError = error.response.data.error;
             switch (error.response.status) {
                 case 403:
-                    notification.error({
-                        message: 'Tạo lịch điều trị thất bại.',
-                        description: 'Bị trùng với lịch hẹn khác.',
-                        duration: 2
-                    })
+                    if (isError.includes("schedule overlaps with other schedules")) {
+                        notification.error({
+                            message: 'Tạo lịch điều trị thất bại',
+                            description: 'Trùng thời gian với lịch khác',
+                            duration: 2,
+                        });
+                    }
                     break;
 
                 case 500:
                     notification.error({
-                        message: 'Tạo lịch điều trị thất bại.',
+                        message: 'Tạo lịch điều trị thất bại',
                         description: 'Lỗi server',
                         duration: 2
                     })
@@ -105,7 +108,7 @@ const AddNewTreatmentScheule = () => {
 
                 default:
                     notification.error({
-                        message: 'Tạo lịch điều trị thất bại.',
+                        message: 'Tạo lịch điều trị thất bại',
                         description: 'Lỗi không xác định.',
                         duration: 2
                     })
@@ -315,7 +318,7 @@ const AddNewTreatmentScheule = () => {
 
                         {/* Chọn Loại Hình Dịch Vụ */}
                         <Form.Item
-                            label="Chọn loại hình dịch vụ"
+                            label="Loại hình dịch vụ"
                             rules={[{ required: true, message: 'Vui lòng chọn loại hình dịch vụ' }]}
                         >
                             <Select
@@ -339,7 +342,7 @@ const AddNewTreatmentScheule = () => {
 
                         {/* Chọn số lần sử dụng dịch vụ*/}
                         <Form.Item
-                            label="Số lần sử dụng dịch vụ"
+                            label="Số lượng"
                             name="service_quantity"
                             rules={[{ required: true, message: 'Vui lòng nhập số lần sử dụng dịch vụ' }]}
                         >

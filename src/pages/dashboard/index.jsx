@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { doLogoutAction } from '../../redux/account/accountSlice'
 
 
-const { Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const AdminDashboard = () => {
 
@@ -122,8 +122,8 @@ const AdminDashboard = () => {
                         <Menu theme="dark" mode="inline"
                             defaultOpenKeys={['sub1']}
                         >
-                            <Menu.SubMenu key="sub1" title="Quản lý lịch khám" icon={<ScheduleOutlined />}>
-                                <Menu.Item key="1" icon={<PieChartOutlined />}>
+                            <Menu.SubMenu key="sub1" title="Quản lý tài khoản" icon={<ScheduleOutlined />}>
+                                <Menu.Item key="1">
                                     <Link style={{ textDecoration: 'none' }} to="/dentist">Thông tin tài khoản</Link>
                                 </Menu.Item>
                                 <Menu.Item key="2">
@@ -139,9 +139,9 @@ const AdminDashboard = () => {
                                 <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-lich-dieu-tri">Quản lý lịch điều trị</Link>
                             </Menu.Item>
 
-                            <Menu.Item key="5" icon={<TeamOutlined />}>
+                            {/* <Menu.Item key="5" icon={<TeamOutlined />}>
                                 <Link style={{ textDecoration: 'none' }} to="/dentist/quan-ly-benh-nhan">Quản lý bệnh nhân</Link>
-                            </Menu.Item>
+                            </Menu.Item> */}
                         </Menu>
                     )}
 
@@ -174,13 +174,13 @@ const AdminDashboard = () => {
                         <Outlet></Outlet>
                     </div>
                 </Content>
-                <Footer
+                {/* <Footer
                     style={{
                         textAlign: 'center',
                     }}
                 >
                     Ant Design ©{new Date().getFullYear()} Created by Ant UED
-                </Footer>
+                </Footer> */}
             </Layout>
         </Layout>
     );

@@ -12,7 +12,6 @@ const DentistChangePassword = () => {
     const userInfo = useSelector(state => state?.account?.user?.user);
     const [form] = Form.useForm();
     const { Title } = Typography;
-    const navigate = useNavigate();
     // console.log("userInfo", userInfo)
     //************************************************************************
 
@@ -42,6 +41,15 @@ const DentistChangePassword = () => {
         // console.log("Success: ", values);
         // console.log("token", token)
         const { old_password, new_password } = values;
+        const validation = validateNewPassword(old_password, new_password);
+
+        if (!validation.valid) {
+            notification.error({
+                message: validation.message,
+                description: validation.description,
+            });
+            return;
+        }
         try {
             const APIChangePasswordByDentist = await DoChangePasswordByDentist(old_password, new_password, token);
             console.log(APIChangePasswordByDentist)
@@ -69,7 +77,7 @@ const DentistChangePassword = () => {
                 case 403:
                     notification.error({
                         message: 'Đổi mật khẩu thất bại',
-                        description: 'Mật khẩu không đúng. Vui lòng thử lại',
+                        description: 'Mật khẩu hiện tại không đúng. Vui lòng thử lại',
                         duration: 2,
                     })
                     break;
@@ -84,7 +92,7 @@ const DentistChangePassword = () => {
                 case 400:
                     notification.error({
                         message: 'Đổi mật khẩu thất bại',
-                        description: 'Bad Request',
+                        description: 'Vui lòng nhập đủ ô trống',
                         duration: 2,
                     })
                     break;
@@ -127,6 +135,55 @@ const DentistChangePassword = () => {
             </Button>
         );
     };
+
+    const validateNewPassword = (oldPassword, newPassword) => {
+        if (oldPassword === newPassword) {
+            return {
+                valid: false,
+                message: 'Đổi mật khẩu thất bại',
+                description: "Mật khẩu mới không được trùng với mật khẩu cũ"
+            };
+        }
+        return {
+            valid: true,
+            message: ''
+        };
+    };
+
+
+    // Validator Password
+    const validatePassword = (_, value) => {
+        if (!value) {
+            return Promise.reject(new Error(''));
+        }
+
+        const errors = [];
+        const hasLength = (value.length) >= 8;
+        const hasUpperCase = /[A-Z]/.test(value);
+        const hasNumber = /[0-9]/.test(value);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+        if (!hasLength || !hasUpperCase || !hasNumber || !hasSpecialChar) {
+            errors.push('Tối thiểu 8 ký tự, 1 chữ hoa, 1 chữ số, và 1 ký tự đặc biệt!');
+        }
+
+        if (errors.length > 0) {
+            return Promise.reject(new Error(errors.join(' ')));
+        }
+
+        return Promise.resolve();
+    };
+
+    // Validate Nhập lại mật khẩu
+    const validateRePassword = (rule, value, callback) => {
+        const { getFieldValue } = form;
+
+        if (value && value !== getFieldValue('new_password')) {
+            callback('Mật khẩu không khớp!');
+        } else {
+            callback();
+        }
+    };
     //************************************************************************
 
     return (
@@ -149,16 +206,53 @@ const DentistChangePassword = () => {
                 >
 
                     <Card style={{ width: 600 }}>
-                        <Form.Item label="Mật khẩu cũ" name="old_password">
-                            <Input />
+                        <Form.Item label="Nhập mật khẩu hiện tại" name="old_password"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Vui lòng nhập mật khẩu!',
+                                },
+                            ]}
+                        >
+                            <Input.Password />
                         </Form.Item>
 
-                        <Form.Item label="Mật khẩu mới" name="new_password">
-                            <Input />
+                        <Form.Item label="Nhập mật khẩu mới" name="new_password" validateDebounce={1000}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Vui lòng nhập mật khẩu!',
+                                },
+                                {
+                                    validator: validatePassword,
+                                },
+                            ]}
+                            hasFeedback
+                        >
+                            <Input.Password />
+                        </Form.Item>
+
+                        {/* Nhập lại Password */}
+                        <Form.Item
+                            label="Nhập lại mật khẩu mới"
+                            name="re-password"
+                            validateDebounce={1000}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Vui lòng nhập mật khẩu!',
+                                },
+                                {
+                                    validator: validateRePassword,
+                                },
+                            ]}
+                            hasFeedback
+                        >
+                            <Input.Password />
                         </Form.Item>
 
                         <Form.Item>
-                            <SubmitButton form={form}>Đặt Lịch Hẹn</SubmitButton>
+                            <SubmitButton form={form}>Đổi mật khẩu</SubmitButton>
                         </Form.Item>
                     </Card>
 

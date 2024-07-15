@@ -168,7 +168,7 @@ const PatientExamination = () => {
                                             }
 
                                             title="Phiếu Khám"
-                                            style={{ width: '', textAlign: 'start', padding: '1rem' }}
+                                            style={{ width: '300', textAlign: 'start', padding: '1rem' }}
                                         >
                                             <div>
                                                 <h6>Ngày {formatDate(data.appointment_date)}</h6>
@@ -185,9 +185,9 @@ const PatientExamination = () => {
                                                             <div style={{ textAlign: 'end' }}>
                                                                 <p style={ExaminationID}>{data.id}</p>
                                                                 <p style={ExaminationValues}>{formatCurrency(data.total_cost)}</p>
-                                                                <p style={{ ...ExaminationValues, color: data.status === "Đã hủy" ? "red" : "green" }}>
+                                                                <p style={{ ...ExaminationValues, color: data.status === "Đã hủy" ? "red" : "#1677FF" }}>
                                                                     {data.status}
-                                                                </p>    
+                                                                </p>
                                                             </div>
                                                         </Col>
                                                     </Row>
@@ -228,7 +228,7 @@ const PatientExamination = () => {
                 </>
             ) : (
                 <div>
-                    <Empty />
+                    <Empty description="Không có lịch để hiển thị" />
                 </div>
             )
 
@@ -276,9 +276,9 @@ const PatientExamination = () => {
                                         <p style={ExaminationDetailText}>Phòng</p>
                                         <p style={ExaminationDetailText}>Giờ khám</p>
                                         <p style={ExaminationDetailText}>Nha sĩ</p>
-                                        <p style={ExaminationDetailText}>Chuyên khoa</p>
+                                        {/* <p style={ExaminationDetailText}>Chuyên khoa</p> */}
                                         <p style={ExaminationDetailText}>Loại hình dịch vụ quan tâm</p>
-                                        <p style={ExaminationDetailText}>Phí khám bệnh</p>
+                                        <p style={ExaminationDetailText}>Tổng cộng</p>
                                     </div>
                                 </Col>
 
@@ -292,7 +292,7 @@ const PatientExamination = () => {
                                             {extractTime(dataDetailExamination.start_time)}-{extractTime(dataDetailExamination.end_time)}
                                         </p>
                                         <p style={ExaminationValues}>{dataDetailExamination.dentist_name}</p>
-                                        <p style={ExaminationValues}>{dataDetailExamination.dentist_specialty}</p>
+                                        {/* <p style={ExaminationValues}>{dataDetailExamination.dentist_specialty}</p> */}
                                         <p style={ExaminationValues}>{dataDetailExamination.service_category === null ? 'Không có' : dataDetailExamination.service_category}</p>
                                         <p style={ExaminationValues}>{formatCurrency(dataDetailExamination.total_cost)}</p>
                                     </div>

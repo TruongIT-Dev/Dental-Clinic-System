@@ -2,7 +2,6 @@ import { Button, Card, Form, Select, Typography, DatePicker, notification, Space
 import { DoAddNewExaminationByAdmin, DoListAllDentistByAdmin, DoListAllRoomByAdmin } from '../../../../apis/api';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import dayjs from 'dayjs';
 import moment from 'moment-timezone';
 
 const CreateExamination = () => {
@@ -58,8 +57,8 @@ const CreateExamination = () => {
             const isError = error.response.data.error;
             if (isError.includes("schedule overlaps with other schedules")) {
                 notification.error({
-                    message: 'Tạo lịch khám thất bại!',
-                    description: 'Trùng thời gian với lịch khác. ',
+                    message: 'Tạo lịch khám thất bại',
+                    description: 'Trùng thời gian với lịch khác',
                     duration: 2,
                 });
             }

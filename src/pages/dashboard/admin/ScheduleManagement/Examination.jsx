@@ -1,4 +1,4 @@
-import { Table, Input, Button, Typography, Space, Modal, Tabs, Descriptions, DatePicker } from 'antd';
+import { Table, Input, Button, Typography, Space, Modal, Tabs, Descriptions, DatePicker, Empty } from 'antd';
 import { Link } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { DoViewAllExaminationByAdmin, DoViewPatientOfAExaminationScheduleByAdmin } from '../../../../apis/api';
@@ -8,8 +8,9 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import vi from 'dayjs/locale/vi';
+import isBetween from 'dayjs/plugin/isBetween';
 
+dayjs.extend(isBetween);
 dayjs.locale('vi');
 // Extend Dayjs with plugins
 dayjs.extend(utc);
@@ -30,7 +31,7 @@ const Examination = () => {
     // *****************************************
     // ------------- useState ------------------
     const [allExamination, setAllExamination] = useState([]);
-    console.log("allExamination", allExamination)
+    // console.log("allExamination", allExamination)
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 5,
@@ -67,7 +68,7 @@ const Examination = () => {
                         max_patients: item.max_patients,
                     }
                 }))
-                console.log("GetDataAllExamination", GetDataAllExamination)
+                // console.log("GetDataAllExamination", GetDataAllExamination)
                 setAllExamination(GetDataAndTimeRange);
             }
 
@@ -80,12 +81,12 @@ const Examination = () => {
     const fetchViewPatientsOfASchedule = async (id) => {
         try {
             const APIViewPatientsOfASchedule = await DoViewPatientOfAExaminationScheduleByAdmin(id);
-            console.log("APIViewPatientsOfASchedule", APIViewPatientsOfASchedule)
+            // console.log("APIViewPatientsOfASchedule", APIViewPatientsOfASchedule)
             // Lấy thành công
             const GetDataPatientsInfo = APIViewPatientsOfASchedule?.data || [];
-            console.log("GetDataPatientsInfo", GetDataPatientsInfo)
+            // console.log("GetDataPatientsInfo", GetDataPatientsInfo)
             setPatientsInfo(GetDataPatientsInfo);
-            console.log("patientsInfo: ", patientsInfo);
+            // console.log("patientsInfo: ", patientsInfo);
         } catch (error) {
             console.log(error)
         }
@@ -135,7 +136,7 @@ const Examination = () => {
         // Convert the timestamp to the Vietnam timezone
         const vietnamTime = moment.tz(timestamp, vietnamTimezone);
         return vietnamTime.format('HH:mm');
-        
+
         // DayJS
         // const vietnamTime = dayjs(utcTime).tz('Asia/Ho_Chi_Minh');
         // return vietnamTime.local("vi", vi).format('HH:mm');
@@ -179,14 +180,14 @@ const Examination = () => {
                             size="small"
                             style={{ width: 90 }}
                         >
-                            OK
+                            Chọn
                         </Button>
                         <Button
                             onClick={() => clearFilters()}
                             size="small"
                             style={{ width: 90 }}
                         >
-                            Reset
+                            Hoàn tác
                         </Button>
                     </Space>
                 </div>
@@ -233,7 +234,7 @@ const Examination = () => {
                             }
                         }}
                     >
-                        Xem bệnh nhân
+                        Xem chi tiết
                     </Button>
                 </Space>
             ),
@@ -273,14 +274,14 @@ const Examination = () => {
             </div>
 
             {/* Top-Bar Btn*/}
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Search
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                {/* <Search
                     placeholder="Nhập tên nha sĩ"
                     allowClear
                     enterButton="Tìm kiếm"
                     size="large"
                     style={{ margin: '20px', width: '33%' }}
-                />
+                /> */}
                 <Button
                     icon={<PlusOutlined />}
                     size={'large'}
@@ -295,11 +296,12 @@ const Examination = () => {
             <Table columns={columns} dataSource={allExamination}
                 pagination={allExamination.length >= 5 ? { pageSize: 5 } : false}
                 onChange={handleTableChange}
+                locale={{ emptyText: <Empty description='Không có dữ liệu' /> }}
             />
 
             {/* Modal View Patients của 1 Lịch Khám */}
             <Modal
-                title={<p>Thông tin bệnh nhân</p>}
+                title={<p>Thông tin chi tiết lịch khám</p>}
                 loading={loadingModalViewPatients}
                 open={modalViewPatients}
                 onCancel={() => setModalViewPatients(false)}

@@ -6,15 +6,16 @@ import {
     Typography,
 } from "antd";
 import { useSelector } from "react-redux";
-import { DoViewDentistInfoByDentist } from "../../../../apis/api";
+import { DoUpdateDentistInfoByDentist, DoViewDentistInfoByDentist } from "../../../../apis/api";
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 
 const DentistProfile = () => {
 
     // ***********************************************************************
     //                                Variables
     const userInfo = useSelector(state => state?.account?.user?.user?.user_info);
-
+    console.log(userInfo)
     const { Title } = Typography;
     const [form] = Form.useForm();
     //************************************************************************
@@ -24,6 +25,7 @@ const DentistProfile = () => {
     //                                useState
 
     const [viewDentistInfo, setViewDentistInfo] = useState({});
+    console.log(viewDentistInfo)
     //************************************************************************
 
 
@@ -43,6 +45,7 @@ const DentistProfile = () => {
                 phone_number: viewDentistInfo.phone_number,
                 date_of_birth: formatDate(viewDentistInfo.date_of_birth),
                 gender: viewDentistInfo.gender,
+                specialty_id: viewDentistInfo.specialty_id,
                 specialty_name: viewDentistInfo.specialty_name
             });
         }
@@ -54,6 +57,7 @@ const DentistProfile = () => {
     // ***********************************************************************
     //                                API Function
 
+    // View Thông tin Cá nhân Dentist
     const fetchViewDentistInfoByDentist = async (id) => {
 
         try {
@@ -66,6 +70,25 @@ const DentistProfile = () => {
             }
         } catch (error) {
             console.log("Lỗi View Dentist Info: ", error);
+        }
+    }
+
+
+    // Update Thông tin cá nhân Dentist
+    const onFinishUpdate = async (values) => {
+        console.log("Update Form Dentist", values)
+
+        const id = userInfo.id;
+        const specialty_id = viewDentistInfo.specialty_id;
+
+        values.date_of_birth = dayjs(values.date_of_birth).format("YYYY-MM-DD");
+
+        const { date_of_birth, email, full_name, gender, phone_number } = values;
+        try {
+            const APIUpdateDentistInfo = await DoUpdateDentistInfoByDentist(id, date_of_birth, email, full_name, gender, phone_number, specialty_id);
+            console.log(APIUpdateDentistInfo);
+        } catch (error) {
+            console.log(error);
         }
     }
     //************************************************************************
@@ -92,6 +115,7 @@ const DentistProfile = () => {
             </div>
             <div className="container mx-auto px-4 mt-4">
                 <Form
+                    onFinish={onFinishUpdate}
                     form={form}
                     layout="vertical"
                     autoComplete="true"
@@ -103,35 +127,39 @@ const DentistProfile = () => {
 
                     <Card style={{ width: 600 }}>
                         <Form.Item label="Họ và tên" name="full_name">
-                            <Input />
+                            <Input disabled />
                         </Form.Item>
 
                         <Form.Item label="Email" name="email">
-                            <Input />
+                            <Input disabled />
                         </Form.Item>
 
                         <Form.Item label="Số điện thoại" name="phone_number">
-                            <Input />
+                            <Input disabled />
                         </Form.Item>
 
 
                         <Form.Item label="Ngày sinh" name="date_of_birth" >
-                            <Input disabled/>
+                            <Input disabled />
                         </Form.Item>
 
                         <Form.Item label="Giới tính" name="gender" >
-                            <Input />
+                            <Input disabled />
                         </Form.Item>
 
                         <Form.Item label="Chuyên khoa" name="specialty_name">
-                            <Input />
+                            <Input disabled />
                         </Form.Item>
 
-                        <Form.Item>
-                            <Button type="primary" htmlType="submit">
+                        {/* <Form.Item label="Chuyên khoa" name="specialty_id">
+                            <Input />
+                        </Form.Item> */}
+
+                        {/* <Form.Item>
+                            B<Button type="primary" htmlType="submit">
                                 Lưu thay đổi
                             </Button>
-                        </Form.Item>
+                        </Form.Item> */}
                     </Card>
 
 

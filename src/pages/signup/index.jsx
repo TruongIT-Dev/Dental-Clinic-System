@@ -205,18 +205,6 @@ const SignUp = () => {
             errors.push('Tối thiểu 8 ký tự, 1 chữ hoa, 1 chữ số, và 1 ký tự đặc biệt!');
         }
 
-        // if (!hasUpperCase) {
-        //     errors.push('ít nhất 1 chữ in hoa, ');
-        // }
-
-        // if (!hasNumber) {
-        //     errors.push('1 chữ số, ');
-        // }
-
-        // if (!hasSpecialChar) {
-        //     errors.push('và 1 ký tự đặc biệt!');
-        // }
-
         if (errors.length > 0) {
             return Promise.reject(new Error(errors.join(' ')));
         }

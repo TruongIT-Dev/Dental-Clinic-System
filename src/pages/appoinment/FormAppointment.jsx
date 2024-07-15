@@ -14,7 +14,7 @@ const disabledDate = (current) => {
     return (
         current &&
         (
-            current < today || // Disable dates before today
+            current <= today || // Disable dates before today
             current >= twoWeeksLater || // Disable dates after two weeks from now
             current.day() === 0 // Disable Sundays (0 is Sunday in Moment.js)
         )

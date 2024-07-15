@@ -78,6 +78,15 @@ export const DoCancelSchedule = (id) => {
     return axios.patch(`/api/v1/appointments/examination/${id}/cancel`);
 }
 
+// API View Danh sách Lịch Điều trị
+export const DoViewTreatmentByPatient = () => {
+    return axios.get('/api/v1/patients/appointments/treatment');
+}
+
+// API View Chi Tiết Lịch điều trị
+export const DoViewDetailTreatmentByPatient = (id) => {
+    return axios.get(`/api/v1/patients/appointments/treatment/${id}`);
+}
 //************************************************************************************** */
 //************************************API ADMIN***************************************** */
 
@@ -245,29 +254,39 @@ export const DoViewPatientOfAExaminationScheduleByAdmin = (id) => {
 
 // API View List Các Lịch Điều Trị
 export const DoViewAllTreatmentByAdmin = (name) => {
-    return axios.get(`/api/v1/schedules/treatment?q=${name}`)
+    return axios.get(`/api/v1/appointments/treatment?q=${name}`)
 }
 
 
-// **************************Quản Lý Phòng Khám*******************************
+// API View Bệnh nhân của 1 Lịch điều trị
+export const DoViewPatientOfATreatmentScheduleByAdmin = (id) => {
+    return axios.get(`/api/v1/appointments/treatment/${id}/patients`)
+}
+// **************************Quản Lý Phòng*******************************
 
-// API View Danh sách các Phòng khám
+// API View Danh sách các Phòng
 export const DoViewAllRoomsByAdmin = () => {
     return axios.get('/api/v1/rooms')
 }
 
-// API Add thêm 1 Phòng khám mới
+// API Add thêm 1 Phòng mới
 export const DoAddNewRoomByAdmin = (name) => {
     return axios.post('/api/v1/rooms', {
         name: name,
     })
 }
 
-// API Delete 1 Phòng Khám
+// API Delete 1 Phòng
 export const DoDeleteRoomByAdmin = (id) => {
     return axios.delete(`/api/v1/rooms/${id}`)
 }
 
+// API Update 1 Phòng
+export const DoUpdateRoomByAdmin = (id, name) => {
+    return axios.put(`/api/v1/rooms/${id}`, {
+        name: name,
+    })
+}
 
 
 //************************************************************************************** */
@@ -276,6 +295,18 @@ export const DoDeleteRoomByAdmin = (id) => {
 // List Thông tin cá nhân Dentist
 export const DoViewDentistInfoByDentist = (id) => {
     return axios.get(`/api/v1/dentists/${id}`);
+}
+
+// API Cập nhật thông tin cá nhân
+export const DoUpdateDentistInfoByDentist = (id, date_of_birth, email, full_name, gender, phone_number) => {
+    return axios.put(`/api/v1/dentists/${id}`, {
+        date_of_birth: date_of_birth,
+        email: email,
+        full_name: full_name,
+        gender: gender,
+        phone_number: phone_number,
+        specialty_id: 0
+    })
 }
 
 // Đổi mật khẩu
@@ -326,4 +357,14 @@ export const DoListServicesByDentist = (slug) => {
 // List Thanh toán
 export const DoListPaymentsByDentist = () => {
     return axios.get('/api/v1/payment-methods')
+}
+
+// API List Danh sách các Lịch Điều trị
+export const DoListTreatmentScheduleByDentist = (id) => {
+    return axios.get(`/api/v1/dentists/${id}/schedules/treatment`);
+}
+
+// API List Danh sách các Lịch khám của 1 nha sĩ
+export const DoListExaminationScheduleByDentist = (id) => {
+    return axios.get(`/api/v1/dentists/${id}/schedules/examination`);
 }
