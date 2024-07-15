@@ -1,22 +1,87 @@
 import {
-    Upload,
     Button,
     Input,
     Form,
     Card,
-    Row,
-    Col,
-    Avatar,
-    Select,
     Typography,
-    Radio,
-    DatePicker,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { DoViewDentistInfoByDentist } from "../../../../apis/api";
+import { useEffect, useState } from "react";
 
 const DentistProfile = () => {
 
+    // ***********************************************************************
+    //                                Variables
+    const userInfo = useSelector(state => state?.account?.user?.user?.user_info);
+
     const { Title } = Typography;
+    const [form] = Form.useForm();
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                useState
+
+    const [viewDentistInfo, setViewDentistInfo] = useState({});
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                useEffect
+
+    useEffect(() => {
+        fetchViewDentistInfoByDentist(userInfo.id);
+    }, [userInfo.id]);
+
+
+    useEffect(() => {
+        if (viewDentistInfo) {
+            form.setFieldsValue({
+                full_name: viewDentistInfo.full_name,
+                email: viewDentistInfo.email,
+                phone_number: viewDentistInfo.phone_number,
+                date_of_birth: formatDate(viewDentistInfo.date_of_birth),
+                gender: viewDentistInfo.gender,
+                specialty_name: viewDentistInfo.specialty_name
+            });
+        }
+    }, [viewDentistInfo, form]);
+
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                API Function
+
+    const fetchViewDentistInfoByDentist = async (id) => {
+
+        try {
+            const APIViewDentistInfo = await DoViewDentistInfoByDentist(id);
+            // console.log(APIViewDentistInfo);
+            if (APIViewDentistInfo.status === 200) {
+                const GetDataViewDentistInfo = APIViewDentistInfo?.data || {};
+                setViewDentistInfo(GetDataViewDentistInfo);
+                // console.log("viewDentistInfo", viewDentistInfo)
+            }
+        } catch (error) {
+            console.log("Lỗi View Dentist Info: ", error);
+        }
+    }
+    //************************************************************************
+
+
+    // ***********************************************************************
+    //                                other Function
+
+    const formatDate = (timestamp) => {
+        const date = new Date(timestamp);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${day}/${month}/${year}`;
+    };
+    //************************************************************************
 
     return (
 
@@ -27,6 +92,7 @@ const DentistProfile = () => {
             </div>
             <div className="container mx-auto px-4 mt-4">
                 <Form
+                    form={form}
                     layout="vertical"
                     autoComplete="true"
                     style={{
@@ -50,47 +116,15 @@ const DentistProfile = () => {
 
 
                         <Form.Item label="Ngày sinh" name="date_of_birth" >
-                            <DatePicker
-                                style={{ width: 200 }}
-                                format="YYYY-MM-DD"
-                                placeholder='YYYY-MM-DD'
-                            />
+                            <Input disabled/>
                         </Form.Item>
 
                         <Form.Item label="Giới tính" name="gender" >
-                            <Radio.Group name="radiogroup">
-                                <Radio value='Nam'>Nam</Radio>
-                                <Radio value='Nữ'>Nữ</Radio>
-                                <Radio value='Khác'>Khác</Radio>
-                            </Radio.Group>
+                            <Input />
                         </Form.Item>
 
-                        <Form.Item label="Chuyên khoa" name="specialty_id">
-                            <Select
-                                defaultValue="lucy"
-                                style={{
-                                    width: 400,
-                                }}
-                                options={[
-                                    {
-                                        value: 'jack',
-                                        label: 'Jack',
-                                    },
-                                    {
-                                        value: 'lucy',
-                                        label: 'Lucy',
-                                    },
-                                    {
-                                        value: 'Yiminghe',
-                                        label: 'yiminghe',
-                                    },
-                                    {
-                                        value: 'disabled',
-                                        label: 'Disabled',
-                                        disabled: true,
-                                    },
-                                ]}
-                            />
+                        <Form.Item label="Chuyên khoa" name="specialty_name">
+                            <Input />
                         </Form.Item>
 
                         <Form.Item>

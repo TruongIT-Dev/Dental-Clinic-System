@@ -40,6 +40,7 @@ import DentistTreatmentManagement from './pages/dashboard/dentist/SheduleManagem
 import DentistPatientManagement from './pages/dashboard/dentist/PatientManagement';
 import AddNewTreatmentScheule from './pages/dashboard/dentist/SheduleManagement/Treatment/AddNewTreatmentShedule';
 import PatientMedicalRecord from './pages/dashboard/dentist/PatientManagement/PatientMedicalRecord';
+import DentistChangePassword from './pages/dashboard/dentist/ChangePassword';
 
 function App() {
   const account = useSelector(state => state?.account);
@@ -115,6 +116,9 @@ function App() {
         {isAuthenticated.loggedIn && isAuthenticated.role === 'dentist' && (
           <Route path='/dentist' element={<AdminDashboard />}>
             <Route index element={<DentistProfile />} />
+
+            {/* Đổi mật khẩu */}
+            <Route path='doi-mat-khau' element={<DentistChangePassword />} />
 
             {/* Quản lý lịch khám điều trị */}
             <Route path='quan-ly-lich-kham' element={<DentistExaminationManagement />} />

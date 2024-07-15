@@ -210,7 +210,7 @@ const CreateExamination = () => {
                             autoComplete="off"
                         >
                             <Form.Item
-                                label="Nha sĩ"
+                                label="Chọn nha sĩ"
                                 name="dentist_id"
                                 rules={[
                                     {
@@ -225,7 +225,7 @@ const CreateExamination = () => {
                             </Form.Item>
 
                             <Form.Item
-                                label="Phòng số"
+                                label="Chọn phòng"
                                 name="room_id"
 
                                 rules={[
@@ -242,7 +242,7 @@ const CreateExamination = () => {
                             </Form.Item>
 
                             <Form.Item
-                                label="Thời gian bắt đầu"
+                                label="Chọn thời gian bắt đầu"
                                 name="start_time"
                                 rules={[
                                     {
@@ -259,7 +259,7 @@ const CreateExamination = () => {
 
 
                             <Form.Item
-                                label="Thời gian kết thúc"
+                                label="Chọn thời gian kết thúc"
                                 name="end_time"
                                 rules={[
                                     {

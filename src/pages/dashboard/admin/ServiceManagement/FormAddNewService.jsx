@@ -4,7 +4,7 @@ import { DoAddNewServiceByAdmin } from '../../../../apis/api';
 // import CSS
 import '../../../../scss/FormAddNewService.css';
 
-const FormAddNewService = ({ data, id, category }) => {
+const FormAddNewService = ({ id }) => {
 
     // console.log("prop data: ", data);
     // console.log("prop id: ", id);
@@ -14,10 +14,6 @@ const FormAddNewService = ({ data, id, category }) => {
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
-    };
-
-    const onReset = () => {
-        form.resetFields();
     };
 
     const onFinish = async (values) => {
