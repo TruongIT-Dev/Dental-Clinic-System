@@ -1,9 +1,9 @@
-import { Button, Card, Form, Select, Typography, DatePicker, notification } from 'antd';
+import { Button, Card, Form, Select, Typography, DatePicker, notification, Space } from 'antd';
 import { DoAddNewExaminationByAdmin, DoListAllDentistByAdmin, DoListAllRoomByAdmin } from '../../../../apis/api';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-
+import moment from 'moment-timezone';
 
 const CreateExamination = () => {
 
@@ -12,7 +12,8 @@ const CreateExamination = () => {
 
     const { Title } = Typography;
     const navigate = useNavigate();
-
+    const [form] = Form.useForm();
+    const vietnamTimezone = 'Asia/Ho_Chi_Minh';
     // *****************************************
 
 
@@ -21,28 +22,28 @@ const CreateExamination = () => {
 
     const [allDentist, setAllDentist] = useState([]);
     const [allRoom, setAllRoom] = useState([]);
-
+    const [startTime, setStartTime] = useState(null);
     // *****************************************
 
 
     // *****************************************
     // ------------- API Function --------------
 
+    // API Đặt 1 Lịch khám
     const onFinish = async (values) => {
         console.log('Success:', values);
 
         // const startTime = values.start_time;
         // const endTime = values.end_time;
 
-        values.start_time = dayjs(values.start_time).format('YYYY-MM-DDTHH:mm:ss[Z]');
-        values.end_time = dayjs(values.end_time).format('YYYY-MM-DDTHH:mm:ss[Z]');
+        // values.start_time = dayjs(values.start_time).format('YYYY-MM-DDTHH:mm:ss[Z]');
+        // values.end_time = dayjs(values.end_time).format('YYYY-MM-DDTHH:mm:ss[Z]');
 
         const { dentist_id, room_id, start_time, end_time } = values;
 
         try {
             const APIAddNewExaminationByAdmin = await DoAddNewExaminationByAdmin(dentist_id, room_id, start_time, end_time);
-            console.log("APIAddNewExaminationByAdmin", APIAddNewExaminationByAdmin)
-
+            // console.log("APIAddNewExaminationByAdmin", APIAddNewExaminationByAdmin)
             switch (APIAddNewExaminationByAdmin.status) {
                 case 201:
                     notification.success({
@@ -51,20 +52,17 @@ const CreateExamination = () => {
                     });
                     navigate('/admin/quan-ly-lich-kham');
                     break;
-
-                default:
-                    notification.error({
-                        message: 'Thêm thất bại',
-                        duration: 2,
-                    });
-                    break;
             }
         } catch (error) {
             console.log("Error add new Examination: ", error);
-            notification.error({
-                message: 'Thêm thất bại',
-                duration: 2,
-            });
+            const isError = error.response.data.error;
+            if (isError.includes("schedule overlaps with other schedules")) {
+                notification.error({
+                    message: 'Tạo lịch khám thất bại!',
+                    description: 'Trùng thời gian với lịch khác. ',
+                    duration: 2,
+                });
+            }
         }
     };
 
@@ -135,8 +133,36 @@ const CreateExamination = () => {
 
     // *****************************************
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+    // Submit undisable khi chọn hết field
+    const SubmitButton = ({ form, children }) => {
+        const [submittable, setSubmittable] = React.useState(false);
+
+        // Watch all values
+        const values = Form.useWatch([], form);
+        React.useEffect(() => {
+            form
+                .validateFields({
+                    validateOnly: true,
+                })
+                .then(() => setSubmittable(true))
+                .catch(() => setSubmittable(false));
+        }, [form, values]);
+        return (
+            <Button type="primary" htmlType="submit" disabled={!submittable}>
+                {children}
+            </Button>
+        );
+    };
+
+    // Date
+    const handleDateChange = (value) => {
+        if (value) {
+            // Convert the selected date to Vietnam timezone
+            const vietnamTime = value.tz(vietnamTimezone);
+            setStartTime(vietnamTime);
+        } else {
+            setStartTime(null);
+        }
     };
 
     // Options Danh sách các Nha sĩ
@@ -167,6 +193,7 @@ const CreateExamination = () => {
                     <Card style={{ width: '80%' }}>
                         <Form
                             name="basic"
+                            form={form}
                             labelCol={{
                                 span: 8,
                             }}
@@ -180,7 +207,6 @@ const CreateExamination = () => {
                                 remember: true,
                             }}
                             onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
                             autoComplete="off"
                         >
                             <Form.Item
@@ -189,6 +215,7 @@ const CreateExamination = () => {
                                 rules={[
                                     {
                                         required: true,
+                                        message: 'Vui lòng chọn nha sĩ'
                                     },
                                 ]}
                             >
@@ -200,14 +227,17 @@ const CreateExamination = () => {
                             <Form.Item
                                 label="Phòng số"
                                 name="room_id"
+
                                 rules={[
                                     {
                                         required: true,
+                                        message: 'Vui lòng chọn phòng'
                                     },
                                 ]}
                             >
                                 <Select
                                     options={OptionsRoomList}
+
                                 />
                             </Form.Item>
 
@@ -217,10 +247,14 @@ const CreateExamination = () => {
                                 rules={[
                                     {
                                         required: true,
+                                        message: 'Vui lòng chọn thời gian'
                                     },
                                 ]}
                             >
-                                <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+                                <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"
+                                    onChange={handleDateChange}
+                                    value={startTime ? moment(startTime) : null}
+                                />
                             </Form.Item>
 
 
@@ -230,6 +264,7 @@ const CreateExamination = () => {
                                 rules={[
                                     {
                                         required: true,
+                                        message: 'Vui lòng chọn thời gian'
                                     },
                                 ]}
                             >
@@ -242,9 +277,9 @@ const CreateExamination = () => {
                                     span: 16,
                                 }}
                             >
-                                <Button type="primary" htmlType="submit">
-                                    Thêm lịch khám
-                                </Button>
+                                <Space>
+                                    <SubmitButton form={form}>Đặt lịch khám</SubmitButton>
+                                </Space>
                             </Form.Item>
                         </Form>
                     </Card>

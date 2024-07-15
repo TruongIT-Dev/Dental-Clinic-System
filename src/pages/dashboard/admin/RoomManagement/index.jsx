@@ -136,7 +136,7 @@ const RoomManagement = () => {
         //     key: 'id',
         // },
         {
-            title: 'STT',
+            title: 'No.',
             key: 'index',
             render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
         },

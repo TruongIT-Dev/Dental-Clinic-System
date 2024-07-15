@@ -231,6 +231,7 @@ const PatientExamination = () => {
                                         <p style={ExaminationDetailText}>Giờ khám</p>
                                         <p style={ExaminationDetailText}>Nha sĩ</p>
                                         <p style={ExaminationDetailText}>Chuyên khoa</p>
+                                        <p style={ExaminationDetailText}>Loại hình dịch vụ quan tâm</p>
                                         <p style={ExaminationDetailText}>Phí khám bệnh</p>
                                     </div>
                                 </Col>
@@ -246,6 +247,7 @@ const PatientExamination = () => {
                                         </p>
                                         <p style={ExaminationValues}>{dataDetailExamination.dentist_name}</p>
                                         <p style={ExaminationValues}>{dataDetailExamination.dentist_specialty}</p>
+                                        <p style={ExaminationValues}>{dataDetailExamination.service_category === null ? 'Không có' : dataDetailExamination.service_category}</p>
                                         <p style={ExaminationValues}>{formatCurrency(dataDetailExamination.total_cost)}</p>
                                     </div>
                                 </Col>

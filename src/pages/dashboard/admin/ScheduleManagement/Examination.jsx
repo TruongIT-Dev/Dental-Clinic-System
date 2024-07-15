@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { DoViewAllExaminationByAdmin, DoViewPatientOfAExaminationScheduleByAdmin } from '../../../../apis/api';
 import { useEffect, useState } from 'react';
-import 'moment-timezone';
+import moment from 'moment-timezone';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import vi from 'dayjs/locale/vi';
 
 dayjs.locale('vi');
 // Extend Dayjs with plugins
 dayjs.extend(utc);
 dayjs.extend(timezone);
-
 
 const Examination = () => {
 
@@ -30,7 +30,7 @@ const Examination = () => {
     // *****************************************
     // ------------- useState ------------------
     const [allExamination, setAllExamination] = useState([]);
-    // console.log("allExamination", allExamination)
+    console.log("allExamination", allExamination)
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 5,
@@ -127,15 +127,23 @@ const Examination = () => {
         return `${day}/${month}/${year}`;
     };
 
+    const extractTime = (timestamp) => {
 
-    const extractTime = (utcTime) => {
-        const vietnamTime = dayjs(utcTime).tz('Asia/Ho_Chi_Minh');
-        return vietnamTime.local().format('HH:mm:ssZ');
+        // Moment
+        // Define the Vietnam timezone
+        const vietnamTimezone = 'Asia/Ho_Chi_Minh';
+        // Convert the timestamp to the Vietnam timezone
+        const vietnamTime = moment.tz(timestamp, vietnamTimezone);
+        return vietnamTime.format('HH:mm');
+        
+        // DayJS
+        // const vietnamTime = dayjs(utcTime).tz('Asia/Ho_Chi_Minh');
+        // return vietnamTime.local("vi", vi).format('HH:mm');
     };
 
     const columns = [
         {
-            title: 'STT',
+            title: 'No.',
             key: 'index',
             render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
         },
@@ -194,7 +202,6 @@ const Examination = () => {
             title: 'Thời gian',
             dataIndex: 'time_range',
             key: 'time_range',
-            width: 300,
             render: (time_range) => (
                 <span>
                     {extractTime(time_range.start_time)} - {extractTime(time_range.end_time)}
@@ -205,6 +212,7 @@ const Examination = () => {
             title: 'Số bệnh nhân đăng ký',
             dataIndex: 'patient_count',
             key: 'patient_count',
+            align: 'center',  // This will center the conten
             render: (text, record) => (
                 `${record.current_patients} / ${record.max_patients}`
             )
@@ -225,7 +233,7 @@ const Examination = () => {
                             }
                         }}
                     >
-                        View bệnh nhân
+                        Xem bệnh nhân
                     </Button>
                 </Space>
             ),
@@ -242,7 +250,7 @@ const Examination = () => {
                 {/* <Descriptions.Item label="Họ và Tên">{data.full_name}</Descriptions.Item> */}
                 <Descriptions.Item label="Giới tính">{data.gender}</Descriptions.Item>
                 <Descriptions.Item label="Số điện thoại">{data.phone_number}</Descriptions.Item>
-                <Descriptions.Item label="Loại hình dịch vụ">{data.service_category}</Descriptions.Item>
+                <Descriptions.Item label="Loại hình dịch vụ quan tâm">{data.service_category === null ? 'Không có' : data.service_category}</Descriptions.Item>
                 <Descriptions.Item label="Ngày sinh">{formatDate(data.date_of_birth)}</Descriptions.Item>
             </Descriptions>
         ),
@@ -267,7 +275,7 @@ const Examination = () => {
             {/* Top-Bar Btn*/}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Search
-                    placeholder="Nhập lịch khám"
+                    placeholder="Nhập tên nha sĩ"
                     allowClear
                     enterButton="Tìm kiếm"
                     size="large"

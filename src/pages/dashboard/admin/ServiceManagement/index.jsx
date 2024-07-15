@@ -159,7 +159,7 @@ const ServiceManagement = () => {
     // Cột bảng Table Categories
     const columns = [
         {
-            title: 'STT',
+            title: 'No.',
             key: 'index',
             render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1,
         },
