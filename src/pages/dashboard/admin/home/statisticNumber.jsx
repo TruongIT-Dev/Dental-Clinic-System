@@ -27,7 +27,7 @@ const StatisticNumber = () => {
                             borderWidth: 2,
                             borderStyle: 'solid',
                         }}>
-                            <Statistic style={revertCard} title="Total students received CV" value={200} />
+                            <Statistic style={revertCard} title="Total patients received treatment" value={150} />
                         </Card>
                     </Col>
                     <Col style={{ width: '186px' }}>
@@ -37,7 +37,7 @@ const StatisticNumber = () => {
                             borderWidth: 2,
                             borderStyle: 'solid',
                         }}>
-                            <Statistic style={revertCard} title="Total students interviewed" value={150} />
+                            <Statistic style={revertCard} title="Total patients feedback" value={150} />
                         </Card>
                     </Col>
                     <Col style={{ width: '186px' }}>
@@ -47,7 +47,7 @@ const StatisticNumber = () => {
                             borderWidth: 2,
                             borderStyle: 'solid',
                         }}>
-                            <Statistic style={revertCard} title="Total studented passed" value={150} />
+                            <Statistic style={revertCard} title="Total treatment successfully " value={145} />
                         </Card>
                     </Col>
                     <Col style={{ width: '186px' }}>
@@ -57,7 +57,7 @@ const StatisticNumber = () => {
                             borderWidth: 2,
                             borderStyle: 'solid',
                         }}>
-                            <Statistic style={revertCard} title="Total students interning" value={150} />
+                            <Statistic style={revertCard} title="Total dentist interning" value={10} />
                         </Card>
                     </Col>
                     <Col style={{ width: '186px' }}>
@@ -67,7 +67,7 @@ const StatisticNumber = () => {
                             borderWidth: 2,
                             borderStyle: 'solid',
                         }}>
-                            <Statistic style={revertCard} title="Total students interned" value={150} />
+                            <Statistic style={revertCard} title="Total dentist interned" value={8} />
                         </Card>
                     </Col>
                 </Row>
