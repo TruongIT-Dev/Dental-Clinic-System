@@ -264,7 +264,7 @@ const DentistExaminationtManagement = () => {
             />
             {/* Modal View Patients của 1 Lịch Khám */}
             <Modal
-                title={<p>Thông tin chi tiết lịch khám</p>}
+                title={<p>Thông tin bệnh nhân</p>}
                 loading={loadingModalViewPatients}
                 open={modalViewPatients}
                 onCancel={() => setModalViewPatients(false)}
