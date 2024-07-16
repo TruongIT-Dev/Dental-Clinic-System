@@ -250,7 +250,7 @@ const DentistTreatmentManagement = () => {
             >
                 {/* <Tabs defaultActiveKey="1" items={renderPatientsInfo} /> */}
                 <Descriptions layout="vertical">
-                    <Descriptions.Item label="Họ và Tên">{patientsInfo.full_name}</Descriptions.Item>
+                    <Descriptions.Item label="Họ và Tên bệnh nhân">{patientsInfo.full_name}</Descriptions.Item>
                     <Descriptions.Item label="Email">{patientsInfo.email}</Descriptions.Item>
                     <Descriptions.Item label="Giới tính">{patientsInfo.gender}</Descriptions.Item>
                     <Descriptions.Item label="Ngày sinh">{formatDate(patientsInfo.date_of_birth)}</Descriptions.Item>

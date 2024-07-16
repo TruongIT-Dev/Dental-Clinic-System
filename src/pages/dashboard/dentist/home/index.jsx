@@ -127,28 +127,28 @@ const DentistProfile = () => {
 
                     <Card style={{ width: 600 }}>
                         <Form.Item label="Họ và tên" name="full_name">
-                            <Input disabled />
+                            <Input />
                         </Form.Item>
 
                         <Form.Item label="Email" name="email">
-                            <Input disabled />
+                            <Input />
                         </Form.Item>
 
                         <Form.Item label="Số điện thoại" name="phone_number">
-                            <Input disabled />
+                            <Input />
                         </Form.Item>
 
 
                         <Form.Item label="Ngày sinh" name="date_of_birth" >
-                            <Input disabled />
+                            <Input />
                         </Form.Item>
 
                         <Form.Item label="Giới tính" name="gender" >
-                            <Input disabled />
+                            <Input />
                         </Form.Item>
 
                         <Form.Item label="Chuyên khoa" name="specialty_name">
-                            <Input disabled />
+                            <Input />
                         </Form.Item>
 
                         {/* <Form.Item label="Chuyên khoa" name="specialty_id">
