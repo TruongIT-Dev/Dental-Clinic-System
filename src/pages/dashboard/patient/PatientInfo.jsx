@@ -34,7 +34,13 @@ const PatientInfo = () => {
 
     // ***********************************************************************
     //                                other Function
-
+    const formatDate = (timestamp) => {
+        const date = new Date(timestamp);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${day}/${month}/${year}`;
+    };
     //************************************************************************
     return (
 
@@ -51,7 +57,7 @@ const PatientInfo = () => {
                                 <Descriptions.Item label="Email"> {user_info.email}</Descriptions.Item>
                                 <Descriptions.Item label="Số điện thoại">{user_info.phone_number}</Descriptions.Item>
                                 <Descriptions.Item label="Giới tính">{user_info.gender}</Descriptions.Item>
-                                <Descriptions.Item label="Ngày sinh">{user_info.date_of_birth}</Descriptions.Item>
+                                <Descriptions.Item label="Ngày sinh">{formatDate(user_info.date_of_birth)}</Descriptions.Item>
                                 {/* <Descriptions.Item label="Mật khẩu">
                                     **************
                                 </Descriptions.Item> */}
