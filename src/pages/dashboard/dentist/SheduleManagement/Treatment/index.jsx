@@ -255,8 +255,10 @@ const DentistTreatmentManagement = () => {
                     <Descriptions.Item label="Giới tính">{patientsInfo.gender}</Descriptions.Item>
                     <Descriptions.Item label="Ngày sinh">{formatDate(patientsInfo.date_of_birth)}</Descriptions.Item>
                     <Descriptions.Item label="Số điện thoại">{patientsInfo.phone_number}</Descriptions.Item>
-                    <Descriptions.Item label="Số lượng">{patientsInfo.service_quantity}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions layout="vertical">
                     <Descriptions.Item label="Dịch vụ điều trị">{patientsInfo.service_name === null ? 'Không có' : patientsInfo.service_name}</Descriptions.Item>
+                    <Descriptions.Item label="Số lượng">{patientsInfo.service_quantity}</Descriptions.Item>
                     <Descriptions.Item label="Phí điều trị">{formatCurrency(patientsInfo.service_cost)}</Descriptions.Item>
                     <Descriptions.Item label="Tổng cộng">{formatCurrency(patientsInfo.total_cost)}</Descriptions.Item>
                 </Descriptions>
