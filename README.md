@@ -1,8 +1,66 @@
-# React + Vite
+# 🦷 Dental Clinic Appointment Booking System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and user-friendly **Dental Clinic Appointment Booking Website** that helps patients conveniently schedule appointments, dentists manage their schedules, and admins oversee clinic operations efficiently.
 
-Currently, two official plugins are available:
+This platform is built to optimize the appointment process in dental clinics, reduce manual errors, and enhance the patient experience through a digital-first approach.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+
+## 🌐 Overview
+
+The website allows users to:
+
+- **Browse available dentists and services**
+- **Book dental appointments online**
+- **Track appointment history**
+- **Manage clinic schedules and patient records**
+
+---
+
+## 👥 User Roles
+
+### 👤 Guest
+- View clinic services and dentist profiles
+- Register an account to book an appointment
+
+### 🧑‍⚕️ Patient
+- Log in to book, reschedule, or cancel appointments
+- View past and upcoming bookings
+- Receive appointment reminders
+
+### 🦷 Dentist
+- Log in to manage availability
+- View and update daily appointments
+- Access patient visit history and notes
+
+### 🛠️ Admin
+- Manage user accounts (patients, dentists)
+- Approve and manage clinic listings
+- Oversee services, appointment logs, and platform settings
+
+---
+
+## 🛠️ Technologies Used
+
+- **Frontend**: HTML, CSS, JavaScript, ReactJS, Vite  
+- **Backend**: Golang (GO)  
+- **Database**: PostgreSQL  
+- **Authentication**: JWT (JSON Web Tokens)  
+- **Deployment**: Not yet
+
+---
+
+## 📸 Screenshots
+
+> *Below are some illustrations of key pages on the website:*
+
+### 🏠 Login  
+![Homepage](assets/screenshots/homepage.png)
+
+### 📅 Appointment Booking  
+![Booking Page](assets/screenshots/booking.png)
+
+### 👩‍⚕️ Dentist Dashboard  
+![Dentist Dashboard](assets/screenshots/dentist-dashboard.png)
+
+---
