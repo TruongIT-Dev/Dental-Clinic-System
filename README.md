@@ -50,6 +50,9 @@ The website allows users to:
 
 ---
 
-## Link to Document:
-https://docs.google.com/document/d/1NB3umzmM0kOCE6CwJ1Vd9rhaksd8zQi-/edit?usp=sharing&ouid=113237985754051670344&rtpof=true&sd=true
+## 📄 Project Documentation
+
+You can view the full project documentation at the following link:  
+👉 [View on Google Docs](https://docs.google.com/document/d/1NB3umzmM0kOCE6CwJ1Vd9rhaksd8zQi-/edit?usp=sharing)
+
 ---
