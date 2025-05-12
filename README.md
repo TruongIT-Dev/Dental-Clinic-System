@@ -50,17 +50,6 @@ The website allows users to:
 
 ---
 
-## 📸 Screenshots
-
-> *Below are some illustrations of key pages on the website:*
-
-### 🏠 Login  
-![Homepage](assets/screenshots/homepage.png)
-
-### 📅 Appointment Booking  
-![Booking Page](assets/screenshots/booking.png)
-
-### 👩‍⚕️ Dentist Dashboard  
-![Dentist Dashboard](assets/screenshots/dentist-dashboard.png)
-
+## Link to Document:
+https://docs.google.com/document/d/1NB3umzmM0kOCE6CwJ1Vd9rhaksd8zQi-/edit?usp=sharing&ouid=113237985754051670344&rtpof=true&sd=true
 ---
